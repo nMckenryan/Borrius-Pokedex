@@ -1,11 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from "react-native";
+import { PokedexListItem } from "./components/PokedexListItem";
+import { Text } from "@rneui/themed";
+import { getPokemonInfo } from "./api/pokemon.api";
+import { useState, useEffect } from "react";
 
 export default function App() {
+  const [pokemonData, setPokemonData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getPokemonInfo("pikachu");
+        setPokemonData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!pokemonData) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text>{pokemonData.name}</Text>
+      <PokedexListItem
+        name={pokemonData.name}
+        types={pokemonData.types.map((type) => type.type.name).join(", ")}
+        spriteURL={pokemonData.sprites.front_default}
+      />
     </View>
   );
 }
@@ -13,8 +39,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -32,7 +32,7 @@ export const getAllPokemon = async () => {
         const pokeObj = {
             name: pokeName,
             sprite: sprite.data.sprites.front_default,
-            type: types.join("/"),
+            typeList: types,
         };
 
         allPokemon.push(pokeObj);

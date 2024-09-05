@@ -34,9 +34,9 @@ export default function App() {
           <View className="flex-row">
             <Image
               style={{
-                width: 100,
-                height: 100,
-                borderRadius: 15,
+                width: 50,
+                height: 50,
+                borderRadius: 60,
               }}
               source={{
                 uri: item.sprite || "https://via.placeholder.com/100",

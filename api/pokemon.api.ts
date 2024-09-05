@@ -27,12 +27,12 @@ export const getAllPokemon = async () => {
         const pokeName = item.name;
         const sprite = await axios.get(item.url);
 
-        const types = sprite.data.types;
+        const types = sprite.data.types.map((item) => item.type.name);
 
         const pokeObj = {
             name: pokeName,
             sprite: sprite.data.sprites.front_default,
-            type: "types",
+            type: types.join("/"),
         };
 
         allPokemon.push(pokeObj);

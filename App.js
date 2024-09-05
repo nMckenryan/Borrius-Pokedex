@@ -24,7 +24,7 @@ export default function App() {
   }
 
   return (
-    <View className="flex-1 items-center justify-center bg-white">
+    <View className="flex-1">
       <FlatList
         data={pokemonData}
         renderItem={({ item }) => (
@@ -39,9 +39,10 @@ export default function App() {
                 uri: item.sprite || "https://via.placeholder.com/100",
               }}
             />
-            <View className="flex-col">
-              <Text>{item.name}</Text>
-              <Text>{item.types}</Text>
+            <View className="flex-1 flex-col justify-center">
+              <Text className="capitalize">{item.name}</Text>
+              <TypeIcon type={item.type} />
+              <Text className="capitalize">{item.type}</Text>
             </View>
             <View />
           </View>

@@ -1,16 +1,15 @@
-import { StyleSheet, View } from "react-native";
-import { PokedexListItem } from "./components/PokedexListItem";
-import { Text } from "@rneui/themed";
-import { getPokemonInfo } from "./api/pokemon.api";
-import { useState, useEffect } from "react";
+import { View, Text, Image, FlatList } from "react-native";
+import { PokedexView } from "./components/PokedexView";
+import { getAllPokemon, getPokemonInfo } from "./api/pokemon.api";
+import { useEffect, useState } from "react";
 
 export default function App() {
-  const [pokemonData, setPokemonData] = useState(null);
+  const [pokemonData, setPokemonData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getPokemonInfo("pikachu");
+        const data = await getAllPokemon();
         setPokemonData(data);
       } catch (error) {
         console.error(error);
@@ -25,22 +24,29 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>{pokemonData.name}</Text>
-      <PokedexListItem
-        name={pokemonData.name}
-        types={pokemonData.types.map((type) => type.type.name).join(", ")}
-        spriteURL={pokemonData.sprites.front_default}
+    <View className="flex-1 items-center justify-center bg-white">
+      <FlatList
+        data={pokemonData}
+        renderItem={({ item }) => (
+          <View className="flex-row">
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 15,
+              }}
+              source={{
+                uri: item.sprite || "https://via.placeholder.com/100",
+              }}
+            />
+            <View className="flex-col">
+              <Text>{item.name}</Text>
+              <Text>{item.types}</Text>
+            </View>
+            <View />
+          </View>
+        )}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

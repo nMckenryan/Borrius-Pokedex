@@ -22,12 +22,7 @@ export default function TypeIcon({
 function TypeIconButton({ type }: { type: string }) {
   return (
     <>
-      <Text
-        className="bg-grass"
-        style={{ marginRight: 8, backgroundColor: "bg-grass" }}
-      >
-        {type}
-      </Text>
+      <Text className="mr-1 bg-grass">{type}</Text>
     </>
   );
 }

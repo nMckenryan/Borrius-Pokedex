@@ -1,3 +1,5 @@
+import "./global.css";
+
 import { View, Text, Image, FlatList } from "react-native";
 import TypeIcon from "./components/TypeIcon";
 

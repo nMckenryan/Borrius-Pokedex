@@ -4,6 +4,7 @@
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
+    "cleanstart": "expo start -clean",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -14,10 +15,11 @@
     "expo": "~51.0.28",
     "expo-constants": "~16.0.2",
     "expo-status-bar": "~1.12.1",
-    "nativewind": "^2.0.11",
+    "nativewind": "^4.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
+    "react-native-reanimated": "^3.15.1",
     "react-native-web": "~0.19.10",
     "typescript": "~5.3.3"
   },

@@ -4,12 +4,12 @@ import React, { PureComponent, useEffect, useState } from "react";
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import TypeIcon from "./TypeIcon";
 import { getAllPokemon } from "../api/pokemon.api";
-import { ListItem } from "@rneui/themed";
-import { Avatar, Skeleton } from "@rneui/base";
+import { BottomSheet, ListItem } from "@rneui/themed";
+import { Avatar, Card, Skeleton } from "@rneui/base";
 
 export function PokedexView() {
   const [pokemonData, setPokemonData] = useState([]);
-
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,7 +29,7 @@ export function PokedexView() {
   {
     {
       return (
-        <View className="flex-1 w-screen">
+        <View className="flex-1">
           <FlatList
             data={pokemonData}
             renderItem={({ item }) => (
@@ -58,8 +58,10 @@ export function PokedexView() {
                 <ListItem
                   bottomDivider
                   key={item.name}
-                  className="px-2 sm:w-screen md:w-1/4"
-                  onPress={() => {}}
+                  className="w-full"
+                  onPress={() => {
+                    setIsBottomSheetVisible(!isBottomSheetVisible);
+                  }}
                 >
                   <Avatar
                     rounded
@@ -82,6 +84,28 @@ export function PokedexView() {
               </View>
             )}
           />
+          <BottomSheet
+            isVisible={isBottomSheetVisible}
+            onBackdropPress={() => setIsBottomSheetVisible(false)}
+          >
+            <Card containerStyle={{ borderRadius: 10 }}>
+              <Card.Image
+                source={{
+                  uri: "https://via.placeholder.com/100",
+                }}
+                style={{ borderRadius: 10 }}
+              />
+              <Text>
+                Type:{" "}
+                <TypeIcon
+                  typeList={
+                    pokemonData.find((item) => item.name === "bulbasaur")
+                      ?.typeList || []
+                  }
+                />
+              </Text>
+            </Card>
+          </BottomSheet>
         </View>
       );
     }

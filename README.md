@@ -14,14 +14,14 @@
 
 ## TODO:
 
-- [] Set up boilerplate UI
+- [x] Set up boilerplate UI
 - [x] Import Pokemon data from PokeAPI
 
-  - [] Import All Pokemon Data from PokeAPI
+  - [x] Import All Pokemon Data from PokeAPI
   - [] Filter pokemon by generation
 
 - [x] Implement Pokedex list with pokemon icon sprite
-- [] Implement pokemon page (via Bottomsheet? like google maps)
+- [x] Implement pokemon page (via Bottomsheet? like google maps)
 
 - [] Filter Data by Generation via dropdown at top
 - [] Get and display:
@@ -34,5 +34,5 @@
   - [] Table of Moves
 
 - [] Create App Icon
-- [] Cache images?
+- [x] Cache images?
 - [] publish to store

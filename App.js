@@ -1,12 +1,21 @@
 import "./global.css";
-import { SafeAreaView } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import { Header } from "@rneui/themed";
 
 import { PokedexView } from "./components/PokedexView";
 
 export default function App() {
   return (
-    <SafeAreaView>
+    <SafeAreaProvider>
+      <Header
+        leftComponent={{
+          icon: "menu",
+          color: "#ffffff",
+        }}
+        centerComponent={{ text: "CuraDex", style: { color: "#ffffff" } }}
+      />
       <PokedexView />
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }

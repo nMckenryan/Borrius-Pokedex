@@ -16,21 +16,20 @@ export const getPokemonInfo = async (pokemonName) => {
 };
 
 export const getAllPokemon = async () => {
-    const url = "https://pokeapi.co/api/v2/pokemon";
+    const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
     const allPokemon = [];
-
 
     let pkmn = await axios.get(url);
 
     pkmn.data.results.map(async (item) => {
-
-        const pokeName = item.name;
+        let index = 1;
         const sprite = await axios.get(item.url);
 
         const types = sprite.data.types.map((item) => item.type.name);
 
         const pokeObj = {
-            name: pokeName.charAt(0).toUpperCase() + pokeName.slice(1),
+            number: index++,
+            name: item.name,
             sprite: sprite.data.sprites.front_default,
             typeList: types,
         };

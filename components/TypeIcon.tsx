@@ -1,5 +1,6 @@
 import "../global.css";
 import { Text, View } from "react-native";
+import { typeColors } from "../api/pokemon.api";
 
 export default function TypeIcon({
   typeList,

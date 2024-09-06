@@ -26,10 +26,9 @@
 - [] Filter Data by Generation via dropdown at top
 - [] Get and display:
 
-  - [] Pokemon Evolution methods/levels
-  - [] Pokemon Abilities
-  - [] Pokemon Role
-  - [] Pokemon Stat Ratings
+  - [/] Pokemon Evolution methods/levels
+  - [/] Pokemon Base Stats (look for bar graph, )
+  - [/] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
   - [] Pokemon Location
   - [] Table of Moves
 

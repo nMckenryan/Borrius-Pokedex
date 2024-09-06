@@ -3,13 +3,23 @@ import "../global.css";
 import React, { PureComponent, useEffect, useState } from "react";
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import TypeIcon from "./TypeIcon";
-import { getAllPokemon } from "../api/pokemon.api";
+import { getAllPokemon, Pokemon } from "../api/pokemon.api";
 import { BottomSheet, ListItem } from "@rneui/themed";
 import { Avatar, Card, Skeleton } from "@rneui/base";
+import { PokemonEntry } from "./PokemonEntry";
 
 export function PokedexView() {
   const [pokemonData, setPokemonData] = useState([]);
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+
+  const pokemonDa: Pokemon = {
+    number: 0,
+    name: "Unknown",
+    sprite: "../assets/questionMark.png",
+    typeList: ["Unknown"],
+  };
+  const [selectedPokemon, setSelectedPokemon] = useState(pokemonDa);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,6 +36,7 @@ export function PokedexView() {
   if (!pokemonData) {
     return <Text>Loading...</Text>;
   }
+
   {
     {
       return (
@@ -60,7 +71,9 @@ export function PokedexView() {
                   key={item.name}
                   className="w-full"
                   onPress={() => {
-                    setIsBottomSheetVisible(!isBottomSheetVisible);
+                    setSelectedPokemon(item.name);
+                    console.log("not yet" + JSON.stringify(item));
+                    setIsBottomSheetVisible(true);
                   }}
                 >
                   <Avatar
@@ -80,7 +93,6 @@ export function PokedexView() {
                     </ListItem.Subtitle>
                   </ListItem.Content>
                 </ListItem>
-                {/* </TouchableOpacity> */}
               </View>
             )}
           />
@@ -88,23 +100,7 @@ export function PokedexView() {
             isVisible={isBottomSheetVisible}
             onBackdropPress={() => setIsBottomSheetVisible(false)}
           >
-            <Card containerStyle={{ borderRadius: 10 }}>
-              <Card.Image
-                source={{
-                  uri: "https://via.placeholder.com/100",
-                }}
-                style={{ borderRadius: 10 }}
-              />
-              <Text>
-                Type:{" "}
-                <TypeIcon
-                  typeList={
-                    pokemonData.find((item) => item.name === "bulbasaur")
-                      ?.typeList || []
-                  }
-                />
-              </Text>
-            </Card>
+            <PokemonEntry pokemonName={selectedPokemon.name} />
           </BottomSheet>
         </View>
       );

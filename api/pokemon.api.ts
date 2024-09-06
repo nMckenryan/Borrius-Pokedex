@@ -1,17 +1,30 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+
+export type Pokemon = {
+    number: number;
+    name: string;
+    sprite: string;
+    typeList: string[];
+};
 
 
-export const getPokemonInfo = async (pokemonName) => {
+export const getPokemonDetails = async (
+    pokemonId: string
+): Promise<AxiosResponse<Pokemon>> => {
+    const url = `https://pokeapi.co/api/v2/pokemon-form/${pokemonId}`;
+
     try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-        const pokemonData = response.data;
-        return {
-            name: "pokemonData.name",
-            types: pokemonData.types,
-            spriteURL: pokemonData.sprites.front_default,
-        };
+        return await axios.get<Pokemon>(url);
     } catch (error) {
-        console.error(error);
+        console.error(`Error fetching pokemon #${pokemonId}:`, error);
+        return {
+            data: {
+                number: 0,
+                name: "Unknown",
+                sprite: "../assets/question-mark.png",
+                typeList: ["Unknown"],
+            },
+        } as AxiosResponse<Pokemon>;
     }
 };
 
@@ -19,27 +32,29 @@ export const getAllPokemon = async () => {
     const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
     const allPokemon = [];
 
-    let pkmn = await axios.get(url);
+    try {
+        let pkmn = await axios.get(url);
 
-    pkmn.data.results.map(async (item) => {
-        let index = 1;
-        const sprite = await axios.get(item.url);
+        pkmn.data.results.map(async (item) => {
+            const req = await axios.get(item.url);
+            const types = req.data.types.map((item) => item.type.name);
 
-        const types = sprite.data.types.map((item) => item.type.name);
+            const pokeObj: Pokemon = {
+                number: req.data.id || 0,
+                name: item.name || "No Name",
+                sprite: req.data.sprites.front_default || "../assets/question-mark.png",
+                typeList: types || ["Unknown"],
+            };
 
-        const pokeObj = {
-            number: index++,
-            name: item.name,
-            sprite: sprite.data.sprites.front_default,
-            typeList: types,
-        };
+            allPokemon.push(pokeObj);
+        });
 
-        allPokemon.push(pokeObj);
+        return allPokemon;
+    } catch (error) {
+        console.error(`Error fetching all pokemon: `, error);
+        return allPokemon;
+    }
 
-
-    });
-
-    return allPokemon;
 };
 
 

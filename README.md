@@ -15,8 +15,12 @@
 ## TODO:
 
 - [] Set up boilerplate UI
-- [] Import Pokemon data from PokeAPI
-- [] Implement Pokedex list with pokemon icon sprite
+- [x] Import Pokemon data from PokeAPI
+
+  - [] Import All Pokemon Data from PokeAPI
+  - [] Filter pokemon by generation
+
+- [x] Implement Pokedex list with pokemon icon sprite
 - [] Implement pokemon page (via Bottomsheet? like google maps)
 
 - [] Filter Data by Generation via dropdown at top

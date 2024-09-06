@@ -30,7 +30,7 @@ export const getAllPokemon = async () => {
         const types = sprite.data.types.map((item) => item.type.name);
 
         const pokeObj = {
-            name: pokeName,
+            name: pokeName.charAt(0).toUpperCase() + pokeName.slice(1),
             sprite: sprite.data.sprites.front_default,
             typeList: types,
         };
@@ -41,4 +41,26 @@ export const getAllPokemon = async () => {
     });
 
     return allPokemon;
+};
+
+
+export const typeColors = {
+    normal: "bg-normal",
+    fire: "bg-fire",
+    water: "bg-water",
+    electric: "bg-electric",
+    grass: "bg-grass",
+    ice: "bg-ice",
+    fighting: "bg-fighting",
+    poison: "bg-poison",
+    ground: "bg-ground",
+    flying: "bg-flying",
+    psychic: "bg-psychic",
+    bug: "bg-bug",
+    rock: "bg-rock",
+    ghost: "bg-ghost",
+    dragon: "bg-dragon",
+    dark: "bg-dark",
+    steel: "bg-steel",
+    fairy: "bg-fairy",
 };

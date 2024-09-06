@@ -2,7 +2,7 @@
 module.exports = {
   // NOTE: Update this to include the paths to all of your component files.
   content: [
-    "./app/**/*.{js,jsx,ts,tsx}",
+    "./App/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
     "./assets/**/*.{js,jsx,ts,tsx}",
   ],
@@ -29,6 +29,10 @@ module.exports = {
         dragon: "#0097e6",
         dark: "#212121",
         fairy: "#e1bee7",
+        pokeDexRed: "#DE1537",
+        pokeDexBlack: "#fffff",
+        pokeDexWhite: "#F5F5F5",
+        pokeDexBlue: "##27A4F3",
       },
     },
   },

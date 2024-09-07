@@ -5,11 +5,11 @@ export type EvolutionDetails = {
         name: string;
         url: string;
     },
-    stage1: {
+    stage1?: {
         name: string;
         url: string;
     },
-    stage2: {
+    stage2?: {
         name: string;
         url: string;
     }
@@ -71,8 +71,8 @@ export const getPokemonDetails = async (pokemonName: string) => {
 
 
         const base = evoResponse.chain.species.name || null;
-        const stage1 = evoResponse.chain.evolves_to[0].species.name || null;
-        const stage2 = evoResponse.chain.evolves_to[0].evolves_to[0].species.name || null;
+        const stage1 = evoResponse.chain.evolves_to[0]?.species.name || null;
+        const stage2 = evoResponse.chain.evolves_to[0]?.evolves_to[0]?.species.name || null;
 
         const evoDetails: EvolutionDetails = {
             base: {

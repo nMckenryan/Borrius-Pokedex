@@ -24,16 +24,19 @@
 - [x] Implement pokemon page (via Bottomsheet? like google maps)
 
 - [] Filter Data by Generation via dropdown at top
+
 - [] Get and display:
 
   - [x] Pokemon Evolution methods/levels
-    - [] Handle 2 stage evolutions
+    - [x] Handle No Evo
+    - [x] Handle 2 stage evolutions
     - [x] Handle 3 stage evolutions
-    - [] Handle split evolutions
+    - [] Handle split evolutions e.g poliwag
     - [] Handle Eevee
-  - [/] Pokemon Base Stats (look for bar graph, )
+    - [] Handle clicking evolution forms to go to other pokemon
+  - [x] Pokemon Base Stats (look for bar graph, )
   - [x] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
-  - [] Pokemon Catch rate
+  - [x] Pokemon Catch rate
   - [] Pokemon Location
   - [] Table of Moves
 

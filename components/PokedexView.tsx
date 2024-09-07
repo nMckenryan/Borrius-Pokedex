@@ -59,7 +59,7 @@ export function PokedexView() {
                       </ListItem.Content>
                     </View>
                   ))}
-                {/* <TouchableOpacity> */}
+
                 <ListItem
                   bottomDivider
                   key={item.name}

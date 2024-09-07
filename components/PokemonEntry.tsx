@@ -11,6 +11,11 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
     name: "Unknown",
     sprite: "../assets/questionMark.png",
     typeList: ["Unknown"],
+    evolutionDetails: {
+      base: { name: "", url: "" },
+      stage1: { name: "", url: "" },
+      stage2: { name: "", url: "" },
+    },
   });
 
   const gradeStat = (stat: number): string => {
@@ -26,12 +31,14 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const get = (await getPokemonDetails(pokemonName)).data;
+        const get = await getPokemonDetails(pokemonName);
+
         setSelectedPokemon({
           id: get.id,
           name: get.name,
-          sprite: get.sprite.front_default,
+          sprite: get.sprite,
           typeList: get.typeList,
+          evolutionDetails: get.evolutionDetails,
         });
       } catch (error) {
         console.error(error);
@@ -41,20 +48,6 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
     fetchData();
   }, [pokemonName]);
   return (
-    // <Card containerStyle={{ borderRadius: 10 }}>
-    //   <Card.Title className="justify-between">
-    //     <Text>{`#${selectedPokemon.number}`}</Text>
-    //     <Text>{selectedPokemon.name}</Text>
-    //     <TypeIcon typeList={selectedPokemon.typeList} />
-    //   </Card.Title>
-    //   <Avatar
-    //     source={{
-    //       uri: selectedPokemon.sprite,
-    //     }}
-    //   />
-    //   <Text></Text>
-    // </Card>
-
     <Card containerStyle={{ borderRadius: 10 }}>
       <View className="flex-row justify-between items-center">
         <Text>{`#${selectedPokemon.id}`}</Text>
@@ -101,38 +94,70 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
       </View>
       <Card.Divider />
 
-      <View className="flex-col items-center">
-        <Text>Evolutions</Text>
-        <View className="flex-row justify-between items-center">
-          <View className="flex-col">
-            <Avatar
-              size="medium"
-              source={{
-                uri: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png",
-              }}
-            />
-            <Text>Lvl 16</Text>
-          </View>
-          <View className="flex-col items-center justify-center">
-            <Icon name="arrow-right" color="black" />
-          </View>
-          <View className="flex-col items-center justify-center">
-            <Avatar
-              size="medium"
-              source={{
-                uri: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png",
-              }}
-            />
-            <Text>Lvl 36</Text>
-          </View>
-        </View>
+      {(selectedPokemon.evolutionDetails.stage1.name ||
+        selectedPokemon.evolutionDetails.stage2.name) && (
+        <>
+          <View className="flex-col items-center">
+            <Text>Evolutions</Text>
+            <View className="flex-row justify-between items-center">
+              <View className="flex-col">
+                <Avatar
+                  size="medium"
+                  rounded
+                  source={{
+                    uri: selectedPokemon.evolutionDetails.base.url,
+                  }}
+                />
+                <Text>{selectedPokemon.evolutionDetails.base.name}</Text>
+                <Text>Base</Text>
+              </View>
 
-        <Card.Divider />
-        <View className="flex-col items-center">
-          <Text>Locations</Text>
-          <Text>1</Text>
-        </View>
-      </View>
+              {selectedPokemon.evolutionDetails.stage1.name && (
+                <>
+                  <View className="flex-col items-center justify-center">
+                    <Icon name="arrow-right" color="black" />
+                  </View>
+                  <View className="flex-col">
+                    <Avatar
+                      size="medium"
+                      rounded
+                      source={{
+                        uri: selectedPokemon.evolutionDetails.stage1.url,
+                      }}
+                    />
+                    <Text>{selectedPokemon.evolutionDetails.stage1.name}</Text>
+                    <Text>Lvl 16</Text>
+                  </View>
+                </>
+              )}
+              {selectedPokemon.evolutionDetails.stage2.name && (
+                <>
+                  <View className="flex-col items-center justify-center">
+                    <Icon name="arrow-right" color="black" />
+                  </View>
+                  <View className="flex-col items-center justify-center">
+                    <Avatar
+                      size="medium"
+                      rounded
+                      source={{
+                        uri: selectedPokemon.evolutionDetails.stage2.url,
+                      }}
+                    />
+                    <Text>{selectedPokemon.evolutionDetails.stage2.name}</Text>
+                    <Text>Lvl 36</Text>
+                  </View>
+                </>
+              )}
+            </View>
+
+            <Card.Divider />
+            <View className="flex-col items-center">
+              <Text>Locations</Text>
+              <Text>1</Text>
+            </View>
+          </View>
+        </>
+      )}
     </Card>
   );
 }

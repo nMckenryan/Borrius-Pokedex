@@ -26,9 +26,14 @@
 - [] Filter Data by Generation via dropdown at top
 - [] Get and display:
 
-  - [/] Pokemon Evolution methods/levels
+  - [x] Pokemon Evolution methods/levels
+    - [] Handle 2 stage evolutions
+    - [x] Handle 3 stage evolutions
+    - [] Handle split evolutions
+    - [] Handle Eevee
   - [/] Pokemon Base Stats (look for bar graph, )
-  - [/] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
+  - [x] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
+  - [] Pokemon Catch rate
   - [] Pokemon Location
   - [] Table of Moves
 

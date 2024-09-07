@@ -1,8 +1,8 @@
 import TypeIcon from "./TypeIcon";
-import { Avatar, Card, Text, Image } from "@rneui/themed";
+import { Avatar, Card, Image, Skeleton } from "@rneui/themed";
 import { getPokemonDetails, Pokemon } from "../api/pokemon.api";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Icon } from "@rneui/themed";
 
 export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
@@ -16,15 +16,25 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
       stage1: { name: "", url: "" },
       stage2: { name: "", url: "" },
     },
+    stats: {
+      hp: 0,
+      attack: 0,
+      defense: 0,
+      specialAttack: 0,
+      specialDefense: 0,
+      speed: 0,
+      catchRate: 0,
+      growthRate: "-",
+    },
   });
 
   const gradeStat = (stat: number): string => {
-    if (stat < 40) return "F";
-    if (stat < 65) return "D";
-    if (stat < 80) return "C";
-    if (stat < 90) return "B";
-    if (stat < 110) return "A";
-    if (stat < 130) return "S";
+    if (stat < 40) return "text-red-500";
+    if (stat < 65) return "text-orange-500";
+    if (stat < 80) return "text-yellow-500";
+    if (stat < 90) return "text-green-500";
+    if (stat < 110) return "text-blue-500";
+    if (stat < 130) return "text-indigo-500";
     return "-";
   };
 
@@ -39,6 +49,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
           sprite: get.sprite,
           typeList: get.typeList,
           evolutionDetails: get.evolutionDetails,
+          stats: get.stats,
         });
       } catch (error) {
         console.error(error);
@@ -47,48 +58,88 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
 
     fetchData();
   }, [pokemonName]);
+
   return (
     <Card containerStyle={{ borderRadius: 10 }}>
       <View className="flex-row justify-between items-center">
-        <Text>{`#${selectedPokemon.id}`}</Text>
-        <Text>{selectedPokemon.name}</Text>
-        <TypeIcon typeList={selectedPokemon.typeList} />
+        {selectedPokemon.id ||
+        selectedPokemon.name ||
+        selectedPokemon.typeList ? (
+          <>
+            <Text className="text-lg">{`#${selectedPokemon.id}`}</Text>
+            <Text className="text-lg capitalize">{selectedPokemon.name}</Text>
+            <TypeIcon typeList={selectedPokemon.typeList} />
+          </>
+        ) : (
+          <>
+            <Skeleton animation="pulse" width={100} height={20} />
+            <Skeleton animation="pulse" width={100} height={20} />
+            <Skeleton animation="pulse" width={100} height={20} />
+          </>
+        )}
       </View>
 
       <Card.Divider />
 
       <View className="flex-row justify-between items-center">
+        {/* MAIN SPRITE */}
         <Image
-          style={{ width: 50, height: 50, alignSelf: "center" }}
+          style={{
+            width: 100,
+            height: 100,
+            alignSelf: "center",
+          }}
           source={{
             uri: selectedPokemon.sprite,
           }}
+          PlaceholderContent={<Skeleton animation="pulse" />}
+          containerStyle={{
+            borderRadius: 15,
+            backgroundColor: "lightgray",
+          }}
         />
+
         <View className="flex-col">
+          {/* STATS */}
           <View className="flex-row">
             <Text>Base Stat</Text>
-            <Text>45</Text>
-            <Text>{gradeStat(45)}</Text>
           </View>
           <View className="flex-row">
-            <Text>Attack</Text>
-            <Text>49</Text>
+            <Text className={gradeStat(selectedPokemon.stats.hp)}>
+              HP: {selectedPokemon.stats.hp}
+            </Text>
           </View>
           <View className="flex-row">
-            <Text>Defense</Text>
-            <Text>49</Text>
+            <Text className={gradeStat(selectedPokemon.stats.attack)}>
+              Attack: {selectedPokemon.stats.attack}
+            </Text>
           </View>
           <View className="flex-row">
-            <Text>Special Attack</Text>
-            <Text>65</Text>
+            <Text className={gradeStat(selectedPokemon.stats.defense)}>
+              Defense: {selectedPokemon.stats.defense}
+            </Text>
           </View>
           <View className="flex-row">
-            <Text> Special Defense </Text>
-            <Text>65</Text>
+            <Text className={gradeStat(selectedPokemon.stats.specialAttack)}>
+              Sp. Attack: {selectedPokemon.stats.specialAttack}
+            </Text>
           </View>
           <View className="flex-row">
-            <Text> Speed </Text>
-            <Text>45</Text>
+            <Text className={gradeStat(selectedPokemon.stats.specialDefense)}>
+              Sp. Defense: {selectedPokemon.stats.specialDefense}
+            </Text>
+          </View>
+          <View className="flex-row">
+            <Text className={gradeStat(selectedPokemon.stats.speed)}>
+              Speed: {selectedPokemon.stats.speed}
+            </Text>
+          </View>
+          <View className="flex-row">
+            <Text>Catch Rate: {selectedPokemon.stats.catchRate}</Text>
+          </View>
+
+          <View className="flex-row">
+            <Text>Growth Rate: {selectedPokemon.stats.growthRate}</Text>
           </View>
         </View>
       </View>
@@ -97,6 +148,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
       {(selectedPokemon.evolutionDetails.stage1.name ||
         selectedPokemon.evolutionDetails.stage2.name) && (
         <>
+          {/* Evolutions */}
           <View className="flex-col items-center">
             <Text>Evolutions</Text>
             <View className="flex-row justify-between items-center">
@@ -108,7 +160,9 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
                     uri: selectedPokemon.evolutionDetails.base.url,
                   }}
                 />
-                <Text>{selectedPokemon.evolutionDetails.base.name}</Text>
+                <Text className="text-md capitalize">
+                  {selectedPokemon.evolutionDetails.base.name}
+                </Text>
                 <Text>Base</Text>
               </View>
 
@@ -125,7 +179,9 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
                         uri: selectedPokemon.evolutionDetails.stage1.url,
                       }}
                     />
-                    <Text>{selectedPokemon.evolutionDetails.stage1.name}</Text>
+                    <Text className="text-md capitalize">
+                      {selectedPokemon.evolutionDetails.stage1.name}
+                    </Text>
                     <Text>Lvl 16</Text>
                   </View>
                 </>
@@ -143,7 +199,9 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
                         uri: selectedPokemon.evolutionDetails.stage2.url,
                       }}
                     />
-                    <Text>{selectedPokemon.evolutionDetails.stage2.name}</Text>
+                    <Text className="text-md capitalize">
+                      {selectedPokemon.evolutionDetails.stage2.name}
+                    </Text>
                     <Text>Lvl 36</Text>
                   </View>
                 </>

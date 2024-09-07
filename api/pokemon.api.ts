@@ -15,12 +15,24 @@ export type EvolutionDetails = {
     }
 };
 
+export type PokemonStats = {
+    hp: number;
+    attack: number;
+    defense: number;
+    specialAttack: number;
+    specialDefense: number;
+    speed: number;
+    catchRate: number;
+    growthRate: string;
+}
+
 export type Pokemon = {
     id: number;
     name: string;
     sprite: string;
     typeList: string[];
     evolutionDetails: EvolutionDetails;
+    stats: PokemonStats
 };
 
 export type PokedexItem = {
@@ -49,10 +61,7 @@ export const getPokemonDetails = async (pokemonName: string) => {
 
     const spriteURL = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
 
-
-
     try {
-        // const response = await axios.get<Pokemon>(url);
         const response = await axios.get(url);
         const imageResponse = (await axios.get(spriteURL)).data;
 
@@ -60,11 +69,10 @@ export const getPokemonDetails = async (pokemonName: string) => {
         const evolutionURL = response.data.evolution_chain.url;
         const evoResponse = (await axios.get(evolutionURL)).data;
 
-        console.log(evoResponse);
 
-        const base = evoResponse.chain.species.name;
-        const stage1 = evoResponse.chain.evolves_to[0].species.name;
-        const stage2 = evoResponse.chain.evolves_to[0].evolves_to[0].species.name;
+        const base = evoResponse.chain.species.name || null;
+        const stage1 = evoResponse.chain.evolves_to[0].species.name || null;
+        const stage2 = evoResponse.chain.evolves_to[0].evolves_to[0].species.name || null;
 
         const evoDetails: EvolutionDetails = {
             base: {
@@ -81,12 +89,24 @@ export const getPokemonDetails = async (pokemonName: string) => {
             }
         }
 
+        const stats: PokemonStats = {
+            hp: imageResponse.stats[0].base_stat,
+            attack: imageResponse.stats[1].base_stat,
+            defense: imageResponse.stats[2].base_stat,
+            specialAttack: imageResponse.stats[3].base_stat,
+            specialDefense: imageResponse.stats[4].base_stat,
+            speed: imageResponse.stats[5].base_stat,
+            catchRate: response.data.capture_rate,
+            growthRate: response.data.growth_rate.name
+        }
+
         const pokemonObject = {
             id: response.data.id,
             name: response.data.name,
-            sprite: imageResponse.sprites.other.home.front_default,
+            sprite: imageResponse.sprites.other.home.front_default || imageResponse.sprites.front_default || "../assets/question-mark.png",
             typeList: imageResponse.types.map((item) => item.type.name),
             evolutionDetails: evoDetails,
+            stats: stats
         };
 
         return pokemonObject;

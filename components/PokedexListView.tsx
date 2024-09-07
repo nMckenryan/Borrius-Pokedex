@@ -8,7 +8,7 @@ import { BottomSheet, ListItem } from "@rneui/themed";
 import { Avatar, Card, Skeleton } from "@rneui/base";
 import { PokemonEntry } from "./PokemonEntry";
 
-export function PokedexView() {
+export function PokedexListView() {
   const [pokemonData, setPokemonData] = useState([]);
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 

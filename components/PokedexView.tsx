@@ -12,13 +12,7 @@ export function PokedexView() {
   const [pokemonData, setPokemonData] = useState([]);
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
-  const pokemonDa: Pokemon = {
-    number: 0,
-    name: "Unknown",
-    sprite: "../assets/questionMark.png",
-    typeList: ["Unknown"],
-  };
-  const [selectedPokemon, setSelectedPokemon] = useState(pokemonDa);
+  const [selectedPokemon, setSelectedPokemon] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,7 +66,6 @@ export function PokedexView() {
                   className="w-full"
                   onPress={() => {
                     setSelectedPokemon(item.name);
-                    console.log("not yet" + JSON.stringify(item));
                     setIsBottomSheetVisible(true);
                   }}
                 >
@@ -100,7 +93,7 @@ export function PokedexView() {
             isVisible={isBottomSheetVisible}
             onBackdropPress={() => setIsBottomSheetVisible(false)}
           >
-            <PokemonEntry pokemonName={selectedPokemon.name} />
+            <PokemonEntry pokemonName={selectedPokemon} />
           </BottomSheet>
         </View>
       );

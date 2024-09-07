@@ -1,30 +1,22 @@
 import axios, { AxiosResponse } from "axios";
 
 export type Pokemon = {
-    number: number;
+    id: number;
     name: string;
     sprite: string;
     typeList: string[];
 };
 
 
-export const getPokemonDetails = async (
-    pokemonId: string
-): Promise<AxiosResponse<Pokemon>> => {
-    const url = `https://pokeapi.co/api/v2/pokemon-form/${pokemonId}`;
+export const getPokemonDetails = async (pokemonName: string) => {
+
+    const url = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`;
 
     try {
         return await axios.get<Pokemon>(url);
     } catch (error) {
-        console.error(`Error fetching pokemon #${pokemonId}:`, error);
-        return {
-            data: {
-                number: 0,
-                name: "Unknown",
-                sprite: "../assets/question-mark.png",
-                typeList: ["Unknown"],
-            },
-        } as AxiosResponse<Pokemon>;
+        console.error(`Error fetching pokemon #${pokemonName}:`, error);
+        return null;
     }
 };
 
@@ -40,7 +32,7 @@ export const getAllPokemon = async () => {
             const types = req.data.types.map((item) => item.type.name);
 
             const pokeObj: Pokemon = {
-                number: req.data.id || 0,
+                id: req.data.id || 0,
                 name: item.name || "No Name",
                 sprite: req.data.sprites.front_default || "../assets/question-mark.png",
                 typeList: types || ["Unknown"],

@@ -3,15 +3,15 @@ import axios, { AxiosResponse } from "axios";
 export type EvolutionDetails = {
     base: {
         name: string;
-        url: string;
+        spriteUrl: string;
     },
     stage1: {
         name: string;
-        url: string;
+        spriteUrl: string;
     },
     stage2: {
         name: string;
-        url: string;
+        spriteUrl: string;
     }
 };
 
@@ -26,7 +26,7 @@ export type PokemonStats = {
     growthRate: string;
 }
 
-export type Pokemon = {
+export interface Pokemon {
     id: number;
     name: string;
     sprite: string;
@@ -35,7 +35,14 @@ export type Pokemon = {
     stats: PokemonStats
 };
 
-export type PokedexItem = {
+export interface PokemonSpecies {
+    capture_rate: number;
+    growth_rate: {
+        name: string;
+    };
+}
+
+export interface PokedexItem {
     id: number;
     name: string;
     sprite: string;
@@ -53,65 +60,81 @@ export const getPokemonSprite = async (pokemonName: string) => {
     }
 }
 
+export const getPokemonStats = async (pokemonName: string): Promise<PokemonStats> => {
+    const [speciesResponse, pokemonResponse] = await Promise.all([
+        axios.get<PokemonSpecies>(`https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`),
+        axios.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`),
+    ]);
 
-export const getPokemonDetails = async (pokemonName: string) => {
+    const stats: PokemonStats = {
+        hp: pokemonResponse.data.stats[0].base_stat,
+        attack: pokemonResponse.data.stats[1].base_stat,
+        defense: pokemonResponse.data.stats[2].base_stat,
+        specialAttack: pokemonResponse.data.stats[3].base_stat,
+        specialDefense: pokemonResponse.data.stats[4].base_stat,
+        speed: pokemonResponse.data.stats[5].base_stat,
+        catchRate: speciesResponse.data.capture_rate,
+        growthRate: speciesResponse.data.growth_rate.name,
+    };
 
-    const url = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`;
+    return stats;
+}
 
-    const spriteURL = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+export const getEvolutionDetails = async (pokemonName: string) => {
+    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`;
+    const speciesResponse = (await axios.get(speciesUrl)).data;
+
+    const evolutionUrl = speciesResponse.evolution_chain.url;
+    const evolutionResponse = (await axios.get(evolutionUrl)).data;
+
+    const baseName = evolutionResponse.chain.species.name || null;
+    const stage1Name = evolutionResponse.chain.evolves_to[0].species.name || null;
+    const stage2Name = evolutionResponse.chain.evolves_to[0].evolves_to[0].species.name || null;
+
+    const evolutionDetails: EvolutionDetails = {
+        base: {
+            name: baseName,
+            spriteUrl: await getPokemonSprite(baseName),
+        },
+        stage1: {
+            name: stage1Name,
+            spriteUrl: await getPokemonSprite(stage1Name),
+        },
+        stage2: {
+            name: stage2Name,
+            spriteUrl: await getPokemonSprite(stage2Name),
+        },
+    };
+
+    return evolutionDetails;
+}
+
+
+export const getPokemonDetails = async (pokemonName: string): Promise<Pokemon | null> => {
+    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`;
+    const spriteUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
 
     try {
-        const response = await axios.get(url);
-        const imageResponse = (await axios.get(spriteURL)).data;
+        const speciesResponse = (await axios.get(speciesUrl)).data;
+        const pokemonResponse = (await axios.get(spriteUrl)).data;
+
+        const evolutionDetails = await getEvolutionDetails(pokemonName);
+
+        const stats = await getPokemonStats(pokemonName);
 
 
-        const evolutionURL = response.data.evolution_chain.url;
-        const evoResponse = (await axios.get(evolutionURL)).data;
-
-
-        const base = evoResponse.chain.species.name || null;
-        const stage1 = evoResponse.chain.evolves_to[0].species.name || null;
-        const stage2 = evoResponse.chain.evolves_to[0].evolves_to[0].species.name || null;
-
-        const evoDetails: EvolutionDetails = {
-            base: {
-                name: base || null,
-                url: await getPokemonSprite(base) || null
-            },
-            stage1: {
-                name: stage1 || null,
-                url: await getPokemonSprite(stage1) || null
-            },
-            stage2: {
-                name: stage2 || null,
-                url: await getPokemonSprite(stage2) || null
-            }
-        }
-
-        const stats: PokemonStats = {
-            hp: imageResponse.stats[0].base_stat,
-            attack: imageResponse.stats[1].base_stat,
-            defense: imageResponse.stats[2].base_stat,
-            specialAttack: imageResponse.stats[3].base_stat,
-            specialDefense: imageResponse.stats[4].base_stat,
-            speed: imageResponse.stats[5].base_stat,
-            catchRate: response.data.capture_rate,
-            growthRate: response.data.growth_rate.name
-        }
-
-        const pokemonObject = {
-            id: response.data.id,
-            name: response.data.name,
-            sprite: imageResponse.sprites.other.home.front_default || imageResponse.sprites.front_default || "../assets/question-mark.png",
-            typeList: imageResponse.types.map((item) => item.type.name),
-            evolutionDetails: evoDetails,
-            stats: stats
+        const pokemon: Pokemon = {
+            id: speciesResponse.id,
+            name: speciesResponse.name,
+            sprite: pokemonResponse.sprites.other.home.front_default || pokemonResponse.sprites.front_default || "../assets/question-mark.png",
+            typeList: pokemonResponse.types.map((item) => item.type.name),
+            evolutionDetails,
+            stats,
         };
 
-        return pokemonObject;
+        return pokemon;
 
     } catch (error) {
-        console.error(`Error fetching pokemon #${pokemonName}:`, error);
         return null;
     }
 };

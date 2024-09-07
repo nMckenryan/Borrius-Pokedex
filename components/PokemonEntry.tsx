@@ -12,9 +12,9 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
     sprite: "../assets/questionMark.png",
     typeList: ["Unknown"],
     evolutionDetails: {
-      base: { name: "", url: "" },
-      stage1: { name: "", url: "" },
-      stage2: { name: "", url: "" },
+      base: { name: "", spriteUrl: "" },
+      stage1: { name: "", spriteUrl: "" },
+      stage2: { name: "", spriteUrl: "" },
     },
     stats: {
       hp: 0,
@@ -157,7 +157,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
                   size="medium"
                   rounded
                   source={{
-                    uri: selectedPokemon.evolutionDetails.base.url,
+                    uri: selectedPokemon.evolutionDetails.base.spriteUrl,
                   }}
                 />
                 <Text className="text-md capitalize">
@@ -176,7 +176,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
                       size="medium"
                       rounded
                       source={{
-                        uri: selectedPokemon.evolutionDetails.stage1.url,
+                        uri: selectedPokemon.evolutionDetails.stage1.spriteUrl,
                       }}
                     />
                     <Text className="text-md capitalize">
@@ -196,7 +196,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
                       size="medium"
                       rounded
                       source={{
-                        uri: selectedPokemon.evolutionDetails.stage2.url,
+                        uri: selectedPokemon.evolutionDetails.stage2.spriteUrl,
                       }}
                     />
                     <Text className="text-md capitalize">

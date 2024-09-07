@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { getPokemonSprite } from './pokemon.api';
+import { getEvolutionDetails, getPokemonSprite, getPokemonStats, PokemonStats } from './pokemon.api';
 jest.mock('axios');
 
 //GETTING SPRITES
-
 describe('getPokemonSprite', () => {
     it('returns sprite URL for valid Pokémon name', async () => {
         const pokemonName = 'pikachu';

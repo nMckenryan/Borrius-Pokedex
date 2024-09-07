@@ -7,8 +7,8 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
     const gradeColors = [
       "bg-red-500",
       "bg-red-300",
-      "bg-orange-300",
       "bg-orange-400",
+      "bg-orange-500",
       "bg-yellow-400",
       "bg-yellow-500",
       "bg-green-400  text-white",
@@ -23,18 +23,18 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
       "bg-violet-800  text-white",
     ] as const;
     const gradeLetters = [
-      "F",
+      "F ",
       "D-",
       "D",
       "D+",
       "C-",
-      "C",
+      "C ",
       "C+",
       "B-",
       "B",
       "B+",
       "A-",
-      "A",
+      "A ",
       "A+",
       "S-",
       "S",
@@ -44,51 +44,52 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
     const index = Math.min(Math.floor(stat / 10), gradeColors.length - 1);
 
     return (
-      <Text
-        className={`mr-1 text-xs uppercase font-bold ${gradeColors[index]}  px-2 py-1 rounded-full`}
+      <View
+        className={`w-5 h-5 rounded-full flex justify-center items-center ${gradeColors[index]} text-xs uppercase font-bold`}
       >
         {gradeLetters[index]}
-      </Text>
+      </View>
     );
   };
 
   return selectedPokemon ? (
-    <View className="flex-col">
-      <Text className="font-bold">Base Stats</Text>
+    <>
+      <View className="flex-row justify-around items-center">
+        <View className="flex-col mr-1">
+          <Text className="font-bold my-1">HP:</Text>
+          <Text className="font-bold my-1">Attack:</Text>
+          <Text className="font-bold my-1">Defense:</Text>
+          <Text className="font-bold my-1">Sp Attack:</Text>
+          <Text className="font-bold my-1">Sp Defense:</Text>
+          <Text className="font-bold my-1">Speed:</Text>
+        </View>
+        <View className="flex-col mr-1">
+          <Text className="my-1">{selectedPokemon.stats.hp}</Text>
+          <Text className="my-1">{selectedPokemon.stats.attack}</Text>
+          <Text className="my-1">{selectedPokemon.stats.defense}</Text>
+          <Text className="my-1">{selectedPokemon.stats.specialAttack}</Text>
+          <Text className="my-1">{selectedPokemon.stats.specialDefense}</Text>
+          <Text className="my-1">{selectedPokemon.stats.speed}</Text>
+        </View>
 
-      <View className="flex-col">
-        <View className="flex-row justify-between my-1">
-          <Text className="font-bold">HP:</Text>
-          <Text>{selectedPokemon.stats.hp}</Text>
-          <Text>{gradeStat(selectedPokemon.stats.hp)}</Text>
-        </View>
-        <View className="flex-row justify-between my-1">
-          <Text className="font-bold">Attack:</Text>
-          <Text>{selectedPokemon.stats.attack}</Text>
-          <Text>{gradeStat(selectedPokemon.stats.attack)}</Text>
-        </View>
-        <View className="flex-row justify-between my-1">
-          <Text className="font-bold">Defense:</Text>
-          <Text>{selectedPokemon.stats.defense}</Text>
-          <Text>{gradeStat(selectedPokemon.stats.defense)}</Text>
-        </View>
-        <View className="flex-row justify-between my-1">
-          <Text className="font-bold">Sp Attack:</Text>
-          <Text>{selectedPokemon.stats.specialAttack}</Text>
-          <Text>{gradeStat(selectedPokemon.stats.specialAttack)}</Text>
-        </View>
-        <View className="flex-row justify-between my-1">
-          <Text className="font-bold">Sp Defense:</Text>
-          <Text>{selectedPokemon.stats.specialDefense}</Text>
-          <Text>{gradeStat(selectedPokemon.stats.specialDefense)}</Text>
-        </View>
-        <View className="flex-row justify-between my-1">
-          <Text className="font-bold">Speed:</Text>
-          <Text>{selectedPokemon.stats.speed}</Text>
-          <Text>{gradeStat(selectedPokemon.stats.speed)}</Text>
+        <View className="flex-col p-1">
+          <Text className="my-1">{gradeStat(selectedPokemon.stats.hp)}</Text>
+          <Text className="my-1">
+            {gradeStat(selectedPokemon.stats.attack)}
+          </Text>
+          <Text className="my-1">
+            {gradeStat(selectedPokemon.stats.defense)}
+          </Text>
+          <Text className="my-1">
+            {gradeStat(selectedPokemon.stats.specialAttack)}
+          </Text>
+          <Text className="my-1">
+            {gradeStat(selectedPokemon.stats.specialDefense)}
+          </Text>
+          <Text className="my-1">{gradeStat(selectedPokemon.stats.speed)}</Text>
         </View>
       </View>
-    </View>
+    </>
   ) : (
     <Skeleton animation="pulse" width={100} height={100} />
   );

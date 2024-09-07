@@ -29,8 +29,10 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
       <View className="flex-row justify-between items-center">
         {selectedPokemon ? (
           <>
-            <Text className="text-lg">{`#${selectedPokemon.id}`}</Text>
-            <Text className="text-lg capitalize">{selectedPokemon.name}</Text>
+            <Text className="text-lg font-bold">{`#${selectedPokemon.id}`}</Text>
+            <Text className="text-lg  font-bold capitalize">
+              {selectedPokemon.name}
+            </Text>
             <TypeIcon typeList={selectedPokemon.typeList} />
           </>
         ) : (

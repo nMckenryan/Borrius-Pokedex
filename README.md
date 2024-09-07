@@ -8,22 +8,23 @@
 ## Built with:
 
 - React Native
-- Pokemon data via PokeApi (via pokedex-promise-v2)
+- Pokemon data via PokeApi
 - ReactNativeElements
 - NativeWind
 
-## TODO:
+### MVP
 
 - [x] Set up boilerplate UI
 - [x] Import Pokemon data from PokeAPI
 
   - [x] Import All Pokemon Data from PokeAPI
   - [] Filter pokemon by generation
+  - [] Filter Data by Generation via dropdown at top
+  - [] Search for pokemon by name
+  - [] search pokemon by type
 
 - [x] Implement Pokedex list with pokemon icon sprite
 - [x] Implement pokemon page (via Bottomsheet? like google maps)
-
-- [] Filter Data by Generation via dropdown at top
 
 - [] Get and display:
 
@@ -38,8 +39,16 @@
   - [x] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
   - [x] Pokemon Catch rate
   - [] Pokemon Location
-  - [] Table of Moves
 
 - [] Create App Icon
+
+## TODO:
+
+- [] Table of Moves
+- [] Unit test API calls
 - [x] Cache images?
+- [] Handle Popular Romhacks
+- [] Customise FOnts
+- [] Make sure it works on iOS
 - [] publish to store
+- [] Pokesprite items

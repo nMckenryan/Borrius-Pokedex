@@ -45,13 +45,12 @@ export type PokedexItem = {
 export const getPokemonSprite = async (pokemonName: string) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
     try {
-        const response = await (await axios.get(url)).data.sprites.front_default;
-        return response;
+        const { data } = await axios.get(url);
+        return data.sprites.front_default;
     } catch (error) {
         console.error(`Error fetching sprite for pokemon #${pokemonName}:`, error);
         return null;
     }
-
 }
 
 

@@ -7,6 +7,7 @@ import { getAllPokemon, Pokemon } from "../api/pokemon.api";
 import { BottomSheet, ListItem } from "@rneui/themed";
 import { Avatar, Card, Skeleton } from "@rneui/base";
 import { PokemonEntry } from "./PokemonEntry";
+import { getAllBorriusPokemon } from "../api/get-borrius-api";
 
 export function PokedexListView() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -17,7 +18,7 @@ export function PokedexListView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllPokemon();
+        const data = await getAllBorriusPokemon();
         setPokemonData(data);
       } catch (error) {
         console.error(error);

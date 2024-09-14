@@ -52,3 +52,8 @@
 - [] Make sure it works on iOS
 - [] publish to store
 - [] Pokesprite items
+
+## BUGS
+
+- [] Pokemon down the list take a while to load in their individual entries
+- [] Pokemon load in at random order at the start

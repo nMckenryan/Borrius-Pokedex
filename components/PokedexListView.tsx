@@ -1,12 +1,13 @@
 import "../global.css";
 
-import React, { PureComponent, useEffect, useState } from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
-import TypeIcon from "./TypeIcon";
-import { getAllPokemon, Pokemon } from "../api/pokemon.api";
-import { BottomSheet, ListItem } from "@rneui/themed";
-import { Avatar, Card, Skeleton } from "@rneui/base";
-import { PokemonEntry } from "./PokemonEntry";
+import React, { useEffect, useState } from "react";
+import { Text, View, FlatList } from "react-native";
+import { getAllPokemon } from "../api/pokemon.api";
+import { Avatar, BottomSheet, ListItem, Skeleton } from "@rneui/themed";
+import { PokemonEntry } from "./PokemonEntryViews/PokemonEntry";
+import { PokedexListItem } from "./PokedexListItem";
+import TypeIcon from "./UI/TypeIcon";
+import SpriteAvatar from "./UI/SpriteAvatar";
 
 export function PokedexListView() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -26,6 +27,11 @@ export function PokedexListView() {
 
     fetchData();
   }, []);
+
+  function isPokemonSelected(pkmn) {
+    setPokemonData(pkmn);
+    setIsBottomSheetVisible(true);
+  }
 
   if (!pokemonData) {
     return <Text>Loading...</Text>;
@@ -69,14 +75,7 @@ export function PokedexListView() {
                     setIsBottomSheetVisible(true);
                   }}
                 >
-                  <Avatar
-                    rounded
-                    size="small"
-                    source={{
-                      uri: item.sprite || "https://via.placeholder.com/100",
-                    }}
-                    containerStyle={{ backgroundColor: "lightgray" }}
-                  />
+                  <SpriteAvatar size={"small"} spriteUrl={item.sprite} />
                   <ListItem.Content>
                     <ListItem.Title className="capitalize">
                       {item.name}

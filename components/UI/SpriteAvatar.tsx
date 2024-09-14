@@ -1,5 +1,5 @@
 import "../../global.css";
-import { Avatar } from "@rneui/themed";
+import { Avatar, Skeleton } from "@rneui/themed";
 
 export default function SpriteAvatar({
   spriteUrl,
@@ -9,15 +9,21 @@ export default function SpriteAvatar({
   size: number | "small" | "large" | "medium" | "xlarge";
 }) {
   return (
-    <Avatar
-      size={size}
-      rounded
-      source={{
-        uri: spriteUrl || "../../assets/questionMark.png",
-      }}
-      containerStyle={{
-        backgroundColor: "lightgray",
-      }}
-    />
+    <>
+      {!spriteUrl ? (
+        <Skeleton circle width="100%" />
+      ) : (
+        <Avatar
+          size={size}
+          rounded
+          source={{
+            uri: spriteUrl || "../../assets/questionMark.png",
+          }}
+          containerStyle={{
+            backgroundColor: "lightgray",
+          }}
+        />
+      )}
+    </>
   );
 }

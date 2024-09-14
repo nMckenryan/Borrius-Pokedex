@@ -56,7 +56,7 @@ export const getPokemonSprite = async (pokemonName: string) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
     try {
         const { data } = await axios.get(url);
-        return data.sprites.other.showdown.front_default || data.sprites.front_default;
+        return data.sprites.front_default;
     } catch (error) {
         console.error(`Error fetching sprite for pokemon #${pokemonName}:`, error);
         return null;
@@ -152,7 +152,7 @@ export const getPokemonDetails = async (pokemonName: string): Promise<Pokemon | 
         const pokemon: Pokemon = {
             id: speciesResponse.id,
             name: speciesResponse.name,
-            sprite: pokemonResponse.sprites.other?.["official-artwork"]?.front_default || pokemonResponse.sprites.front_default || "../assets/question-mark.png",
+            sprite: pokemonResponse.sprites.other?.["official-artwork"].front_default || pokemonResponse.sprites.front_default || "../assets/question-mark.png",
             typeList: pokemonResponse.types.map((item) => item.type.name),
             evolutionDetails,
             stats,
@@ -186,13 +186,15 @@ export const getAllPokemon = async () => {
             allPokemon.push(pokeObj);
         });
 
-        return allPokemon;
+        return allPokemon.sort((a, b) => a.id - b.id);
     } catch (error) {
         console.error(`Error fetching all pokemon: `, error);
         return allPokemon;
     }
 
 };
+
+
 
 
 export const typeColors = {

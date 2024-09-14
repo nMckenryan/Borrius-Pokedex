@@ -56,4 +56,5 @@
 ## BUGS
 
 - [] Pokemon down the list take a while to load in their individual entries
-- [] Pokemon load in at random order at the start
+- [x] Pokemon load in at random order at the start
+- [] Weirdness re: single/duo evos

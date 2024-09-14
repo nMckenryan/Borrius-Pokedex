@@ -3,7 +3,6 @@ import { Card, Image, Skeleton } from "@rneui/themed";
 import { getPokemonDetails, Pokemon } from "../../api/pokemon.api";
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
-import { Icon } from "@rneui/themed";
 import { StatBlock } from "./StatBlock";
 import { EvolutionBlock } from "./EvolutionBlock";
 import LocationsBlock from "./LocationsBlock";
@@ -42,6 +41,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
             <Skeleton animation="pulse" width={100} height={20} />
             <Skeleton animation="pulse" width={100} height={20} />
             <Skeleton animation="pulse" width={100} height={20} />
+            <Skeleton animation="pulse" width={100} height={20} />
           </>
         )}
       </View>
@@ -51,29 +51,36 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
       <View className="flex-row justify-between items-center">
         {/* MAIN SPRITE */}
         {selectedPokemon ? (
-          <Image
-            style={{
-              width: 100,
-              height: 100,
-              alignSelf: "center",
-            }}
-            source={{
-              uri: selectedPokemon.sprite,
-            }}
-            PlaceholderContent={<Skeleton animation="pulse" />}
-            containerStyle={{
-              borderRadius: 15,
-              backgroundColor: "lightgray",
-            }}
-          />
+          <>
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                alignSelf: "center",
+              }}
+              source={{
+                uri: selectedPokemon.sprite,
+              }}
+              PlaceholderContent={<Skeleton animation="pulse" />}
+              containerStyle={{
+                borderRadius: 15,
+                backgroundColor: "lightgray",
+              }}
+            />
+            <StatBlock selectedPokemon={selectedPokemon} />
+            <EvolutionBlock selectedPokemon={selectedPokemon} />
+            <LocationsBlock selectedPokemon={selectedPokemon} />
+            <MovesBlock selectedPokemon={selectedPokemon} />
+          </>
         ) : (
-          <Skeleton width={100} height={100} />
+          <>
+            <Skeleton width={100} height={100} />
+            <Skeleton width={100} height={100} />
+            <Skeleton width={100} height={100} />
+            <Skeleton width={100} height={100} />
+            <Skeleton width={100} height={100} />
+          </>
         )}
-        {/* STATS */}
-        <StatBlock selectedPokemon={selectedPokemon} />
-        <EvolutionBlock selectedPokemon={selectedPokemon} />
-        <LocationsBlock selectedPokemon={selectedPokemon} />
-        <MovesBlock selectedPokemon={selectedPokemon} />
       </View>
     </Card>
   );

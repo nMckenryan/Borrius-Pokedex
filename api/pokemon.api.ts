@@ -113,10 +113,21 @@ export const getEvolutionDetails = async (pokemonName: string) => {
             break;
     }
 
+    // case 'use-item':
+    //     return s2t.item;
+    //     break;
 
+    // case 'held-item':
+    //     return s2t.held_item;
+    //     break;
 
+    // case 'level-up':
+    //     return "Level";
+    //     break;
 
-
+    // default:
+    //     return s2t
+    //     break;
 
     const evolutionDetails: EvoMethod[] = [
         {

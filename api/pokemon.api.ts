@@ -101,10 +101,26 @@ export const getEvolutionDetails = async (pokemonName: string) => {
 
     stage1Trigger = stage1Trigger == 'level-up' && 'level';
 
-    let stage2Trigger = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name;
+    let s2t = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name;
+    let stage2Trigger = "trigger not implemented";
+    switch (s2t) {
+        case 'use-item':
+            stage2Trigger = evolutionResponse.chain.evolves_to[0].evolves_to[0].evolution_details[0].item.name;
+            break;
 
-    stage2Trigger = stage2Trigger == 'use-item' ?
-        evolutionResponse.chain.evolves_to[0].evolves_to[0].evolution_details[0].item.name : stage1Trigger;
+        case 'level-up':
+            stage2Trigger = "Level";
+            break;
+
+        default:
+            stage2Trigger = s2t
+            break;
+    }
+
+
+
+
+
 
     const evolutionDetails: EvolutionDetails = {
         base: {

@@ -22,6 +22,10 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
       }
     };
 
+    if (selectedPokemon === null) {
+      console.error("selectedPokemon is null" + selectedPokemon);
+    }
+
     fetchData();
   }, [pokemonName]);
 
@@ -38,10 +42,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
           </>
         ) : (
           <>
-            <Skeleton animation="pulse" width={100} height={20} />
-            <Skeleton animation="pulse" width={100} height={20} />
-            <Skeleton animation="pulse" width={100} height={20} />
-            <Skeleton animation="pulse" width={100} height={20} />
+            <Skeleton animation="pulse" width="100%" height={20} />
           </>
         )}
       </View>
@@ -61,7 +62,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
               source={{
                 uri: selectedPokemon.sprite,
               }}
-              PlaceholderContent={<Skeleton animation="pulse" />}
+              PlaceholderContent={<Skeleton circle animation="pulse" />}
               containerStyle={{
                 borderRadius: 15,
                 backgroundColor: "lightgray",
@@ -75,10 +76,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
         ) : (
           <>
             <Skeleton circle width={100} height={100} />
-            <Skeleton width={100} height={100} />
-            <Skeleton width={100} height={100} />
-            <Skeleton width={100} height={100} />
-            <Skeleton width={100} height={100} />
+            <Skeleton width={"90%"} height={100} />
           </>
         )}
       </View>

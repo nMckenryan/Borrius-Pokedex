@@ -10,7 +10,6 @@ export default function MovesBlock({
   return (
     <View className="flex-col items-center">
       <Text>Moves:</Text>
-      <Text>Catch Rate: {selectedPokemon?.stats.catchRate}</Text>
     </View>
   );
 }

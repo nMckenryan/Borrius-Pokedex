@@ -9,6 +9,24 @@ export default function LocationsBlock({
   selectedPokemon: Pokemon;
 }) {
   const [locationData, setLocationData] = useState<LocationInfo[] | null>(null);
+
+  function getCatchRateDifficulty(catchRate: number) {
+    switch (true) {
+      case catchRate <= 255:
+        return "Very Easy";
+      case catchRate <= 200:
+        return "Easy";
+      case catchRate <= 150:
+        return "Medium";
+      case catchRate <= 100:
+        return "Hard";
+      case catchRate <= 50:
+        return "Very Hard";
+      case catchRate <= 5:
+        return "Extremely Hard";
+    }
+  }
+
   useEffect(() => {
     if (selectedPokemon) {
       getPokemonLocations(selectedPokemon.name, 1).then((data) => {
@@ -29,7 +47,10 @@ export default function LocationsBlock({
             </>
           ))}
 
-          <Text>Catch Rate: {selectedPokemon?.stats.catchRate}</Text>
+          <Text>
+            Catch Rate: {selectedPokemon?.stats.catchRate} (
+            {getCatchRateDifficulty(selectedPokemon?.stats.catchRate)})
+          </Text>
         </View>
       )}
     </>

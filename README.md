@@ -38,7 +38,7 @@
   - [x] Pokemon Base Stats (look for bar graph, )
   - [x] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
   - [x] Pokemon Catch rate
-  - [] Pokemon Location
+  - [/] Pokemon Location
 
 - [] Create App Icon
 

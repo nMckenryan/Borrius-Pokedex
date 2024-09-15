@@ -93,8 +93,8 @@ export const getEvolutionDetails = async (pokemonName: string) => {
     const baseName = evolutionResponse.chain.species.name || null;
 
 
-    const stage1Name = evolutionResponse.chain.evolves_to[0].species.name || null;
-    const stage2Name = evolutionResponse.chain.evolves_to[0].evolves_to[0].species.name || null;
+    const stage1Name = evolutionResponse.chain.evolves_to[0]?.species.name || null;
+    const stage2Name = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.species.name || null;
 
 
     let stage1Trigger = evolutionResponse.chain.evolves_to[0]?.evolution_details[0]?.trigger.name;

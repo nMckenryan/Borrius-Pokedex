@@ -1,6 +1,6 @@
-import { Avatar, Card, Icon, Skeleton } from "@rneui/base";
+import { Icon } from "@rneui/base";
 import { View, Text } from "react-native";
-import { EvolutionDetails, evoMethod, Pokemon } from "../../api/pokemon.api";
+import { evoMethod, Pokemon } from "../../api/pokemon.api";
 import SpriteAvatar from "../UI/SpriteAvatar";
 
 function EvolutionStage({ evoStage }: { evoStage: evoMethod }) {
@@ -28,9 +28,12 @@ export function EvolutionBlock({
 }: {
   selectedPokemon: Pokemon;
 }) {
+  let stages = 1;
+  selectedPokemon.evolutionDetails.stage1 && stages++;
+  selectedPokemon.evolutionDetails.stage2 && stages++;
+
   return (
-    selectedPokemon &&
-    selectedPokemon.evolutionDetails.stage1.name && (
+    stages >= 2 && (
       <>
         {/* Evolutions */}
         <View className="flex-col items-center">
@@ -58,7 +61,7 @@ export function EvolutionBlock({
             )}
 
             {/* EVOLUTION 2 */}
-            {selectedPokemon.evolutionDetails.stage2.name && (
+            {stages == 3 && (
               <EvolutionStage
                 evoStage={selectedPokemon.evolutionDetails.stage2}
               />

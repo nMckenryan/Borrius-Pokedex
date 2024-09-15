@@ -74,7 +74,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
           </>
         ) : (
           <>
-            <Skeleton width={100} height={100} />
+            <Skeleton circle width={100} height={100} />
             <Skeleton width={100} height={100} />
             <Skeleton width={100} height={100} />
             <Skeleton width={100} height={100} />

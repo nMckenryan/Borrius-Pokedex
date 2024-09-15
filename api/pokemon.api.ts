@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-export type evoMethod = {
+export type EvoMethod = {
     name: string;
     spriteUrl: string;
     method: {
@@ -8,12 +8,6 @@ export type evoMethod = {
         level?: number;
     }
 }
-
-export interface EvolutionDetails {
-    base: evoMethod;
-    stage1: evoMethod;
-    stage2: evoMethod;
-};
 
 export interface PokemonStats {
     hp: number;
@@ -31,7 +25,7 @@ export interface Pokemon {
     name: string;
     sprite: string;
     typeList: string[];
-    evolutionDetails: EvolutionDetails;
+    evolutionDetails: EvoMethod[];
     stats: PokemonStats
 };
 
@@ -103,6 +97,8 @@ export const getEvolutionDetails = async (pokemonName: string) => {
 
     let s2t = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name;
     let stage2Trigger = "trigger not implemented";
+
+
     switch (s2t) {
         case 'use-item':
             stage2Trigger = evolutionResponse.chain.evolves_to[0].evolves_to[0].evolution_details[0].item.name;
@@ -122,8 +118,8 @@ export const getEvolutionDetails = async (pokemonName: string) => {
 
 
 
-    const evolutionDetails: EvolutionDetails = {
-        base: {
+    const evolutionDetails: EvoMethod[] = [
+        {
             name: baseName,
             spriteUrl: await getPokemonSprite(baseName),
             method: {
@@ -131,7 +127,7 @@ export const getEvolutionDetails = async (pokemonName: string) => {
                 level: null
             }
         },
-        stage1: {
+        {
             name: stage1Name,
             spriteUrl: await getPokemonSprite(stage1Name),
             method: {
@@ -139,7 +135,7 @@ export const getEvolutionDetails = async (pokemonName: string) => {
                 level: evolutionResponse.chain.evolves_to[0]?.evolution_details[0]?.min_level || null,
             }
         },
-        stage2: {
+        {
             name: stage2Name,
             spriteUrl: await getPokemonSprite(stage2Name),
             method: {
@@ -147,7 +143,7 @@ export const getEvolutionDetails = async (pokemonName: string) => {
                 level: evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level || null,
             }
         },
-    };
+    ];
 
     return evolutionDetails;
 }

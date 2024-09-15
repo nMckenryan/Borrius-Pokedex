@@ -8,9 +8,6 @@ function EvolutionStage({ evoStage }: { evoStage: evoMethod }) {
   const methodLevel = evoStage.method.level;
   return (
     <>
-      <View className="flex-col items-center justify-center">
-        <Icon name="arrow-right" color="black" />
-      </View>
       <View className="flex-col  items-center justify-center">
         <SpriteAvatar size={"large"} spriteUrl={evoStage.spriteUrl} />
         <Text className="text-md capitalize">{evoStage.name}</Text>
@@ -28,12 +25,11 @@ export function EvolutionBlock({
 }: {
   selectedPokemon: Pokemon;
 }) {
-  let stages = 1;
-  selectedPokemon.evolutionDetails.stage1 && stages++;
-  selectedPokemon.evolutionDetails.stage2 && stages++;
+  const stageDetails = selectedPokemon.evolutionDetails;
 
   return (
-    stages >= 2 && (
+    stageDetails.base.name &&
+    stageDetails.stage1.name && (
       <>
         {/* Evolutions */}
         <View className="flex-col items-center">
@@ -41,30 +37,28 @@ export function EvolutionBlock({
 
           {/* BASE FORM */}
           <View className="flex-row items-center justify-center">
-            <View className="flex-col  items-center justify-center">
-              <SpriteAvatar
-                size={"large"}
-                spriteUrl={selectedPokemon.evolutionDetails.base.spriteUrl}
-              />
-
-              <Text className="text-md capitalize">
-                {selectedPokemon.evolutionDetails.base.name}
-              </Text>
-              <Text className="text-sm capitalize">Base</Text>
+            <View className="flex-col items-center justify-center">
+              <EvolutionStage evoStage={stageDetails.base} />
             </View>
 
             {/* EVOLUTION 1 */}
-            {selectedPokemon.evolutionDetails.stage1.name && (
-              <EvolutionStage
-                evoStage={selectedPokemon.evolutionDetails.stage1}
-              />
+            {stageDetails.stage1.name && (
+              <>
+                <View className="flex-col items-center justify-center">
+                  <Icon name="arrow-right" color="black" />
+                </View>
+                <EvolutionStage evoStage={stageDetails.stage1} />
+              </>
             )}
 
             {/* EVOLUTION 2 */}
-            {stages == 3 && (
-              <EvolutionStage
-                evoStage={selectedPokemon.evolutionDetails.stage2}
-              />
+            {stageDetails.stage2.name && (
+              <>
+                <View className="flex-col items-center justify-center">
+                  <Icon name="arrow-right" color="black" />
+                </View>
+                <EvolutionStage evoStage={stageDetails.stage2} />
+              </>
             )}
           </View>
         </View>

@@ -10,10 +10,7 @@ export type evoMethod = {
 }
 
 export interface EvolutionDetails {
-    base: {
-        name: string;
-        spriteUrl: string;
-    },
+    base: evoMethod;
     stage1: evoMethod;
     stage2: evoMethod;
 };
@@ -113,6 +110,10 @@ export const getEvolutionDetails = async (pokemonName: string) => {
         base: {
             name: baseName,
             spriteUrl: await getPokemonSprite(baseName),
+            method: {
+                trigger: "Base",
+                level: null
+            }
         },
         stage1: {
             name: stage1Name,

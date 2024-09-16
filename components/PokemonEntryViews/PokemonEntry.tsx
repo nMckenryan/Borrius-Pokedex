@@ -7,32 +7,37 @@ import { StatBlock } from "./StatBlock";
 import { EvolutionBlock } from "./EvolutionBlock";
 import LocationsBlock from "./LocationsBlock";
 import MovesBlock from "./MovesBlock";
+import { useQuery } from "@tanstack/react-query";
 
 export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
-  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const {
+    isPending,
+    error,
+    data: selectedPokemon,
+  } = useQuery({
+    queryKey: ["pokemon"],
+    queryFn: () =>
+      fetch(
+        "https://pokeapi.co/api/v2/pokemon-species/" + pokemonName + "/"
+      ).then((res) => res.json()),
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const get = await getPokemonDetails(pokemonName);
+  const { isPending: spriteIsPending, data: pokemonDetails } = useQuery({
+    queryKey: ["pokemonSprite"],
+    queryFn: () =>
+      fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonName + "/").then(
+        (res) => res.json()
+      ),
+  });
 
-        setSelectedPokemon(get);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  if (isPending) return "Loading...";
 
-    if (selectedPokemon === null) {
-      console.error("selectedPokemon is null" + selectedPokemon);
-    }
-
-    fetchData();
-  }, [pokemonName]);
+  if (error) return "An error has occurred: " + error.message;
 
   return (
     <Card containerStyle={{ borderRadius: 10 }}>
       <View className="flex-row justify-between items-center">
-        {selectedPokemon ? (
+        {isPending || selectedPokemon ? (
           <>
             <Text className="text-lg font-bold">{`#${selectedPokemon.id}`}</Text>
             <Text className="text-lg  font-bold capitalize">
@@ -51,26 +56,30 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
 
       <View className="flex-row justify-between items-center">
         {/* MAIN SPRITE */}
-        {selectedPokemon ? (
+        {isPending || selectedPokemon ? (
           <>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                alignSelf: "center",
-              }}
-              source={{
-                uri: selectedPokemon.sprite,
-              }}
-              PlaceholderContent={<Skeleton circle animation="pulse" />}
-              containerStyle={{
-                borderRadius: 15,
-                backgroundColor: "lightgray",
-              }}
-            />
-            <StatBlock selectedPokemon={selectedPokemon} />
-            <EvolutionBlock selectedPokemon={selectedPokemon} />
-            <LocationsBlock selectedPokemon={selectedPokemon} />
+            {spriteIsPending ? (
+              <Skeleton circle width={100} height={100} />
+            ) : (
+              <Image
+                style={{
+                  width: 100,
+                  height: 100,
+                  alignSelf: "center",
+                }}
+                source={{
+                  uri: pokemonDetails.sprites.front_default,
+                }}
+                PlaceholderContent={<Skeleton circle animation="pulse" />}
+                containerStyle={{
+                  borderRadius: 15,
+                  backgroundColor: "lightgray",
+                }}
+              />
+            )}
+            <StatBlock selectedPokemon={pokemonDetails} />
+            {/* <EvolutionBlock selectedPokemon={selectedPokemon} /> */}
+            <LocationsBlock selectedPokemon={pokemonDetails} />
             <MovesBlock selectedPokemon={selectedPokemon} />
           </>
         ) : (

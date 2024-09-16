@@ -1,13 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 
-export type EvoMethod = {
-    name: string;
-    spriteUrl: string;
-    method: {
-        trigger: string;
-        level?: number;
-    }
-}
 
 export interface PokemonStats {
     hp: number;
@@ -74,89 +66,22 @@ export const getPokemonStats = async (pokemonName: string): Promise<PokemonStats
     return stats;
 }
 
-export const getEvolutionDetails = async (pokemonName: string) => {
-    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`;
-    const speciesResponse = (await axios.get(speciesUrl)).data;
+export const getEvolutionDetails = async (pokemonId: number) => {
+    try {
 
-    const evolutionUrl = speciesResponse.evolution_chain.url;
-    const evolutionResponse = (await axios.get(evolutionUrl)).data;
+        // First, fetch the pokemon species data to get the evolution chain URL
+        const speciesResponse = await axios.get(
+            `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}/`
+        );
+        const evolutionChainUrl = speciesResponse.data.evolution_chain.url;
 
-    const baseName = evolutionResponse.chain.species.name || null;
+        // Then, fetch the evolution chain data
+        const evolutionResponse = await axios.get(evolutionChainUrl);
+        return evolutionResponse.data;
 
-
-    const stage1Name = evolutionResponse.chain.evolves_to[0]?.species.name || null;
-    const stage2Name = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.species.name || null;
-
-
-    let stage1Trigger = evolutionResponse.chain.evolves_to[0]?.evolution_details[0]?.trigger.name;
-
-    stage1Trigger = stage1Trigger == 'use-item' ?
-        evolutionResponse.chain.evolves_to[0]?.evolution_details[0].item.name : stage1Trigger;
-
-    stage1Trigger = stage1Trigger == 'level-up' && 'level';
-
-    let s2t = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name;
-    let stage2Trigger = "trigger not implemented";
-
-
-    switch (s2t) {
-        case 'use-item':
-            stage2Trigger = evolutionResponse.chain.evolves_to[0].evolves_to[0].evolution_details[0].item.name;
-            break;
-
-        case 'level-up':
-            stage2Trigger = "Level";
-            break;
-
-        default:
-            stage2Trigger = s2t
-            break;
+    } catch (err) {
+        console.error("Error fetching evolution data", err);
     }
-
-    // case 'use-item':
-    //     return s2t.item;
-    //     break;
-
-    // case 'held-item':
-    //     return s2t.held_item;
-    //     break;
-
-    // case 'level-up':
-    //     return "Level";
-    //     break;
-
-    // default:
-    //     return s2t
-    //     break;
-
-    const evolutionDetails: EvoMethod[] = [
-        {
-            name: baseName,
-            spriteUrl: await getPokemonSprite(baseName),
-            method: {
-                trigger: "Base",
-                level: null
-            }
-        },
-        {
-            name: stage1Name,
-            spriteUrl: await getPokemonSprite(stage1Name),
-            method: {
-                trigger: stage1Trigger || null,
-                level: evolutionResponse.chain.evolves_to[0]?.evolution_details[0]?.min_level || null,
-            }
-        },
-        {
-            name: stage2Name,
-            spriteUrl: await getPokemonSprite(stage2Name),
-            method: {
-                trigger: stage2Trigger || null,
-                level: evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level || null,
-            }
-        },
-    ];
-
-    return evolutionDetails;
 }
 
 

@@ -69,8 +69,8 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
               }}
             />
             <StatBlock selectedPokemon={selectedPokemon} />
-            <EvolutionBlock selectedPokemon={selectedPokemon} />
-            <LocationsBlock selectedPokemon={selectedPokemon} />
+            <EvolutionBlock pokemonId={selectedPokemon.id} />
+            {/* <LocationsBlock selectedPokemon={selectedPokemon} /> */}
             <MovesBlock selectedPokemon={selectedPokemon} />
           </>
         ) : (

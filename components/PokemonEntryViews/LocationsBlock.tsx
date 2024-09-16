@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
-import React, { useEffect, useState, version } from "react";
+import React, { useEffect, useState } from "react";
 import { Pokemon } from "../../api/pokemon.api";
 import getPokemonLocations, { LocationInfo } from "../../api/location.api";
 
 export default function LocationsBlock({
   selectedPokemon,
 }: {
-  selectedPokemon: Pokemon;
+  selectedPokemon: Pokemon | null;
 }) {
   const [locationData, setLocationData] = useState<LocationInfo[] | null>(null);
 
@@ -44,6 +44,20 @@ export default function LocationsBlock({
           {locationData.map((location) => (
             <>
               <Text>{location.locationName}</Text>
+              {location.versionDetails.map((i) =>
+                i.encounterDetails.map((j) => (
+                  <>
+                    <Text>
+                      Chance: {j.chance} - {i.maxChance}
+                    </Text>
+                    <Text>
+                      Level: {j.minLevel} - {j.maxLevel}
+                    </Text>
+                    <Text> Method: {j.method}</Text>
+                    <Text> Conditions: {j.conditions.join(", ")}</Text>
+                  </>
+                ))
+              )}
             </>
           ))}
 

@@ -1,12 +1,12 @@
 import "../global.css";
 
-import React, { PureComponent, useEffect, useState } from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
-import TypeIcon from "./TypeIcon";
-import { getAllPokemon, Pokemon } from "../api/pokemon.api";
-import { BottomSheet, ListItem } from "@rneui/themed";
-import { Avatar, Card, Skeleton } from "@rneui/base";
-import { PokemonEntry } from "./PokemonEntry";
+import React, { useEffect, useState } from "react";
+import { Text, View, FlatList } from "react-native";
+import { getAllPokemon } from "../api/pokemon.api";
+import { BottomSheet, ListItem, Skeleton } from "@rneui/themed";
+import { PokemonEntry } from "./PokemonEntryViews/PokemonEntry";
+import TypeIcon from "./UI/TypeIcon";
+import SpriteAvatar from "./UI/SpriteAvatar";
 
 export function PokedexListView() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -27,21 +27,18 @@ export function PokedexListView() {
     fetchData();
   }, []);
 
-  if (!pokemonData) {
-    return <Text>Loading...</Text>;
-  }
-
   {
     {
       return (
         <View className="flex-1">
           <FlatList
-            data={pokemonData}
+            data={pokemonData.sort((a, b) => a.id - b.id)}
+            initialNumToRender={15}
             renderItem={({ item }) => (
               <View className="flex-row items-center">
                 {!item.name ||
                   !item.sprite ||
-                  (!item.typeList && (
+                  (!item.typeList ? (
                     <View className="flex-row items-center">
                       <Skeleton
                         circle
@@ -58,34 +55,27 @@ export function PokedexListView() {
                         </ListItem.Subtitle>
                       </ListItem.Content>
                     </View>
+                  ) : (
+                    <ListItem
+                      bottomDivider
+                      key={item.name}
+                      className="w-full"
+                      onPress={() => {
+                        setSelectedPokemon(item.name);
+                        setIsBottomSheetVisible(true);
+                      }}
+                    >
+                      <SpriteAvatar size={"small"} spriteUrl={item.sprite} />
+                      <ListItem.Content>
+                        <ListItem.Title className="capitalize">
+                          {item.name}
+                        </ListItem.Title>
+                        <ListItem.Subtitle>
+                          <TypeIcon typeList={item.typeList} />
+                        </ListItem.Subtitle>
+                      </ListItem.Content>
+                    </ListItem>
                   ))}
-
-                <ListItem
-                  bottomDivider
-                  key={item.name}
-                  className="w-full"
-                  onPress={() => {
-                    setSelectedPokemon(item.name);
-                    setIsBottomSheetVisible(true);
-                  }}
-                >
-                  <Avatar
-                    rounded
-                    size="small"
-                    source={{
-                      uri: item.sprite || "https://via.placeholder.com/100",
-                    }}
-                    containerStyle={{ backgroundColor: "lightgray" }}
-                  />
-                  <ListItem.Content>
-                    <ListItem.Title className="capitalize">
-                      {item.name}
-                    </ListItem.Title>
-                    <ListItem.Subtitle>
-                      <TypeIcon typeList={item.typeList} />
-                    </ListItem.Subtitle>
-                  </ListItem.Content>
-                </ListItem>
               </View>
             )}
           />

@@ -51,11 +51,15 @@ export function PokemonEntry({
                 backgroundColor: "lightgray",
               }}
             />
-            <StatBlock selectedPokemon={selectedPokemon} />
+            {selectedPokemon.stats ? (
+              <StatBlock selectedPokemon={selectedPokemon} />
+            ) : (
+              <Skeleton animation="pulse" width="87.5%" height={100} />
+            )}
 
-            {/* {selectedPokemon.evolutions.length > 1 && (
+            {selectedPokemon.evolutions && (
               <EvolutionBlock selectedPokemon={selectedPokemon} />
-            )} */}
+            )}
             {/*<LocationsBlock selectedPokemon={selectedPokemon} />
              <MovesBlock selectedPokemon={selectedPokemon} /> */}
           </>

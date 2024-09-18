@@ -11,20 +11,12 @@ export default function LocationsBlock({
   const [locationData, setLocationData] = useState<LocationInfo[] | null>(null);
 
   function getCatchRateDifficulty(catchRate: number) {
-    switch (true) {
-      case catchRate <= 255:
-        return "Very Easy";
-      case catchRate <= 200:
-        return "Easy";
-      case catchRate <= 150:
-        return "Medium";
-      case catchRate <= 100:
-        return "Hard";
-      case catchRate <= 50:
-        return "Very Hard";
-      case catchRate <= 5:
-        return "Extremely Hard";
-    }
+    if (catchRate <= 5) return "Extremely Hard";
+    if (catchRate <= 50) return "Very Hard";
+    if (catchRate <= 100) return "Hard";
+    if (catchRate <= 150) return "Medium";
+    if (catchRate <= 200) return "Easy";
+    return "Very Easy";
   }
 
   useEffect(() => {
@@ -41,9 +33,9 @@ export default function LocationsBlock({
         <View className="flex-col items-center">
           <Text>Locations</Text>
 
-          {locationData.map((location) => (
+          {locationData.map((location, index) => (
             <>
-              <Text>{location.locationName}</Text>
+              <Text key={index}>{location.locationName}</Text>
             </>
           ))}
 

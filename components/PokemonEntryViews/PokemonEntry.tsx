@@ -22,10 +22,6 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
       }
     };
 
-    if (selectedPokemon === null) {
-      console.error("selectedPokemon is null" + selectedPokemon);
-    }
-
     fetchData();
   }, [pokemonName]);
 
@@ -69,14 +65,21 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
               }}
             />
             <StatBlock selectedPokemon={selectedPokemon} />
-            <EvolutionBlock selectedPokemon={selectedPokemon} />
+
+            {selectedPokemon.evolutionDetails.length > 1 && (
+              <EvolutionBlock selectedPokemon={selectedPokemon} />
+            )}
             <LocationsBlock selectedPokemon={selectedPokemon} />
-            <MovesBlock selectedPokemon={selectedPokemon} />
+            {/* <MovesBlock selectedPokemon={selectedPokemon} /> */}
           </>
         ) : (
           <>
             <Skeleton circle width={100} height={100} />
-            <Skeleton width={"90%"} height={100} />
+            <Skeleton
+              width={"87.5%"}
+              height={100}
+              style={{ marginHorizontal: 10 }}
+            />
           </>
         )}
       </View>

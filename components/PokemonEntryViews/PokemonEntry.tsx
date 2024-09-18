@@ -53,10 +53,10 @@ export function PokemonEntry({
             />
             <StatBlock selectedPokemon={selectedPokemon} />
 
-            {/*{selectedPokemon.evolutionDetails.length > 1 && (
+            {/* {selectedPokemon.evolutions.length > 1 && (
               <EvolutionBlock selectedPokemon={selectedPokemon} />
-            )}
-             <LocationsBlock selectedPokemon={selectedPokemon} />
+            )} */}
+            {/*<LocationsBlock selectedPokemon={selectedPokemon} />
              <MovesBlock selectedPokemon={selectedPokemon} /> */}
           </>
         ) : (

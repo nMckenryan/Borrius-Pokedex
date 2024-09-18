@@ -19,6 +19,28 @@ export type Move = {
     level_learned: number | null
 }
 
+export type Evolutions = {
+    gender: null,
+    held_item: null,
+    item: null,
+    known_move: null,
+    known_move_type: null,
+    location: null,
+    min_level: number | null,
+    min_happiness: null,
+    min_affection: null,
+    needs_overworld_rain: null,
+    party_species: null,
+    party_type: null,
+    relative_physical_stats: null,
+    time_of_day: null,
+    trade_species: null,
+    trigger: {
+        name: string,
+    },
+    turn_upside_down: null
+}
+
 export type Pokemon = {
     id: number,
     nationalId: number,
@@ -32,6 +54,7 @@ export type Pokemon = {
     },
     typeList: string[],
     stats: Stats,
+    evolutions: Evolutions[],
     abilities: string[]
 }
 
@@ -57,11 +80,12 @@ export const getAllBorriusPokemon = async () => {
                     defense: pokemon.stats.defense.base_stat,
                     specialAttack: pokemon.stats.specialAttack.base_stat,
                     specialDefense: pokemon.stats.specialDefense.base_stat,
-                    speed: pokemon.stats.speed
+                    speed: pokemon.stats.speed.base_stat
                 },
+                evolutions: pokemon.evolution_chain,
 
                 height: pokemon.height,
-                weight: 0,
+                weight: pokemon.weight,
                 capture_rate: pokemon.capture_rate,
             };
             allPokemon.push(pokeObj);

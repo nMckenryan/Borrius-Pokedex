@@ -1,6 +1,6 @@
 import { Skeleton } from "@rneui/base";
 import { View, Text } from "react-native";
-import { Pokemon } from "../api/pokemon.api";
+import { Pokemon } from "../../api/pokemon.api";
 
 export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
   const gradeStat = (stat: number) => {
@@ -22,6 +22,7 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
       "bg-violet-700  text-white",
       "bg-violet-800  text-white",
     ] as const;
+
     const gradeLetters = [
       "F ",
       "D-",
@@ -45,9 +46,11 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
 
     return (
       <View
-        className={`w-5 h-5 rounded-full flex justify-center items-center ${gradeColors[index]} text-xs uppercase font-bold`}
+        className={`w-5 h-5 rounded-full flex justify-center items-center ${gradeColors[index]} my-1`}
       >
-        {gradeLetters[index]}
+        <Text className="text-xs uppercase font-bold">
+          {gradeLetters[index]}
+        </Text>
       </View>
     );
   };
@@ -72,21 +75,17 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
           <Text className="my-1">{selectedPokemon.stats.speed}</Text>
         </View>
 
-        <View className="flex-col p-1">
-          <Text className="my-1">{gradeStat(selectedPokemon.stats.hp)}</Text>
-          <Text className="my-1">
-            {gradeStat(selectedPokemon.stats.attack)}
-          </Text>
-          <Text className="my-1">
-            {gradeStat(selectedPokemon.stats.defense)}
-          </Text>
-          <Text className="my-1">
-            {gradeStat(selectedPokemon.stats.specialAttack)}
-          </Text>
-          <Text className="my-1">
-            {gradeStat(selectedPokemon.stats.specialDefense)}
-          </Text>
-          <Text className="my-1">{gradeStat(selectedPokemon.stats.speed)}</Text>
+        <View className="flex-col my-1">
+          {gradeStat(selectedPokemon.stats.hp)}
+
+          {gradeStat(selectedPokemon.stats.attack)}
+
+          {gradeStat(selectedPokemon.stats.defense)}
+
+          {gradeStat(selectedPokemon.stats.specialAttack)}
+
+          {gradeStat(selectedPokemon.stats.specialDefense)}
+          {gradeStat(selectedPokemon.stats.speed)}
         </View>
       </View>
     </>

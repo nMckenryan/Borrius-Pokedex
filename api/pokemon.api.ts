@@ -30,15 +30,6 @@ export type evoMethod = {
     }
 }
 
-export interface EvolutionDetails {
-    base: {
-        name: string;
-        spriteUrl: string;
-    },
-    stage1: evoMethod;
-    stage2: evoMethod;
-};
-
 export interface PokemonStats {
     hp: number;
     attack: number;
@@ -55,7 +46,7 @@ export interface Pokemon {
     name: string;
     sprite: string;
     typeList: string[];
-    evolutionDetails: EvolutionDetails;
+    evolutionDetails: EvoMethod[];
     stats: PokemonStats
 };
 
@@ -114,8 +105,8 @@ export const getEvolutionDetails = async (pokemonName: string) => {
     const baseName = evolutionResponse.chain.species.name || null;
 
 
-    const stage1Name = evolutionResponse.chain.evolves_to[0].species.name || null;
-    const stage2Name = evolutionResponse.chain.evolves_to[0].evolves_to[0].species.name || null;
+    const stage1Name = evolutionResponse.chain.evolves_to[0]?.species.name || null;
+    const stage2Name = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.species.name || null;
 
 
     let stage1Trigger = evolutionResponse.chain.evolves_to[0]?.evolution_details[0]?.trigger.name;
@@ -125,17 +116,50 @@ export const getEvolutionDetails = async (pokemonName: string) => {
 
     stage1Trigger = stage1Trigger == 'level-up' && 'level';
 
-    let stage2Trigger = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name;
+    let s2t = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name;
+    let stage2Trigger = "trigger not implemented";
 
-    stage2Trigger = stage2Trigger == 'use-item' ?
-        evolutionResponse.chain.evolves_to[0].evolves_to[0].evolution_details[0].item.name : stage1Trigger;
 
-    const evolutionDetails: EvolutionDetails = {
-        base: {
+    switch (s2t) {
+        case 'use-item':
+            stage2Trigger = evolutionResponse.chain.evolves_to[0].evolves_to[0].evolution_details[0].item.name;
+            break;
+
+        case 'level-up':
+            stage2Trigger = "Level";
+            break;
+
+        default:
+            stage2Trigger = s2t
+            break;
+    }
+
+    // case 'use-item':
+    //     return s2t.item;
+    //     break;
+
+    // case 'held-item':
+    //     return s2t.held_item;
+    //     break;
+
+    // case 'level-up':
+    //     return "Level";
+    //     break;
+
+    // default:
+    //     return s2t
+    //     break;
+
+    const evolutionDetails: EvoMethod[] = [
+        {
             name: baseName,
             spriteUrl: await getPokemonSprite(baseName),
+            method: {
+                trigger: "Base",
+                level: null
+            }
         },
-        stage1: {
+        {
             name: stage1Name,
             spriteUrl: await getPokemonSprite(stage1Name),
             method: {
@@ -143,7 +167,7 @@ export const getEvolutionDetails = async (pokemonName: string) => {
                 level: evolutionResponse.chain.evolves_to[0]?.evolution_details[0]?.min_level || null,
             }
         },
-        stage2: {
+        {
             name: stage2Name,
             spriteUrl: await getPokemonSprite(stage2Name),
             method: {
@@ -151,7 +175,7 @@ export const getEvolutionDetails = async (pokemonName: string) => {
                 level: evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level || null,
             }
         },
-    };
+    ];
 
     return evolutionDetails;
 }
@@ -173,7 +197,7 @@ export const getPokemonDetails = async (pokemonName: string): Promise<Pokemon | 
         const pokemon: Pokemon = {
             id: speciesResponse.id,
             name: speciesResponse.name,
-            sprite: pokemonResponse.sprites.other.home.front_default || pokemonResponse.sprites.front_default || "../assets/question-mark.png",
+            sprite: pokemonResponse.sprites.other?.["official-artwork"].front_default || pokemonResponse.sprites.front_default || "../assets/question-mark.png",
             typeList: pokemonResponse.types.map((item) => item.type.name),
             evolutionDetails,
             stats,
@@ -207,7 +231,7 @@ export const getAllPokemon = async () => {
             allPokemon.push(pokeObj);
         });
 
-        return allPokemon;
+        return allPokemon.sort((a, b) => a.id - b.id);
     } catch (error) {
         console.error(`Error fetching all pokemon: `, error);
         return allPokemon;

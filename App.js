@@ -9,10 +9,6 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <Header
-        leftComponent={{
-          icon: "menu",
-          color: "#ffffff",
-        }}
         centerComponent={{ text: "CuraDex", style: { color: "#ffffff" } }}
       />
       <PokedexListView />

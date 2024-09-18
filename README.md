@@ -35,10 +35,31 @@
     - [] Handle split evolutions e.g poliwag
     - [] Handle Eevee
     - [] Handle clicking evolution forms to go to other pokemon
+
+- EVO TRIGGERS
+
+  - [] gender (vespiqueen)
+  - [x] held_item
+  - [x] item
+  - [] known_move (primeape)
+  - [] known_move_type
+  - [] location
+  - [] min_affection (togepi?)
+  - [] min_beauty (milotic)
+  - [] min_happiness (togepi)
+  - [x] min_level
+  - [] needs_overworld_rain
+  - [] party_species
+  - [] party_type
+  - [] relative_physical_stats (tyrogue)
+  - [] time_of_day (rockruff)
+  - [] turn_upside_down (that squid thing)
+  - [] Trade species (escavalier)
+
   - [x] Pokemon Base Stats (look for bar graph, )
   - [x] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
   - [x] Pokemon Catch rate
-  - [] Pokemon Location
+  - [/] Pokemon Location
 
 - [] Create App Icon
 
@@ -52,3 +73,9 @@
 - [] Make sure it works on iOS
 - [] publish to store
 - [] Pokesprite items
+
+## BUGS
+
+- [] Pokemon down the list take a while to load in their individual entries
+- [x] Pokemon load in at random order at the start
+- [] Weirdness re: single/duo evos

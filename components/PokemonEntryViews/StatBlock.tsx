@@ -1,6 +1,6 @@
 import { Skeleton } from "@rneui/base";
 import { View, Text } from "react-native";
-import { Pokemon } from "../../api/pokemon.api";
+import { Pokemon } from "../../api/get-borrius-api";
 
 export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
   const gradeStat = (stat: number) => {
@@ -55,7 +55,7 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
     );
   };
 
-  return selectedPokemon ? (
+  return selectedPokemon.stats ? (
     <>
       <View className="flex-row justify-around items-center">
         <View className="flex-col mr-1">
@@ -77,13 +77,9 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
 
         <View className="flex-col my-1">
           {gradeStat(selectedPokemon.stats.hp)}
-
           {gradeStat(selectedPokemon.stats.attack)}
-
           {gradeStat(selectedPokemon.stats.defense)}
-
           {gradeStat(selectedPokemon.stats.specialAttack)}
-
           {gradeStat(selectedPokemon.stats.specialDefense)}
           {gradeStat(selectedPokemon.stats.speed)}
         </View>

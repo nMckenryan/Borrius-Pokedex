@@ -1,53 +1,79 @@
-import axios from "axios";
-import { PokemonStats, PokemonSpecies, Pokemon, PokedexItem } from "./pokemon.api";
 import pokedexData from "./borrius_pokedex_data.json";
-// export const getBorriusPokemonStats = async (pokemonId: number): Promise<PokemonStats> => {
-//     const [pokemonResponse] = await Promise.all([
-//         axios.get<Pokemon>(`https://borrius-pokemon-scraper-321133146790.australia-southeast1.run.app/borrius_pokemon/${pokemonId}`),
-//     ]);
 
-//     const stats: PokemonStats = {
-//         hp: pokemonResponse.data.stats[0].base_stat,
-//         attack: pokemonResponse.data.stats[1].base_stat,
-//         defense: pokemonResponse.data.stats[2].base_stat,
-//         specialAttack: pokemonResponse.data.stats[3].base_stat,
-//         specialDefense: pokemonResponse.data.stats[4].base_stat,
-//         speed: pokemonResponse.data.stats[5].base_stat,
-//         // catchRate: pokemonResponse.data.capture_rate,
-//         // growthRate: pokemonResponse.data.growth_rate.name,
-//     };
+export type Stats = {
+    hp: number,
+    attack: number,
+    defense: number,
+    specialAttack: number,
+    specialDefense: number,
+    speed: number
+}
 
-//     return stats;
-// }
+export type Move = {
+    name: string
+    type: string
+    damage_class: string
+    power: number | null
+    accuracy: number | null
+    learn_method: string
+    level_learned: number | null
+}
 
+export type Pokemon = {
+    id: number,
+    nationalId: number,
+    name: string,
+    height: number,
+    weight: number,
+    capture_rate: number,
+    sprites: {
+        official: string | null,
+        game_sprite: string | null
+    },
+    typeList: string[],
+    stats: Stats,
+    abilities: string[]
+}
 
 export const getAllBorriusPokemon = async () => {
-
-
-
-    const allPokemon = [];
-
-    const pd = pokedexData[0].pokemon;
-
+    const allPokemon: Pokemon[] = [];
     const pokemonSection = pokedexData[0].pokemon;
 
-    const numberMap = pokemonSection.map((pokemon) => pokemon);
-
     try {
-        numberMap.map(async (pokemon) => {
-            const pokeObj: PokedexItem = {
+        for (const pokemon of pokemonSection) {
+            const pokeObj: Pokemon = {
                 id: pokemon.game_indices[0].game_index,
+                nationalId: pokemon.game_indices[1].game_index,
                 name: pokemon.name,
-                sprite: pokemon.sprites.front_default,
-                typeList: pokemon.types
+                abilities: pokemon.abilities.map((ability) => ability.ability.name),
+                typeList: pokemon.types,
+                sprites: {
+                    official: pokemon.sprites.other?.home.front_default,
+                    game_sprite: pokemon.sprites.front_default
+                },
+                stats: {
+                    hp: pokemon.stats.hp.base_stat,
+                    attack: pokemon.stats.attack.base_stat,
+                    defense: pokemon.stats.defense.base_stat,
+                    specialAttack: pokemon.stats.specialAttack.base_stat,
+                    specialDefense: pokemon.stats.specialDefense.base_stat,
+                    speed: pokemon.stats.speed
+                },
+
+                height: pokemon.height,
+                weight: 0,
+                capture_rate: pokemon.capture_rate,
             };
             allPokemon.push(pokeObj);
+        }
 
-        });
         return allPokemon;
     } catch (error) {
-        console.error(`Error fetching all pokemon: `, error);
+        console.error(`Error fetching all Borrius pokemon: `, error);
         return allPokemon;
     }
 
 };
+
+
+

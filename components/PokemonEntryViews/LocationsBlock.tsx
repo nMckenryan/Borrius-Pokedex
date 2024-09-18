@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React, { useEffect, useState, version } from "react";
+import React, { useEffect, useState } from "react";
 import { Pokemon } from "../../api/pokemon.api";
 import getPokemonLocations, { LocationInfo } from "../../api/location.api";
 

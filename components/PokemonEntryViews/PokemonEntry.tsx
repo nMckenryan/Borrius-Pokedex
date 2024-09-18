@@ -1,30 +1,17 @@
 import TypeIcon from "../UI/TypeIcon";
 import { Card, Image, Skeleton } from "@rneui/themed";
-import { getPokemonDetails, Pokemon } from "../../api/pokemon.api";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import { StatBlock } from "./StatBlock";
 import { EvolutionBlock } from "./EvolutionBlock";
 import LocationsBlock from "./LocationsBlock";
-import MovesBlock from "./MovesBlock";
+import { Pokemon } from "../../api/get-borrius-api";
 
-export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
-  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const get = await getPokemonDetails(pokemonName);
-
-        setSelectedPokemon(get);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, [pokemonName]);
-
+export function PokemonEntry({
+  selectedPokemon,
+}: {
+  selectedPokemon: Pokemon;
+}) {
   return (
     <Card containerStyle={{ borderRadius: 10 }}>
       <View className="flex-row justify-between items-center">
@@ -56,7 +43,7 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
                 alignSelf: "center",
               }}
               source={{
-                uri: selectedPokemon.sprite,
+                uri: selectedPokemon.sprites.game_sprite,
               }}
               PlaceholderContent={<Skeleton circle animation="pulse" />}
               containerStyle={{
@@ -66,11 +53,11 @@ export function PokemonEntry({ pokemonName }: { pokemonName: string }) {
             />
             <StatBlock selectedPokemon={selectedPokemon} />
 
-            {selectedPokemon.evolutionDetails.length > 1 && (
+            {/*{selectedPokemon.evolutionDetails.length > 1 && (
               <EvolutionBlock selectedPokemon={selectedPokemon} />
             )}
-            <LocationsBlock selectedPokemon={selectedPokemon} />
-            {/* <MovesBlock selectedPokemon={selectedPokemon} /> */}
+             <LocationsBlock selectedPokemon={selectedPokemon} />
+             <MovesBlock selectedPokemon={selectedPokemon} /> */}
           </>
         ) : (
           <>

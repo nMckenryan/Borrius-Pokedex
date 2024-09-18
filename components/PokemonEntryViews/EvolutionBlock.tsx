@@ -1,6 +1,6 @@
 import { Icon } from "@rneui/base";
 import { View, Text } from "react-native";
-import { Pokemon } from "../../api/pokemon.api";
+import { Pokemon } from "../../api/get-borrius-api";
 import SpriteAvatar from "../UI/SpriteAvatar";
 
 export function EvolutionBlock({

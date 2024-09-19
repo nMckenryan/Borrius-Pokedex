@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React from "react";
 import { Pokemon } from "../../api/get-borrius-api";
 import TypeIcon from "../UI/TypeIcon";
@@ -19,32 +19,38 @@ export default function MovesBlock({
         {selectedPokemon.moves.length > 0 && (
           <>
             <Text>Moves:</Text>
-            <View className="flex-col">
-              <ScrollView className="h-50">
-                <View className="flex-row">
-                  <Text>Move</Text>
-                  <Text>Accuracy</Text>
-                  <Text>Category</Text>
-                  <Text>Power</Text>
-                  <Text>Type</Text>
-                  <Text>Method</Text>
-                </View>
+            <View className="flex-col h-[200px]">
+              <FlatList
+                data={selectedPokemon.moves}
+                showsVerticalScrollIndicator={true}
+                keyExtractor={(item) => item.name}
+                contentContainerClassName="h-50"
+                ListHeaderComponent={
+                  <View className="flex-row">
+                    <Text className="font-bold">Move</Text>
+                    <Text className="font-bold">Type</Text>
+                    <Text className="font-bold">Accuracy</Text>
+                    <Text className="font-bold">Category</Text>
+                    <Text className="font-bold">Power</Text>
+                    <Text className="font-bold">Learned via</Text>
+                  </View>
+                }
+                renderItem={({ item }) => (
+                  <View className="flex-row">
+                    <Text className="px-1">{item.name}</Text>
+                    <TypeIcon typeList={[item.type]} />
+                    <Text className="px-1">{item.accuracy}</Text>
+                    <Text className="px-1">{item.category}</Text>
+                    <Text className="px-1">{item.power}</Text>
 
-                {selectedPokemon.moves.map((m) => {
-                  return (
-                    <View className="flex-row">
-                      <Text>{m.name}</Text>
-                      <Text>{m.accuracy}</Text>
-                      <Text>{m.category}</Text>
-                      <Text>{m.power}</Text>
-                      <TypeIcon typeList={[m.type]} />
-                      <Text>
-                        {m.learn_method} + {m.level_learned}
-                      </Text>
-                    </View>
-                  );
-                })}
-              </ScrollView>
+                    {item.learn_method == "level-up" ? (
+                      <Text>Level {item.level_learned}</Text>
+                    ) : (
+                      <Text>TM/HM</Text>
+                    )}
+                  </View>
+                )}
+              />
             </View>
           </>
         )}

@@ -68,11 +68,11 @@
 - [] Table of Moves
 - [] Unit test API calls
 - [x] Cache images?
-- [] Handle Popular Romhacks
 - [] Customise FOnts
 - [] Make sure it works on iOS
 - [] publish to store
 - [] Pokesprite items
+- [x] Sort desktop UI
 
 ## BUGS
 

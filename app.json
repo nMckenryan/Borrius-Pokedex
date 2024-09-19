@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "curaDex",
-    "slug": "curaDex",
+    "name": "Pokedex Unbound",
+    "slug": "A Borrius Region Pokedex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

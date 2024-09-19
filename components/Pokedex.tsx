@@ -1,9 +1,10 @@
 import "../global.css";
 
-import React, { useState } from "react";
-import { BottomSheet, Card, Header, ListItem } from "@rneui/themed";
+import React, { useMemo, useState } from "react";
+import { BottomSheet, Card, Header, ListItem, SearchBar } from "@rneui/themed";
 import { useQuery } from "@tanstack/react-query";
 import { getAllBorriusPokemon, Pokemon } from "../api/get-borrius-api";
+
 import {
   View,
   ActivityIndicator,
@@ -15,6 +16,10 @@ import TypeIcon from "./UI/TypeIcon";
 import { PokemonEntry } from "./PokemonEntryViews/PokemonEntry";
 
 export function Pokedex() {
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const {
     data: pokemonData,
     isLoading,
@@ -22,19 +27,37 @@ export function Pokedex() {
   } = useQuery({
     queryKey: ["allPokemon"],
     queryFn: getAllBorriusPokemon,
+    retry: 3,
+    refetchOnWindowFocus: false,
   });
 
-  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
-  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const filterData = useMemo(
+    () =>
+      pokemonData
+        ? pokemonData.filter((item) =>
+            item.name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        : [],
+    [pokemonData, searchTerm]
+  );
 
   return (
     <>
       <Header
-        backgroundColor="#C21807"
+        backgroundColor="#641e8c"
         centerComponent={{
           text: "Pokedex Unbound",
           style: { color: "#ffffff", fontWeight: "bold" },
         }}
+        rightComponent={
+          <SearchBar
+            lightTheme
+            onChangeText={setSearchTerm}
+            placeholder="Type query here..."
+            placeholderTextColor="#888"
+            value={searchTerm}
+          />
+        }
       />
 
       <View className="bg-slate-100">
@@ -51,13 +74,12 @@ export function Pokedex() {
         ) : window.innerWidth < 768 ? (
           // MOBILE
           <FlatList
-            data={pokemonData}
+            data={filterData}
             initialNumToRender={15}
             renderItem={({ item }) => (
-              <View className="flex-row items-center">
+              <View className="flex-row items-center" key={item.name}>
                 <ListItem
                   bottomDivider
-                  key={item.name}
                   className="w-full"
                   onPress={() => {
                     setSelectedPokemon(item);
@@ -84,7 +106,7 @@ export function Pokedex() {
           //  DESKTOP
           <View className="justify-center ">
             <FlatList
-              data={pokemonData}
+              data={filterData}
               keyExtractor={(item) => item.name}
               contentContainerClassName="flex-row flex-wrap justify-center "
               initialNumToRender={15}
@@ -98,7 +120,7 @@ export function Pokedex() {
                   <Card
                     containerStyle={{
                       height: 150,
-                      width: 150,
+                      width: 175,
                     }}
                     wrapperStyle={{
                       display: "flex",
@@ -116,7 +138,9 @@ export function Pokedex() {
                         spriteUrl={item.sprites.game_sprite}
                       />
                     </View>
-                    <TypeIcon typeList={item.typeList} />
+                    <View className="p-2">
+                      <TypeIcon typeList={item.typeList} />
+                    </View>
                   </Card>
                 </TouchableOpacity>
               )}

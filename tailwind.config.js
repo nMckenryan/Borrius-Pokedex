@@ -32,6 +32,7 @@ module.exports = {
         pokeDexBlack: "#fffff",
         pokeDexWhite: "#F5F5F5",
         pokeDexBlue: "##27A4F3",
+        unboundPurple: "#641e8c",
       },
     },
   },

@@ -57,6 +57,7 @@ export type Pokemon = {
     stats: Stats,
     evolutions: Evolutions,
     abilities: string[]
+    moves: Move[]
 }
 
 export const getPokemonEvolutionSprite = async (nextStageName: string) => {
@@ -155,6 +156,22 @@ async function parseEvolutionDetails(evolutionDetails: any) {
     }
 }
 
+const compileMoves = (moveList) => {
+    return moveList.map((item) => {
+        item.map((moves) => (
+            {
+                name: moves.move.name,
+                type: moves.move.type,
+                category: moves.move.category,
+                power: moves.move.power,
+                accuracy: moves.move.accuracy,
+                learn_method: moves.version_group_details[0].move_learn_method.name,
+                level_learned: moves.version_group_details[0].level_learned_at
+            }
+        ))
+    })
+};
+
 export const getAllBorriusPokemon = async () => {
     const allPokemon: Pokemon[] = [];
     const pokemonSection = pokedexData[0].pokemon;
@@ -191,10 +208,11 @@ export const getAllBorriusPokemon = async () => {
                     specialDefense: pokemon.stats.specialDefense.base_stat,
                     speed: pokemon.stats.speed.base_stat
                 },
-                evolutions: pokeEvo,
+                evolutions: null,
                 height: pokemon.height,
                 weight: pokemon.weight,
                 capture_rate: pokemon.capture_rate,
+                moves: compileMoves(pokemon.moves)
             };
             allPokemon.push(pokeObj);
         }

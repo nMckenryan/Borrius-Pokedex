@@ -7,8 +7,15 @@ export default function MovesBlock({
 }: {
   selectedPokemon: Pokemon;
 }) {
+  const moves = selectedPokemon.moves;
+
+  const movesTable = () => {
+    return <View></View>;
+  };
+
   return (
     <View className="flex-col items-center">
+      <Text>{selectedPokemon.abilities.join(", ")}</Text>
       <Text>Moves:</Text>
     </View>
   );

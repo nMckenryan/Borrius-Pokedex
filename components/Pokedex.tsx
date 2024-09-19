@@ -9,6 +9,7 @@ import {
   SearchBar,
   Text,
 } from "@rneui/themed";
+
 import { useQuery } from "@tanstack/react-query";
 import { getAllBorriusPokemon, Pokemon } from "../api/get-borrius-api";
 
@@ -18,6 +19,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+
 import SpriteAvatar from "./UI/SpriteAvatar";
 import TypeIcon from "./UI/TypeIcon";
 import { PokemonEntry } from "./PokemonEntryViews/PokemonEntry";
@@ -140,39 +142,46 @@ export function Pokedex() {
             initialNumToRender={45}
             contentContainerClassName="flex-row flex-wrap justify-center"
             renderItem={({ item }) => (
-              <Card
-                containerStyle={{
-                  height: 150,
-                  width: 175,
-                  shadowColor: "black",
-                  shadowOpacity: 0.5,
-                  shadowRadius: 5,
-                  elevation: 10,
-                  borderRadius: 5,
-                  margin: 10,
-                }}
-                wrapperStyle={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "column",
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedPokemon(item);
+                  setIsBottomSheetVisible(true);
                 }}
               >
-                <View style={{ position: "absolute", top: 0, left: 0 }}>
-                  <Text style={{ fontSize: 12 }}>#{item.id}</Text>
-                </View>
-                <Card.Title className="capitalize" style={{ margin: 0 }}>
-                  {item.name}
-                </Card.Title>
-                <View className="p-2">
-                  <SpriteAvatar
-                    size={"medium"}
-                    spriteUrl={item.sprites.game_sprite}
-                  />
-                </View>
-                <View className="p-2">
-                  <TypeIcon typeList={item.typeList} />
-                </View>
-              </Card>
+                <Card
+                  containerStyle={{
+                    height: 150,
+                    width: 175,
+                    shadowColor: "black",
+                    shadowOpacity: 0.5,
+                    shadowRadius: 5,
+                    elevation: 10,
+                    borderRadius: 5,
+                    margin: 10,
+                  }}
+                  wrapperStyle={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <View style={{ position: "absolute", top: 0, left: 0 }}>
+                    <Text style={{ fontSize: 9 }}>#{item.id}</Text>
+                  </View>
+                  <Card.Title className="capitalize" style={{ margin: 0 }}>
+                    {item.name}
+                  </Card.Title>
+                  <View className="p-2">
+                    <SpriteAvatar
+                      size={"medium"}
+                      spriteUrl={item.sprites.game_sprite}
+                    />
+                  </View>
+                  <View className="p-2">
+                    <TypeIcon typeList={item.typeList} />
+                  </View>
+                </Card>
+              </TouchableOpacity>
             )}
           />
         )}

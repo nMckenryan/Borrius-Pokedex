@@ -6,6 +6,7 @@ import { StatBlock } from "./StatBlock";
 import { EvolutionBlock } from "./EvolutionBlock";
 import LocationsBlock from "./LocationsBlock";
 import { Pokemon } from "../../api/get-borrius-api";
+import MovesBlock from "./MovesBlock";
 
 export function PokemonEntry({
   selectedPokemon,
@@ -50,18 +51,17 @@ export function PokemonEntry({
                 borderRadius: 15,
                 backgroundColor: "lightgray",
               }}
-            />
+            />{" "}
             {selectedPokemon.stats ? (
               <StatBlock selectedPokemon={selectedPokemon} />
             ) : (
               <Skeleton animation="pulse" width="87.5%" height={100} />
             )}
-
-            {selectedPokemon.evolutions && (
+            {/* {selectedPokemon.evolutions && (
               <EvolutionBlock selectedPokemon={selectedPokemon} />
-            )}
-            {/*<LocationsBlock selectedPokemon={selectedPokemon} />
-             <MovesBlock selectedPokemon={selectedPokemon} /> */}
+            )}  */}
+            {/*<LocationsBlock selectedPokemon={selectedPokemon} /> */}
+            <MovesBlock selectedPokemon={selectedPokemon} />
           </>
         ) : (
           <>

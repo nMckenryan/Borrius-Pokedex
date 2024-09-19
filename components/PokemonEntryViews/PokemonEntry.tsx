@@ -44,7 +44,7 @@ export function PokemonEntry({
                 alignSelf: "center",
               }}
               source={{
-                uri: selectedPokemon.sprites.game_sprite,
+                uri: selectedPokemon.sprites.official,
               }}
               PlaceholderContent={<Skeleton circle animation="pulse" />}
               containerStyle={{

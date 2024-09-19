@@ -12,7 +12,7 @@ export type Stats = {
 export type Move = {
     name: string
     type: string
-    damage_class: string
+    category: string
     power: number | null
     accuracy: number | null
     learn_method: string
@@ -157,9 +157,10 @@ async function parseEvolutionDetails(evolutionDetails: any) {
 }
 
 const compileMoves = (moveList) => {
-    return moveList.map((item) => {
+    let ml = [];
+    const move = moveList.map((item) => {
         item.map((moves) => (
-            {
+            ml.push({
                 name: moves.move.name,
                 type: moves.move.type,
                 category: moves.move.category,
@@ -167,9 +168,10 @@ const compileMoves = (moveList) => {
                 accuracy: moves.move.accuracy,
                 learn_method: moves.version_group_details[0].move_learn_method.name,
                 level_learned: moves.version_group_details[0].level_learned_at
-            }
+            })
         ))
     })
+    return ml
 };
 
 export const getAllBorriusPokemon = async () => {

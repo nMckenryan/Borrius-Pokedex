@@ -42,6 +42,13 @@ export type Evolutions = {
     evolutionChain: []
 }
 
+export type Location = {
+    location: string,
+    encounterMethod: string,
+    timeOfDay: string,
+    isSpecialEncounter: boolean
+}
+
 export type Pokemon = {
     id: number,
     nationalId: number,
@@ -57,6 +64,7 @@ export type Pokemon = {
     stats: Stats,
     evolutions: Evolutions,
     abilities: string[]
+    locations: Location[],
     moves: Move[]
 }
 
@@ -213,8 +221,9 @@ export const getAllBorriusPokemon = async () => {
                 evolutions: null,
                 height: pokemon.height,
                 weight: pokemon.weight,
-                capture_rate: pokemon.capture_rate,
-                moves: compileMoves(pokemon.moves)
+                capture_rate: parseInt(pokemon.capture_rate.percentage),
+                locations: pokemon.locations,
+                moves: []
             };
             allPokemon.push(pokeObj);
         }

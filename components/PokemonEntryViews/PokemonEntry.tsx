@@ -60,8 +60,12 @@ export function PokemonEntry({
             {/* {selectedPokemon.evolutions && (
               <EvolutionBlock selectedPokemon={selectedPokemon} />
             )}  */}
-            {/*<LocationsBlock selectedPokemon={selectedPokemon} /> */}
-            <MovesBlock selectedPokemon={selectedPokemon} />
+            {selectedPokemon.locations.length > 0 && (
+              <LocationsBlock selectedPokemon={selectedPokemon} />
+            )}
+            {/* {selectedPokemon.moves.length > 0 && (
+              <MovesBlock selectedPokemon={selectedPokemon} />
+            )} */}
           </>
         ) : (
           <>

@@ -1,15 +1,12 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Pokemon } from "../../api/pokemon.api";
-import getPokemonLocations, { LocationInfo } from "../../api/location.api";
+import { View, Text, FlatList } from "react-native";
+import React from "react";
+import { Pokemon } from "../../api/get-borrius-api";
 
 export default function LocationsBlock({
   selectedPokemon,
 }: {
   selectedPokemon: Pokemon;
 }) {
-  const [locationData, setLocationData] = useState<LocationInfo[] | null>(null);
-
   function getCatchRateDifficulty(catchRate: number) {
     if (catchRate <= 5) return "Extremely Hard";
     if (catchRate <= 50) return "Very Hard";
@@ -19,32 +16,36 @@ export default function LocationsBlock({
     return "Very Easy";
   }
 
-  useEffect(() => {
-    if (selectedPokemon) {
-      getPokemonLocations(selectedPokemon.name, 1).then((data) => {
-        setLocationData(data);
-      });
-    }
-  }, [selectedPokemon]);
-
   return (
-    <>
-      {locationData && (
-        <View className="flex-col items-center">
-          <Text>Locations</Text>
+    <View className="flex-col ">
+      <Text className="text-md font-bold">Locations</Text>
 
-          {locationData.map((location, index) => (
-            <>
-              <Text key={index}>{location.locationName}</Text>
-            </>
-          ))}
+      <FlatList
+        data={selectedPokemon.locations}
+        showsVerticalScrollIndicator={true}
+        keyExtractor={(item) => item.location}
+        contentContainerClassName="h-50"
+        renderItem={({ item, index }) => (
+          <View className="flex-row" key={index}>
+            <Text>
+              {item.location}
+              {item.encounterMethod != "Grass/Cave" &&
+                " - " + item.encounterMethod}
+            </Text>
+            <Text>
+              {item.isSpecialEncounter ? " (Special encounter)" : ""}
+              {item.timeOfDay != "All Day" && item.timeOfDay}
+            </Text>
+          </View>
+        )}
+      />
 
-          <Text>
-            Catch Rate: {selectedPokemon?.stats.catchRate} (
-            {getCatchRateDifficulty(selectedPokemon?.stats.catchRate)})
-          </Text>
-        </View>
+      {selectedPokemon.capture_rate && (
+        <Text>
+          Catch Rate: {selectedPokemon.capture_rate} (
+          {getCatchRateDifficulty(selectedPokemon.capture_rate)})
+        </Text>
       )}
-    </>
+    </View>
   );
 }

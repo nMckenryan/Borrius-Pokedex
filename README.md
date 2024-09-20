@@ -55,16 +55,17 @@
   - [] turn_upside_down (that squid thing)
   - [] Trade species (escavalier)
 
-  - [x] Pokemon Base Stats (look for bar graph, )
-  - [x] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
-  - [x] Pokemon Catch rate
-  - [/] Pokemon Location
+- [x] Pokemon Base Stats (look for bar graph, )
+- [x] Pokemon Role/Pokemon Stat Ratings (https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier.)
+- [x] Pokemon Catch rate
+- [/] Pokemon Location
+- [] Get Pokemon location for Borrius (Scan thru PDF?)
 
-- [] Create App Icon
+- [x] Create App Icon
 
 ## TODO:
 
-- [] Table of Moves
+- [x] Table of Moves
 - [] Unit test API calls
 - [x] Cache images?
 - [] Customise FOnts

@@ -41,7 +41,7 @@ function TypeIconButton({ type }: { type: string }) {
     fairy: "bg-fairy",
   };
 
-  const color = colors[type] || "bg-gray-500";
+  const color = colors[type.toLowerCase()] || "bg-gray-500";
 
   return (
     <Text

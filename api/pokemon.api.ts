@@ -1,5 +1,26 @@
 import axios, { AxiosResponse } from "axios";
 
+export const typeColors = {
+    normal: "bg-normal",
+    fire: "bg-fire",
+    water: "bg-water",
+    electric: "bg-electric",
+    grass: "bg-grass",
+    ice: "bg-ice",
+    fighting: "bg-fighting",
+    poison: "bg-poison",
+    ground: "bg-ground",
+    flying: "bg-flying",
+    psychic: "bg-psychic",
+    bug: "bg-bug",
+    rock: "bg-rock",
+    ghost: "bg-ghost",
+    dragon: "bg-dragon",
+    dark: "bg-dark",
+    steel: "bg-steel",
+    fairy: "bg-fairy",
+};
+
 export type EvoMethod = {
     name: string;
     spriteUrl: string;
@@ -38,26 +59,27 @@ export interface PokemonSpecies {
 
 export interface PokedexItem {
     id: number;
+    nationalId: number;
     name: string;
     sprite: string;
     typeList: string[];
 };
 
-export const getPokemonSprite = async (pokemonName: string) => {
-    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+export const getPokemonSprite = async (pokemonId: number) => {
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
     try {
         const { data } = await axios.get(url);
         return data.sprites.front_default;
     } catch (error) {
-        console.error(`Error fetching sprite for pokemon #${pokemonName}:`, error);
+        console.error(`Error fetching sprite for pokemon #${pokemonId}:`, error);
         return null;
     }
 }
 
-export const getPokemonStats = async (pokemonName: string): Promise<PokemonStats> => {
+export const getPokemonStats = async (pokemonId: number): Promise<PokemonStats> => {
     const [speciesResponse, pokemonResponse] = await Promise.all([
-        axios.get<PokemonSpecies>(`https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`),
-        axios.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`),
+        axios.get<PokemonSpecies>(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`),
+        axios.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`),
     ]);
 
     const stats: PokemonStats = {
@@ -74,60 +96,14 @@ export const getPokemonStats = async (pokemonName: string): Promise<PokemonStats
     return stats;
 }
 
-export const getEvolutionDetails = async (pokemonName: string) => {
-    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`;
+export const getEvolutionDetails = async (pokemonId: number): Promise<EvoMethod[]> => {
+    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`;
     const speciesResponse = (await axios.get(speciesUrl)).data;
 
     const evolutionUrl = speciesResponse.evolution_chain.url;
     const evolutionResponse = (await axios.get(evolutionUrl)).data;
 
     const baseName = evolutionResponse.chain.species.name || null;
-
-
-    const stage1Name = evolutionResponse.chain.evolves_to[0]?.species.name || null;
-    const stage2Name = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.species.name || null;
-
-
-    let stage1Trigger = evolutionResponse.chain.evolves_to[0]?.evolution_details[0]?.trigger.name;
-
-    stage1Trigger = stage1Trigger == 'use-item' ?
-        evolutionResponse.chain.evolves_to[0]?.evolution_details[0].item.name : stage1Trigger;
-
-    stage1Trigger = stage1Trigger == 'level-up' && 'level';
-
-    let s2t = evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name;
-    let stage2Trigger = "trigger not implemented";
-
-
-    switch (s2t) {
-        case 'use-item':
-            stage2Trigger = evolutionResponse.chain.evolves_to[0].evolves_to[0].evolution_details[0].item.name;
-            break;
-
-        case 'level-up':
-            stage2Trigger = "Level";
-            break;
-
-        default:
-            stage2Trigger = s2t
-            break;
-    }
-
-    // case 'use-item':
-    //     return s2t.item;
-    //     break;
-
-    // case 'held-item':
-    //     return s2t.held_item;
-    //     break;
-
-    // case 'level-up':
-    //     return "Level";
-    //     break;
-
-    // default:
-    //     return s2t
-    //     break;
 
     const evolutionDetails: EvoMethod[] = [
         {
@@ -138,39 +114,39 @@ export const getEvolutionDetails = async (pokemonName: string) => {
                 level: null
             }
         },
-        {
-            name: stage1Name,
-            spriteUrl: await getPokemonSprite(stage1Name),
-            method: {
-                trigger: stage1Trigger || null,
-                level: evolutionResponse.chain.evolves_to[0]?.evolution_details[0]?.min_level || null,
-            }
-        },
-        {
-            name: stage2Name,
-            spriteUrl: await getPokemonSprite(stage2Name),
-            method: {
-                trigger: stage2Trigger || null,
-                level: evolutionResponse.chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level || null,
-            }
-        },
     ];
+
+    let currentEvolution = evolutionResponse.chain;
+    while (currentEvolution.evolves_to.length > 0) {
+        const nextEvolution = currentEvolution.evolves_to[0];
+        const method = nextEvolution.evolution_details[0] || { trigger: null, min_level: null };
+        evolutionDetails.push({
+            name: nextEvolution.species.name,
+            spriteUrl: await getPokemonSprite(nextEvolution.species.name),
+            method: {
+                trigger: method.trigger?.name || null,
+                level: method.min_level || null,
+            },
+        });
+        currentEvolution = nextEvolution;
+    }
 
     return evolutionDetails;
 }
 
 
-export const getPokemonDetails = async (pokemonName: string): Promise<Pokemon | null> => {
-    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`;
-    const spriteUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+
+export const getPokemonDetails = async (pokemonId: number): Promise<Pokemon | null> => {
+    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName.toLowerCase()}`;
+    const spriteUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`;
 
     try {
         const speciesResponse = (await axios.get(speciesUrl)).data;
         const pokemonResponse = (await axios.get(spriteUrl)).data;
 
-        const evolutionDetails = await getEvolutionDetails(pokemonName);
+        const evolutionDetails = await getEvolutionDetails(pokemonId);
 
-        const stats = await getPokemonStats(pokemonName);
+        const stats = await getPokemonStats(pokemonId);
 
 
         const pokemon: Pokemon = {
@@ -202,6 +178,7 @@ export const getAllPokemon = async () => {
 
             const pokeObj: PokedexItem = {
                 id: req.data.id || 0,
+                nationalId: req.data.id || 0,
                 name: item.name || "No Name",
                 sprite: req.data.sprites.front_default || "../assets/question-mark.png",
                 typeList: types || ["Unknown"],
@@ -219,25 +196,3 @@ export const getAllPokemon = async () => {
 };
 
 
-
-
-export const typeColors = {
-    normal: "bg-normal",
-    fire: "bg-fire",
-    water: "bg-water",
-    electric: "bg-electric",
-    grass: "bg-grass",
-    ice: "bg-ice",
-    fighting: "bg-fighting",
-    poison: "bg-poison",
-    ground: "bg-ground",
-    flying: "bg-flying",
-    psychic: "bg-psychic",
-    bug: "bg-bug",
-    rock: "bg-rock",
-    ghost: "bg-ghost",
-    dragon: "bg-dragon",
-    dark: "bg-dark",
-    steel: "bg-steel",
-    fairy: "bg-fairy",
-};

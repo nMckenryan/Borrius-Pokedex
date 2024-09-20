@@ -1,6 +1,6 @@
 import { Skeleton } from "@rneui/base";
 import { View, Text } from "react-native";
-import { Pokemon } from "../../api/pokemon.api";
+import { Pokemon } from "../../api/get-borrius-api";
 
 export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
   const gradeStat = (stat: number) => {
@@ -55,41 +55,43 @@ export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
     );
   };
 
-  return selectedPokemon ? (
-    <>
-      <View className="flex-row justify-around items-center">
-        <View className="flex-col mr-1">
-          <Text className="font-bold my-1">HP:</Text>
-          <Text className="font-bold my-1">Attack:</Text>
-          <Text className="font-bold my-1">Defense:</Text>
-          <Text className="font-bold my-1">Sp Attack:</Text>
-          <Text className="font-bold my-1">Sp Defense:</Text>
-          <Text className="font-bold my-1">Speed:</Text>
-        </View>
-        <View className="flex-col mr-1">
-          <Text className="my-1">{selectedPokemon.stats.hp}</Text>
-          <Text className="my-1">{selectedPokemon.stats.attack}</Text>
-          <Text className="my-1">{selectedPokemon.stats.defense}</Text>
-          <Text className="my-1">{selectedPokemon.stats.specialAttack}</Text>
-          <Text className="my-1">{selectedPokemon.stats.specialDefense}</Text>
-          <Text className="my-1">{selectedPokemon.stats.speed}</Text>
-        </View>
-
-        <View className="flex-col my-1">
-          {gradeStat(selectedPokemon.stats.hp)}
-
-          {gradeStat(selectedPokemon.stats.attack)}
-
-          {gradeStat(selectedPokemon.stats.defense)}
-
-          {gradeStat(selectedPokemon.stats.specialAttack)}
-
-          {gradeStat(selectedPokemon.stats.specialDefense)}
-          {gradeStat(selectedPokemon.stats.speed)}
-        </View>
+  return (
+    <View className="flex-row justify-around items-center">
+      <View className="flex-col mr-1">
+        <Text className="font-bold my-1">HP:</Text>
+        <Text className="font-bold my-1">Attack:</Text>
+        <Text className="font-bold my-1">Defense:</Text>
+        <Text className="font-bold my-1">Sp Attack:</Text>
+        <Text className="font-bold my-1">Sp Defense:</Text>
+        <Text className="font-bold my-1">Speed:</Text>
       </View>
-    </>
-  ) : (
-    <Skeleton animation="pulse" width={100} height={100} />
+      <View className="flex-col mr-1">
+        <Text className="my-1">{JSON.stringify(selectedPokemon.stats.hp)}</Text>
+        <Text className="my-1">
+          {JSON.stringify(selectedPokemon.stats.attack)}
+        </Text>
+        <Text className="my-1">
+          {JSON.stringify(selectedPokemon.stats.defense)}
+        </Text>
+        <Text className="my-1">
+          {JSON.stringify(selectedPokemon.stats.specialAttack)}
+        </Text>
+        <Text className="my-1">
+          {JSON.stringify(selectedPokemon.stats.specialDefense)}
+        </Text>
+        <Text className="my-1">
+          {JSON.stringify(selectedPokemon.stats.speed)}
+        </Text>
+      </View>
+
+      <View className="flex-col my-1">
+        {gradeStat(selectedPokemon.stats.hp)}
+        {gradeStat(selectedPokemon.stats.attack)}
+        {gradeStat(selectedPokemon.stats.defense)}
+        {gradeStat(selectedPokemon.stats.specialAttack)}
+        {gradeStat(selectedPokemon.stats.specialDefense)}
+        {gradeStat(selectedPokemon.stats.speed)}
+      </View>
+    </View>
   );
 }

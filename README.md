@@ -8,9 +8,11 @@
 ## Built with:
 
 - React Native
-- Pokemon data via PokeApi
-- ReactNativeElements
+- React Query
+- React Native Elements
 - NativeWind
+- Pokemon data via PokeApi
+- Borrius Web Scraper/API
 
 ### MVP
 
@@ -18,10 +20,7 @@
 - [x] Import Pokemon data from PokeAPI
 
   - [x] Import All Pokemon Data from PokeAPI
-  - [] Filter pokemon by generation
-  - [] Filter Data by Generation via dropdown at top
-  - [] Search for pokemon by name
-  - [] search pokemon by type
+  - [x] Search for pokemon by name/type/number
 
 - [x] Implement Pokedex list with pokemon icon sprite
 - [x] Implement pokemon page (via Bottomsheet? like google maps)
@@ -68,14 +67,14 @@
 - [] Table of Moves
 - [] Unit test API calls
 - [x] Cache images?
-- [] Handle Popular Romhacks
 - [] Customise FOnts
 - [] Make sure it works on iOS
 - [] publish to store
-- [] Pokesprite items
+- [x] Sort desktop UI
 
 ## BUGS
 
-- [] Pokemon down the list take a while to load in their individual entries
+- [x] Pokemon down the list take a while to load in their individual entries
 - [x] Pokemon load in at random order at the start
-- [] Weirdness re: single/duo evos
+- [x] Weirdness re: single/duo evos
+- [] Pokesprite items

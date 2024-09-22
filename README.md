@@ -66,13 +66,15 @@
 - [ ] Make sure it works on iOS
 - [ ] publish to store
 - [x] Sort desktop UI
+- [ ] Fix up android responsiveness
+- [ ] Handle tables for location and Moves
 
 ## BUGS
 
 - [x] Pokemon down the list take a while to load in their individual entries
 - [x] Pokemon load in at random order at the start
 - [x] Weirdness re: single/duo evos
-- [ ] Beldum has not move data
+- [ ] Beldum has no move data
 - [ ] Handle long pokemon names (e.g. Nidoran female)
 
 ## Future Work

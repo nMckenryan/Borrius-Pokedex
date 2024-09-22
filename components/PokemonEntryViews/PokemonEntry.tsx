@@ -1,12 +1,12 @@
-import TypeIcon from "../UI/TypeIcon";
-import { Card, Image, Skeleton } from "@rneui/themed";
+import { Card, Skeleton, Text } from "@rneui/themed";
 import React from "react";
-import { View, Text } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { StatBlock } from "./StatBlock";
-import { EvolutionBlock } from "./EvolutionBlock";
 import LocationsBlock from "./LocationsBlock";
 import { Pokemon } from "../../api/get-borrius-api";
 import MovesBlock from "./MovesBlock";
+import { BasicInfoBlock } from "./BasicInfoBlock";
+import { EvolutionBlock } from "./EvolutionBlock";
 
 export function PokemonEntry({
   selectedPokemon,
@@ -15,69 +15,51 @@ export function PokemonEntry({
 }) {
   return (
     <Card containerStyle={{ borderRadius: 10 }}>
-      <View className="flex-row justify-between items-center">
-        {selectedPokemon ? (
-          <>
-            <Text className="text-lg font-bold">{`#${selectedPokemon.id}`}</Text>
-            <Text className="text-lg  font-bold capitalize">
-              {selectedPokemon.name}
+      {/* MAIN SPRITE */}
+      {selectedPokemon ? (
+        <>
+          {/* POKEMON NUMBER */}
+          {selectedPokemon.stats && (
+            <Text style={{ position: "absolute", top: 0, left: 0 }}>
+              #{selectedPokemon.id}
             </Text>
-            <TypeIcon typeList={selectedPokemon.typeList} />
-          </>
-        ) : (
-          <>
-            <Skeleton animation="pulse" width="100%" height={20} />
-          </>
-        )}
-      </View>
+          )}
 
-      <Card.Divider />
+          <View className="flex-row justify-between items-center">
+            {selectedPokemon.stats ? (
+              <BasicInfoBlock selectedPokemon={selectedPokemon} />
+            ) : (
+              <Skeleton circle animation="pulse" width={100} height={100} />
+            )}
 
-      <View className="flex-row justify-between items-center">
-        {/* MAIN SPRITE */}
-        {selectedPokemon ? (
-          <>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                alignSelf: "center",
-              }}
-              source={{
-                uri: selectedPokemon.sprites.official,
-              }}
-              PlaceholderContent={<Skeleton circle animation="pulse" />}
-              containerStyle={{
-                borderRadius: 15,
-                backgroundColor: "lightgray",
-              }}
-            />{" "}
             {selectedPokemon.stats ? (
               <StatBlock selectedPokemon={selectedPokemon} />
             ) : (
-              <Skeleton animation="pulse" width="87.5%" height={100} />
+              <Skeleton animation="pulse" width={200} height={100} />
             )}
-            {/* {selectedPokemon.evolutions && (
+
+            {/* {!selectedPokemon.evolutions ? (
               <EvolutionBlock selectedPokemon={selectedPokemon} />
-            )}  */}
-            {selectedPokemon.locations.length > 0 && (
+            ) : (
+              <Skeleton animation="pulse" width={200} height={100} />
+            )} */}
+            {selectedPokemon.locations.length > 0 ? (
               <LocationsBlock selectedPokemon={selectedPokemon} />
+            ) : (
+              <Skeleton animation="pulse" width={200} height={100} />
             )}
-            {selectedPokemon.moves.length > 0 && (
+            {selectedPokemon.moves.length > 0 ? (
               <MovesBlock selectedPokemon={selectedPokemon} />
+            ) : (
+              <Skeleton animation="pulse" width={200} height={100} />
             )}
-          </>
-        ) : (
-          <>
-            <Skeleton circle width={100} height={100} />
-            <Skeleton
-              width={"87.5%"}
-              height={100}
-              style={{ marginHorizontal: 10 }}
-            />
-          </>
-        )}
-      </View>
+          </View>
+        </>
+      ) : (
+        <View className="flex-row items-center">
+          <ActivityIndicator size="large" color="red" />
+        </View>
+      )}
     </Card>
   );
 }

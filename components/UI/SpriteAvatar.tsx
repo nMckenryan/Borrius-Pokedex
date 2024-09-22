@@ -20,7 +20,7 @@ export default function SpriteAvatar({
             uri: spriteUrl || "../../assets/questionMark.png",
           }}
           containerStyle={{
-            backgroundColor: "lightgray",
+            backgroundColor: "#fde68a",
           }}
         />
       )}

@@ -31,7 +31,7 @@ export function BasicInfoBlock({
           PlaceholderContent={<Skeleton circle animation="pulse" />}
           containerStyle={{
             borderRadius: 15,
-            backgroundColor: "lightgray",
+            backgroundColor: "#fde68a",
           }}
         />
         <View className="flex-col items-center">

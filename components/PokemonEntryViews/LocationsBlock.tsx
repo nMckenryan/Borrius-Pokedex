@@ -17,7 +17,16 @@ export default function LocationsBlock({
   }
 
   return (
-    <View className="flex-col ">
+    <View className="flex-col">
+      {selectedPokemon.capture_rate && (
+        <View className="flex-col">
+          <Text className="font-bold">
+            Catch Rate: {selectedPokemon.capture_rate}
+          </Text>
+          <Text>({getCatchRateDifficulty(selectedPokemon.capture_rate)})</Text>
+        </View>
+      )}
+
       <Text className="text-md font-bold">Locations</Text>
 
       <FlatList
@@ -26,7 +35,7 @@ export default function LocationsBlock({
         keyExtractor={(item) => item.location}
         contentContainerClassName="h-50"
         renderItem={({ item, index }) => (
-          <View className="flex-row" key={index}>
+          <View className="flex-row justify-between" key={index}>
             <Text>
               {item.location}
               {item.encounterMethod != "Grass/Cave" &&
@@ -39,13 +48,6 @@ export default function LocationsBlock({
           </View>
         )}
       />
-
-      {selectedPokemon.capture_rate && (
-        <Text>
-          Catch Rate: {selectedPokemon.capture_rate} (
-          {getCatchRateDifficulty(selectedPokemon.capture_rate)})
-        </Text>
-      )}
     </View>
   );
 }

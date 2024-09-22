@@ -38,8 +38,8 @@ export function BasicInfoBlock({
           <TypeIcon typeList={selectedPokemon.typeList} />
           <View className="flex-row">
             <Text className="font-bold">Abilities: </Text>
-            <Text className="flex-wrap">
-              {selectedPokemon.abilities.join(", ")}{" "}
+            <Text className="flex-wrap px-1">
+              {selectedPokemon.abilities.map((ability) => ability + "\n")}
             </Text>
           </View>
         </View>

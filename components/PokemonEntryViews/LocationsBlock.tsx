@@ -26,7 +26,7 @@ export default function LocationsBlock({
           <Text>({getCatchRateDifficulty(selectedPokemon.capture_rate)})</Text>
         </View>
       )}
-
+      <br />
       <Text className="text-md font-bold">Locations</Text>
 
       <FlatList

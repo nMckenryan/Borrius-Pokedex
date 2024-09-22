@@ -44,16 +44,17 @@ export function PokemonEntry({
                   ) : (
                     <Skeleton animation="pulse" width={200} height={100} />
                   )}
-                </View>
-              </View>
 
-              <View className="flex-col justify-between items-center">
-                <View className="flex-row">
                   {selectedPokemon.locations.length > 0 ? (
                     <LocationsBlock selectedPokemon={selectedPokemon} />
                   ) : (
                     <Skeleton animation="pulse" width={200} height={100} />
                   )}
+                </View>
+              </View>
+
+              <View className="flex-col justify-between items-center">
+                <View className="flex-row">
                   {selectedPokemon.moves.length > 0 ? (
                     <MovesBlock selectedPokemon={selectedPokemon} />
                   ) : (
@@ -83,31 +84,32 @@ export function PokemonEntry({
                 {selectedPokemon.stats ? (
                   <BasicInfoBlock selectedPokemon={selectedPokemon} />
                 ) : (
-                  <Skeleton circle animation="pulse" width={100} height={100} />
+                  <Skeleton animation="pulse" width={300} height={200} />
                 )}
 
                 {selectedPokemon.stats ? (
                   <StatBlock selectedPokemon={selectedPokemon} />
                 ) : (
-                  <Skeleton animation="pulse" width={200} height={100} />
+                  <Skeleton animation="pulse" width={300} height={200} />
                 )}
 
-                {/* {!selectedPokemon.evolutions ? (
-                  <EvolutionBlock selectedPokemon={selectedPokemon} />
-                ) : (
-                  <Skeleton animation="pulse" width={200} height={100} />
-                )} */}
-              </View>
-              <View className="flex-row justify-evenly">
                 {selectedPokemon.locations.length > 0 ? (
                   <LocationsBlock selectedPokemon={selectedPokemon} />
                 ) : (
-                  <Skeleton animation="pulse" width={200} height={100} />
+                  <Skeleton animation="pulse" width={300} height={200} />
                 )}
+              </View>
+              <View className="flex-row justify-evenly">
+                {selectedPokemon.evolutions ? (
+                  <EvolutionBlock selectedPokemon={selectedPokemon} />
+                ) : (
+                  <Skeleton animation="pulse" width={250} height={200} />
+                )}
+
                 {selectedPokemon.moves.length > 0 ? (
                   <MovesBlock selectedPokemon={selectedPokemon} />
                 ) : (
-                  <Skeleton animation="pulse" width={200} height={100} />
+                  <Skeleton animation="pulse" width={250} height={200} />
                 )}
               </View>
             </>

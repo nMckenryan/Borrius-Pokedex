@@ -165,19 +165,21 @@ async function parseEvolutionDetails(evolutionDetails: any) {
 }
 
 const compileMoves = (moveList) => {
+    if (moveList.length === 0) {
+        return [];
+    }
+
     let ml = [];
-    const move = moveList.map((item) => {
-        item.map((moves) => (
-            ml.push({
-                name: moves.move.name,
-                type: moves.move.type,
-                category: moves.move.category,
-                power: moves.move.power,
-                accuracy: moves.move.accuracy,
-                learn_method: moves.version_group_details[0].move_learn_method.name,
-                level_learned: moves.version_group_details[0].level_learned_at
-            })
-        ))
+    moveList.map((item) => {
+        ml.push({
+            name: item.move.name,
+            type: item.move.type,
+            category: item.move.category,
+            power: item.move.power,
+            accuracy: item.move.accuracy,
+            learn_method: item.version_group_details[0].move_learn_method.name,
+            level_learned: item.version_group_details[0].level_learned_at
+        })
     })
     return ml
 };
@@ -186,11 +188,11 @@ export const getAllBorriusPokemon = async () => {
     const allPokemon: Pokemon[] = [];
     const pokemonSection = pokedexData[0].pokemon;
 
-
     try {
         for (const pokemon of pokemonSection) {
 
             const pokeEvo = await parseEvolutionDetails(pokemon.evolution_chain);
+            const movesList = compileMoves(pokemon.moves);
 
             const evo = {
                 evolutionDetails: pokeEvo.evolutionDetails,
@@ -223,7 +225,7 @@ export const getAllBorriusPokemon = async () => {
                 weight: pokemon.weight,
                 capture_rate: parseInt(pokemon.capture_rate.percentage),
                 locations: pokemon.locations,
-                moves: []
+                moves: movesList
             };
             allPokemon.push(pokeObj);
         }

@@ -63,9 +63,9 @@ export function PokemonEntry({
             {selectedPokemon.locations.length > 0 && (
               <LocationsBlock selectedPokemon={selectedPokemon} />
             )}
-            {/* {selectedPokemon.moves.length > 0 && (
+            {selectedPokemon.moves.length > 0 && (
               <MovesBlock selectedPokemon={selectedPokemon} />
-            )} */}
+            )}
           </>
         ) : (
           <>

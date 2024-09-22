@@ -23,7 +23,7 @@ export default function MovesBlock({
               <FlatList
                 data={selectedPokemon.moves}
                 showsVerticalScrollIndicator={true}
-                keyExtractor={(item) => item.name}
+                keyExtractor={(item) => item.name + selectedPokemon.name}
                 contentContainerClassName="h-50"
                 ListHeaderComponent={
                   <View className="flex-row">

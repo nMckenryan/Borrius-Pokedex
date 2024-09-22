@@ -1,6 +1,8 @@
 import { Icon } from "@rneui/base";
 import { View, Text } from "react-native";
-import { Pokemon } from "../../api/get-borrius-api";
+
+import SpriteAvatar from "../UI/SpriteAvatar";
+import { Pokemon } from "../../api/borrius-types";
 
 function EvolutionStage({ stageDetails }: { stageDetails: any }) {
   return (
@@ -12,7 +14,10 @@ function EvolutionStage({ stageDetails }: { stageDetails: any }) {
       {/* EVO BLOCK */}
       <View className="flex-col items-center justify-center">
         <View className="flex-col  items-center justify-center">
-          {/* <SpriteAvatar size={"large"} spriteUrl={stageDetails.} /> */}
+          <SpriteAvatar
+            size={"large"}
+            spriteUrl={stageDetails.trigger.sprite}
+          />
           <Text className="text-md capitalize">
             {stageDetails.trigger.name}
           </Text>

@@ -1,6 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import { Pokemon } from "../../api/get-borrius-api";
+import { Pokemon } from "../../api/borrius-types";
 
 export default function LocationsBlock({
   selectedPokemon,

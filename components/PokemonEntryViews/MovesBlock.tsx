@@ -1,7 +1,7 @@
 import { View, Text, FlatList } from "react-native";
 import { Image } from "@rneui/themed";
 import React from "react";
-import { Pokemon } from "../../api/get-borrius-api";
+import { Pokemon } from "../../api/borrius-types";
 import TypeIcon from "../UI/TypeIcon";
 
 const BASE_URI = "../../assets/";

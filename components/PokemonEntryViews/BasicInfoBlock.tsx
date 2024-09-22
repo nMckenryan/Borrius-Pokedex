@@ -2,7 +2,7 @@ import TypeIcon from "../UI/TypeIcon";
 import { Image, Skeleton } from "@rneui/themed";
 import React from "react";
 import { View, Text } from "react-native";
-import { Pokemon } from "../../api/get-borrius-api";
+import { Pokemon } from "../../api/borrius-types";
 
 export function BasicInfoBlock({
   selectedPokemon,

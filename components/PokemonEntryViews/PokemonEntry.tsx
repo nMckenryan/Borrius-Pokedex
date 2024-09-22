@@ -3,7 +3,7 @@ import React from "react";
 import { ActivityIndicator, View } from "react-native";
 import { StatBlock } from "./StatBlock";
 import LocationsBlock from "./LocationsBlock";
-import { Pokemon } from "../../api/get-borrius-api";
+import { Pokemon } from "../../api/borrius-types";
 import MovesBlock from "./MovesBlock";
 import { BasicInfoBlock } from "./BasicInfoBlock";
 import { EvolutionBlock } from "./EvolutionBlock";

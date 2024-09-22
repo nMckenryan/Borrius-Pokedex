@@ -1,72 +1,5 @@
+import { Pokemon } from "./borrius-types";
 import pokedexData from "./borrius_pokedex_data.json";
-
-export type Stats = {
-    hp: number,
-    attack: number,
-    defense: number,
-    specialAttack: number,
-    specialDefense: number,
-    speed: number
-}
-
-export type Move = {
-    name: string
-    type: string
-    category: string
-    power: number | null
-    accuracy: number | null
-    learn_method: string
-    level_learned: number | null
-}
-
-export type Evolutions = {
-    gender: string | null,
-    held_item: string | null,
-    item: string | null,
-    known_move: string | null,
-    known_move_type: string | null,
-    location: string | null,
-    min_level: number | null,
-    min_happiness: number | null,
-    min_affection: number | null,
-    needs_overworld_rain: boolean | null,
-    party_species: string | null,
-    party_type: string | null,
-    relative_physical_stats: number | null,
-    time_of_day: string | null,
-    trade_species: string | null,
-    turn_upside_down: boolean | null
-    trigger: {
-        name: string,
-    },
-    evolutionChain: []
-}
-
-export type Location = {
-    location: string,
-    encounterMethod: string,
-    timeOfDay: string,
-    isSpecialEncounter: boolean
-}
-
-export type Pokemon = {
-    id: number,
-    nationalId: number,
-    name: string,
-    height: number,
-    weight: number,
-    capture_rate: number,
-    sprites: {
-        official: string | null,
-        game_sprite: string | null
-    },
-    typeList: string[],
-    stats: Stats,
-    evolutions: Evolutions,
-    abilities: string[]
-    locations: Location[],
-    moves: Move[]
-}
 
 export const getPokemonEvolutionSprite = async (nextStageName: string) => {
     try {
@@ -110,8 +43,6 @@ export const getPokemonEvolutionSprite = async (nextStageName: string) => {
             nextStageName = "keldeo-ordinary";
         }
 
-
-
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nextStageName}`);
         const data = await response.json();
 
@@ -125,43 +56,40 @@ export const getPokemonEvolutionSprite = async (nextStageName: string) => {
     }
 }
 
-async function parseEvolutionDetails(evolutionDetails: any) {
+async function parseEvolutionDetails(evolutionDetails: any): Promise<Evolutions> {
     const evoSprites = await getPokemonEvolutionSprite(evolutionDetails.species.name);
 
     return {
-        evolutionDetails: evolutionDetails.evolution_details.map((evolutionDetail: any) => ({
-            gender: evolutionDetail.gender || null,
-            held_item: evolutionDetail.held_item || null,
-            item: evolutionDetail.item || null,
-            known_move: evolutionDetail.known_move || null,
-            known_move_type: evolutionDetail.known_move_type || null,
-            location: evolutionDetail.location || null,
-            min_level: evolutionDetail.min_level || null,
-            min_happiness: evolutionDetail.min_happiness || null,
-            min_affection: evolutionDetail.min_affection || null,
-            needs_overworld_rain: evolutionDetail.needs_overworld_rain || null,
-            party_species: evolutionDetail.party_species || null,
-            party_type: evolutionDetail.party_type || null,
-            relative_physical_stats: evolutionDetail.relative_physical_stats || null,
-            time_of_day: evolutionDetail.time_of_day || null,
-            trade_species: evolutionDetail.trade_species || null,
-            trigger: {
-                name: evolutionDetail.trigger.name,
-                url: evolutionDetail.trigger.url
-            },
-            turn_upside_down: evolutionDetail.turn_upside_down || null
-        })),
-        evolves_to: evolutionDetails.evolves_to ? evolutionDetails.evolves_to.map((evolvesTo: any) => parseEvolutionDetails(evolvesTo)) : [],
-        is_baby: evolutionDetails.is_baby,
+        gender: evolutionDetails.gender || null,
+        held_item: evolutionDetails.held_item || null,
+        item: evolutionDetails.item || null,
+        known_move: evolutionDetails.known_move || null,
+        known_move_type: evolutionDetails.known_move_type || null,
+        location: evolutionDetails.location || null,
+        min_level: evolutionDetails.min_level || null,
+        min_happiness: evolutionDetails.min_happiness || null,
+        min_affection: evolutionDetails.min_affection || null,
+        needs_overworld_rain: evolutionDetails.needs_overworld_rain || null,
+        party_species: evolutionDetails.party_species || null,
+        party_type: evolutionDetails.party_type || null,
+        relative_physical_stats: evolutionDetails.relative_physical_stats || null,
+        time_of_day: evolutionDetails.time_of_day || null,
+        trade_species: evolutionDetails.trade_species || null,
+        trigger: {
+            name: evolutionDetails.trigger.name
+        },
+        turn_upside_down: evolutionDetails.turn_upside_down || null,
+        evolves_to: evolutionDetails.evolves_to ? await Promise.all(evolutionDetails.evolves_to.map((evolvesTo: any) => parseEvolutionDetails(evolvesTo))) : [],
+        is_baby: evolutionDetails.is_baby || false,
         species: {
             name: evolutionDetails.species.name,
-            url: evolutionDetails.species.url
-        },
-        evolutionSprites: {
-            official: evoSprites.official,
-            game_sprite: evoSprites.game_sprite
+            url: evolutionDetails.species.url,
+            evolutionSprites: {
+                official: evoSprites.official,
+                game_sprite: evoSprites.game_sprite
+            }
         }
-    }
+    };
 }
 
 const compileMoves = (moveList) => {
@@ -194,14 +122,6 @@ export const getAllBorriusPokemon = async () => {
             const pokeEvo = await parseEvolutionDetails(pokemon.evolution_chain);
             const movesList = compileMoves(pokemon.moves);
 
-            const evo = {
-                evolutionDetails: pokeEvo.evolutionDetails,
-                evolves_to: pokeEvo.evolves_to,
-                is_baby: pokeEvo.is_baby,
-                species: pokeEvo.species,
-                evolutionSprites: pokeEvo.evolutionSprites
-            }
-
             const pokeObj: Pokemon = {
                 id: pokemon.game_indices[0].game_index,
                 nationalId: pokemon.game_indices[1].game_index,
@@ -220,7 +140,7 @@ export const getAllBorriusPokemon = async () => {
                     specialDefense: pokemon.stats.specialDefense.base_stat,
                     speed: pokemon.stats.speed.base_stat
                 },
-                evolutions: null,
+                evolutions: pokeEvo,
                 height: pokemon.height,
                 weight: pokemon.weight,
                 capture_rate: parseInt(pokemon.capture_rate.percentage),

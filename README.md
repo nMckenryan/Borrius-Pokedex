@@ -28,28 +28,29 @@
   - [x] Handle No Evo
   - [x] Handle 2 stage evolutions
   - [x] Handle 3 stage evolutions
-  - [ ] Handle split evolutions e.g poliwag
+  - [ ] Handle split evolutions e.g Tyrogue
   - [ ] Handle Eevee
   - [ ] Handle clicking evolution forms to go to other pokemon
 
 - EVO TRIGGERS
 
+  - [x] min_level
   - [ ] gender (vespiqueen)
-  - [x] held_item
-  - [x] item
-  - [ ] known_move (primeape)
-  - [ ] known_move_type
-  - [ ] location
-  - [ ] min_affection (togepi?)
+  - [x] held_item (Politoed)
+  - [x] item (firestone etc)
+  - [ ] known_move (Tangela)
+  - [ ] known_move_type (eevee - sylveon)
+  - [ ] ~~location (irrelevant)~~
+  - [ ] min_affection (azuril)
   - [ ] min_beauty (milotic)
   - [ ] min_happiness (togepi)
-  - [x] min_level
   - [ ] needs_overworld_rain
-  - [ ] party_species
-  - [ ] party_type
+  - [ ] party_species (mantyke)
+  - [ ] party_type (pancham)
   - [ ] relative_physical_stats (tyrogue)
   - [ ] time_of_day (rockruff)
   - [ ] turn_upside_down (that squid thing)
+  - [ ] Trade (link stone)
   - [ ] Trade species (escavalier)
 
 - [x] Pokemon Base Stats (look for bar graph, )
@@ -58,6 +59,8 @@
 - [x] Get Pokemon location for Borrius (Scan thru PDF?)
 - [x] Movelist
 - [x] Create App Icon
+- Remove Anachronicistic pokemon (e.g. Annihilape)
+- Set Regional pokemon
 
 ## TODO:
 

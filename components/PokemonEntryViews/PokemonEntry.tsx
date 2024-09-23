@@ -80,7 +80,7 @@ export function PokemonEntry({
                 </Text>
               )}
 
-              <View className="flex-row justify-evenly">
+              <View className="flex-row justify-between">
                 {selectedPokemon.stats ? (
                   <BasicInfoBlock selectedPokemon={selectedPokemon} />
                 ) : (
@@ -93,17 +93,14 @@ export function PokemonEntry({
                   <Skeleton animation="pulse" width={300} height={200} />
                 )}
 
-                {selectedPokemon.locations.length > 0 ? (
+                {selectedPokemon.locations.length > 0 && (
                   <LocationsBlock selectedPokemon={selectedPokemon} />
-                ) : (
-                  <Skeleton animation="pulse" width={300} height={200} />
                 )}
               </View>
-              <View className="flex-row justify-evenly">
-                {selectedPokemon.evolutions ? (
+
+              <View className="flex-row justify-between">
+                {selectedPokemon.evolutions.length > 1 && (
                   <EvolutionBlock evolutions={selectedPokemon.evolutions} />
-                ) : (
-                  <Skeleton animation="pulse" width={250} height={200} />
                 )}
 
                 {selectedPokemon.moves.length > 0 ? (

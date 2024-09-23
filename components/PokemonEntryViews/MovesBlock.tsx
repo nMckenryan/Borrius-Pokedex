@@ -31,7 +31,7 @@ export default function MovesBlock({
           <FlatList
             data={selectedPokemon.moves}
             showsVerticalScrollIndicator={true}
-            keyExtractor={(item) => item.name + selectedPokemon.name}
+            keyExtractor={(item, index) => item.name + index}
             contentContainerClassName="h-50"
             renderItem={({ item }) => (
               <View className="grid grid-cols-[repeat(6,minmax(20px,1fr))]">
@@ -42,7 +42,9 @@ export default function MovesBlock({
                   <TypeIcon typeList={[item.type]} />
                 </View>
                 <View>
-                  <Text className="px-1 text-sm">{item.accuracy}</Text>
+                  <Text className="px-1 text-sm">
+                    {item.accuracy !== "-" ? `${item.accuracy}%` : "-"}
+                  </Text>
                 </View>
                 <View>
                   <Image

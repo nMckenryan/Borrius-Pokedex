@@ -45,7 +45,7 @@ function TypeIconButton({ type }: { type: string }) {
 
   return (
     <Text
-      className={`mr-1 text-xs uppercase ${color} text-white px-2 py-1 rounded-full font-bold`}
+      className={`mr-1 text-xs uppercase ${color} text-white px-2 py-1 rounded-full font-bold [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]`}
     >
       {type}
     </Text>

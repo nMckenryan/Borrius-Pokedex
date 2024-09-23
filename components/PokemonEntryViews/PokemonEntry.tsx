@@ -101,7 +101,7 @@ export function PokemonEntry({
               </View>
               <View className="flex-row justify-evenly">
                 {selectedPokemon.evolutions ? (
-                  <EvolutionBlock selectedPokemon={selectedPokemon} />
+                  <EvolutionBlock evolutions={selectedPokemon.evolutions} />
                 ) : (
                   <Skeleton animation="pulse" width={250} height={200} />
                 )}

@@ -1,5 +1,25 @@
-import { Pokemon } from "./borrius-types";
+import { Evolutions, Pokemon } from "./borrius-types";
 import pokedexData from "./borrius_pokedex_data.json";
+
+const compileMoves = (moveList) => {
+    if (moveList.length === 0) {
+        return [];
+    }
+
+    let ml = [];
+    moveList.map((item) => {
+        ml.push({
+            name: item.move.name,
+            type: item.move.type,
+            category: item.move.category,
+            power: item.move.power,
+            accuracy: item.move.accuracy,
+            learn_method: item.version_group_details[0].move_learn_method.name,
+            level_learned: item.version_group_details[0].level_learned_at
+        })
+    })
+    return ml
+};
 
 export const getPokemonEvolutionSprite = async (nextStageName: string) => {
     try {
@@ -28,7 +48,7 @@ export const getPokemonEvolutionSprite = async (nextStageName: string) => {
             nextStageName = "lycanroc-midday";
         }
         if (nextStageName === "basculin" || nextStageName === "basculegion") {
-            nextStageName = "basculin-red-striped";
+            return null;
         }
         if (nextStageName === "darmanitan") {
             nextStageName = "darmanitan-standard";
@@ -56,61 +76,57 @@ export const getPokemonEvolutionSprite = async (nextStageName: string) => {
     }
 }
 
-async function parseEvolutionDetails(evolutionDetails: any): Promise<Evolutions> {
-    const evoSprites = await getPokemonEvolutionSprite(evolutionDetails.species.name);
 
-    return {
-        gender: evolutionDetails.gender || null,
-        held_item: evolutionDetails.held_item || null,
-        item: evolutionDetails.item || null,
-        known_move: evolutionDetails.known_move || null,
-        known_move_type: evolutionDetails.known_move_type || null,
-        location: evolutionDetails.location || null,
-        min_level: evolutionDetails.min_level || null,
-        min_happiness: evolutionDetails.min_happiness || null,
-        min_affection: evolutionDetails.min_affection || null,
-        needs_overworld_rain: evolutionDetails.needs_overworld_rain || null,
-        party_species: evolutionDetails.party_species || null,
-        party_type: evolutionDetails.party_type || null,
-        relative_physical_stats: evolutionDetails.relative_physical_stats || null,
-        time_of_day: evolutionDetails.time_of_day || null,
-        trade_species: evolutionDetails.trade_species || null,
-        trigger: {
-            name: evolutionDetails.trigger.name
-        },
-        turn_upside_down: evolutionDetails.turn_upside_down || null,
-        evolves_to: evolutionDetails.evolves_to ? await Promise.all(evolutionDetails.evolves_to.map((evolvesTo: any) => parseEvolutionDetails(evolvesTo))) : [],
-        is_baby: evolutionDetails.is_baby || false,
-        species: {
-            name: evolutionDetails.species.name,
-            url: evolutionDetails.species.url,
-            evolutionSprites: {
-                official: evoSprites.official,
-                game_sprite: evoSprites.game_sprite
-            }
+async function traverseEvolutionChain(chain) {
+    const evolutions = [];
+    let stages = 1;
+
+    evolutions.push({
+        name: chain.species.name,
+        is_baby: chain.is_baby,
+        trigger: null,
+        triggerItem: "Base",
+        min_level: 0,
+        stage_sprite: await getPokemonEvolutionSprite(chain.species.name),
+        stage: stages
+    });
+
+    async function traverse(node) {
+        if (node.evolution_details.length != 0) {
+            evolutions.push({
+                name: node.species.name,
+                is_baby: node.is_baby,
+                trigger: node.evolution_details[0]?.trigger?.name || null,
+                triggerItem: node.evolution_details[0]?.item
+                    || node.evolution_details[0].held_item
+                    || node.evolution_details[0].known_move
+                    || node.evolution_details[0].known_move_type
+                    || node.evolution_details[0].location
+                    || node.evolution_details[0].party_type
+                    || node.evolution_details[0].trade_species
+                    || node.evolution_details[0].party_species
+                    || node.evolution_details[0].time_of_day
+                    || node.evolution_details[0].relative_physical_stats
+                    || node.evolution_details[0].min_affection
+                    || node.evolution_details[0].min_happiness
+                    || node.evolution_details[0].min_level
+                    || node.evolution_details[0].needs_overworld_rain
+                    || node.evolution_details[0].turn_upside_down || null,
+                min_level: node.evolution_details[0]?.min_level || null,
+                stage_sprite: await getPokemonEvolutionSprite(node.species.name),
+                stage: stages
+            });
         }
-    };
-}
-
-const compileMoves = (moveList) => {
-    if (moveList.length === 0) {
-        return [];
+        for (const evolution of node.evolves_to) {
+            traverse(evolution);
+            stages++;
+        }
     }
 
-    let ml = [];
-    moveList.map((item) => {
-        ml.push({
-            name: item.move.name,
-            type: item.move.type,
-            category: item.move.category,
-            power: item.move.power,
-            accuracy: item.move.accuracy,
-            learn_method: item.version_group_details[0].move_learn_method.name,
-            level_learned: item.version_group_details[0].level_learned_at
-        })
-    })
-    return ml
-};
+    traverse(chain);
+    return evolutions;
+}
+
 
 export const getAllBorriusPokemon = async () => {
     const allPokemon: Pokemon[] = [];
@@ -118,8 +134,7 @@ export const getAllBorriusPokemon = async () => {
 
     try {
         for (const pokemon of pokemonSection) {
-
-            const pokeEvo = await parseEvolutionDetails(pokemon.evolution_chain);
+            const pokeEvo = await traverseEvolutionChain(pokemon.evolution_chain);
             const movesList = compileMoves(pokemon.moves);
 
             const pokeObj: Pokemon = {

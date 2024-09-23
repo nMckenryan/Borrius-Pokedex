@@ -19,36 +19,13 @@ export type Move = {
 }
 
 export type Evolutions = {
-    gender: string | null,
-    held_item: string | null,
-    item: string | null,
-    known_move: string | null,
-    known_move_type: string | null,
-    location: string | null,
-    min_level: number | null,
-    min_happiness: number | null,
-    min_affection: number | null,
-    needs_overworld_rain: boolean | null,
-    party_species: string | null,
-    party_type: string | null,
-    relative_physical_stats: number | null,
-    time_of_day: string | null,
-    trade_species: string | null,
-    turn_upside_down: boolean | null
-    trigger: {
-        name: string,
-    },
-    evolutionChain: [],
-    evolves_to: Evolutions[],
+    name: string | null,
     is_baby: boolean,
-    species: {
-        name: string,
-        url: string
-        evolutionSprites: {
-            official: string | null,
-            game_sprite: string | null
-        }
-    }
+    trigger: string | null,
+    triggerItem: string | null,
+    min_level: number | null,
+    stage_sprite: string | null,
+    stage: number | null
 }
 
 export type Location = {

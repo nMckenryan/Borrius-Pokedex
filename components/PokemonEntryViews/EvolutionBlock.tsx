@@ -5,30 +5,30 @@ import SpriteAvatar from "../UI/SpriteAvatar";
 import { Evolutions, Pokemon } from "../../api/borrius-types";
 
 function EvolutionStage({ stageDetails }: { stageDetails: Evolutions }) {
-  let trigger: string;
+  // let trigger: string;
 
-  switch (stageDetails.trigger) {
-    case "level-up":
-      trigger = stageDetails.min_level
-        ? `Level ${stageDetails.min_level}`
-        : "Level Up";
-      break;
-    case "trade":
-      trigger = "Link Stone";
-      break;
-    case "use-item":
-      trigger = stageDetails.triggerItem.name.replace(/-/g, " ");
-      break;
-    case "gender":
-      trigger = stageDetails.gender + " Level: " + stageDetails.min_level;
-      break;
-    case "min-happiness":
-      trigger =
-        "Happiness: " +
-        stageDetails.min_happiness +
-        " Level: " +
-        stageDetails.min_level;
-  }
+  // switch (stageDetails.trigger) {
+  //   case "level-up":
+  //     trigger = stageDetails.min_level
+  //       ? `Level ${stageDetails.min_level}`
+  //       : "Level Up";
+  //     break;
+  //   case "trade":
+  //     trigger = "Link Stone";
+  //     break;
+  //   case "use-item":
+  //     trigger = stageDetails.triggerItem.name.replace(/-/g, " ");
+  //     break;
+  //   case "gender":
+  //     trigger = stageDetails.gender + " Level: " + stageDetails.min_level;
+  //     break;
+  //   case "min-happiness":
+  //     trigger =
+  //       "Happiness: " +
+  //       stageDetails.min_happiness +
+  //       " Level: " +
+  //       stageDetails.min_level;
+  // }
 
   return (
     <View className="flex-row items-center justify-center">
@@ -43,7 +43,28 @@ function EvolutionStage({ stageDetails }: { stageDetails: Evolutions }) {
         <Text className="text-md capitalize">{stageDetails.name}</Text>
 
         <View className="flex-row items-center">
-          <Text className="text-sm capitalize">{trigger}</Text>
+          <Text className="text-sm capitalize">{stageDetails.triggerItem}</Text>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+function handleEeveelutions(evolutions: Pokemon) {
+  const eevee = evolutions.find((item) => item.name === "eevee");
+  const eevelutions = evolutions.filter((item) => item.name !== "eevee");
+
+  return (
+    <View className="flex-col items-center justify-center">
+      {/* EEVEE */}
+      <View className="flex-col">
+        <EvolutionStage stageDetails={eevee} />;
+      </View>
+      <View className="flex-col">
+        <View className="flex-row">
+          {eevelutions.map((item, index) => {
+            return <EvolutionStage stageDetails={item} key={index} />;
+          })}
         </View>
       </View>
     </View>
@@ -54,8 +75,10 @@ export function EvolutionBlock({ evolutions }: { evolutions: Evolutions }) {
   return (
     <View className="flex-col items-center justify-center">
       <Text className="text-md font-bold mb-2">Evolutions</Text>
-      <View className="flex-row">
+      <View className="flex-row flex-wrap space-between">
         {evolutions.map((item, index) => {
+          if (item.name === "eevee") return handleEeveelutions(item);
+
           return <EvolutionStage stageDetails={item} key={index} />;
         })}
       </View>

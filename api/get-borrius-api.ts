@@ -92,26 +92,94 @@ async function traverseEvolutionChain(chain) {
     });
 
     async function traverse(node) {
+
+        let triggerMethod = ""
+        const gender = node.evolution_details[0]?.gender
+        const item = node.evolution_details[0]?.item
+        const heldItem = node.evolution_details[0]?.held_item
+        const knownMove = node.evolution_details[0]?.known_move
+        const knownMoveType = node.evolution_details[0]?.known_move_type
+        const location = node.evolution_details[0]?.location
+        const partyType = node.evolution_details[0]?.party_type
+        const tradeSpecies = node.evolution_details[0]?.trade_species
+        const partySpecies = node.evolution_details[0]?.party_species
+        const timeOfDay = node.evolution_details[0]?.time_of_day
+        const relativePhysicalStats = node.evolution_details[0]?.relative_physical_stats
+        const minAffection = node.evolution_details[0]?.min_affection
+        const minHappiness = node.evolution_details[0]?.min_happiness
+        const minLevel = node.evolution_details[0]?.min_level
+        const needsOverworldRain = node.evolution_details[0]?.needs_overworld_rain
+        const trade = node.evolution_details[0]?.trigger.name == "trade"
+
+        if (minLevel) {
+            triggerMethod += `Level ${minLevel}\n`
+        }
+
+        if (item) {
+            triggerMethod += `Use ${item.name.replace(/[^\w\s]/gi, '')}\n`
+        }
+
+
+        if (tradeSpecies || trade) {
+            triggerMethod += `Link Stone\n`
+        }
+
+        if (gender) {
+            gender === 1 ? triggerMethod += "Female Only\n" : triggerMethod += "Male Only\n"
+        }
+
+        if (heldItem) {
+            triggerMethod += `Hold  ${item.held_item.replace(/[^\w\s]/gi, '')}\n`
+        }
+
+        if (knownMove) {
+            triggerMethod += `Known Move: ${knownMove.name.replace(/[^\w\s]/gi, '')}\n`
+        }
+
+        if (knownMoveType) {
+            triggerMethod += `Known Move Type: ${knownMoveType.name}\n`
+        }
+
+        if (location) {
+            triggerMethod += `Location: ${location.name.replace(/[^\w\s]/gi, '')}\n`
+        }
+
+        if (partyType) {
+            triggerMethod += `Have ${partyType.name.replace(/[^\w\s]/gi, '')} in Party\n`
+        }
+
+        if (partySpecies) {
+            triggerMethod += `Have ${partySpecies.name.replace(/[^\w\s]/gi, '')} in Party\n`
+        }
+
+        if (timeOfDay) {
+            triggerMethod += `${timeOfDay} Time\n`
+        }
+
+        if (relativePhysicalStats) {
+            triggerMethod += `Relative Physical Stats: ${relativePhysicalStats}\n`
+        }
+
+        if (minAffection) {
+            triggerMethod += `High Affection: (${minAffection})\n`
+        }
+
+        if (minHappiness) {
+            triggerMethod += `High Happiness: (${minHappiness})\n`
+        }
+
+
+        if (needsOverworldRain) {
+            triggerMethod += `In Rain (Route 10)\n`
+        }
+
         if (node.evolution_details.length != 0) {
             evolutions.push({
                 name: node.species.name,
                 is_baby: node.is_baby,
                 trigger: node.evolution_details[0]?.trigger?.name || null,
-                triggerItem: node.evolution_details[0]?.item
-                    || node.evolution_details[0].held_item
-                    || node.evolution_details[0].known_move
-                    || node.evolution_details[0].known_move_type
-                    || node.evolution_details[0].location
-                    || node.evolution_details[0].party_type
-                    || node.evolution_details[0].trade_species
-                    || node.evolution_details[0].party_species
-                    || node.evolution_details[0].time_of_day
-                    || node.evolution_details[0].relative_physical_stats
-                    || node.evolution_details[0].min_affection
-                    || node.evolution_details[0].min_happiness
-                    || node.evolution_details[0].min_level
-                    || node.evolution_details[0].needs_overworld_rain
-                    || node.evolution_details[0].turn_upside_down || null,
+                triggerItem: triggerMethod,
+
                 min_level: node.evolution_details[0]?.min_level || null,
                 stage_sprite: await getPokemonEvolutionSprite(node.species.name),
                 stage: stages

@@ -28,30 +28,30 @@
   - [x] Handle No Evo
   - [x] Handle 2 stage evolutions
   - [x] Handle 3 stage evolutions
-  - [ ] Handle split evolutions e.g Tyrogue
+  - [ ] Handle split evolutions e.g politoed
   - [ ] Handle Eevee
   - [ ] Handle clicking evolution forms to go to other pokemon
 
 - EVO TRIGGERS
 
   - [x] min_level
-  - [ ] gender (vespiqueen)
+  - [x] gender (vespiqueen)
   - [x] held_item (Politoed)
   - [x] item (firestone etc)
-  - [ ] known_move (Tangela)
+  - [x] known_move (Tangela)
   - [ ] known_move_type (eevee - sylveon)
-  - [ ] ~~location (irrelevant)~~
-  - [ ] min_affection (azuril)
-  - [ ] min_beauty (milotic)
-  - [ ] min_happiness (togepi)
-  - [ ] needs_overworld_rain
-  - [ ] party_species (mantyke)
-  - [ ] party_type (pancham)
-  - [ ] relative_physical_stats (tyrogue)
-  - [ ] time_of_day (rockruff)
-  - [ ] turn_upside_down (that squid thing)
-  - [ ] Trade (link stone)
-  - [ ] Trade species (escavalier)
+        ~~- [x] location (irrelevant)~~
+  - [x] min_affection (azuril)
+        ~~- [x] min_beauty (milotic)~~
+  - [x] min_happiness (riolu)
+  - [x] needs_overworld_rain
+  - [x] party_species (mantyke)
+  - [x] party_type (pancham)
+        ~~- [ ] relative_physical_stats (tyrogue)~~
+  - [x] time_of_day (rockruff)
+  - [x] turn_upside_down (Malamar)
+  - [x] Trade (link stone)
+        ~~- [ ] Trade species (escavalier)~~
 
 - [x] Pokemon Base Stats (look for bar graph, )
 - [x] [Pokemon Stat Ratings](<https://marriland.com/glossary/base-stats/#:~:text=Excellent%20(130%20or%20Higher),indicative%20of%20the%20top%20tier>)
@@ -79,6 +79,7 @@
 - [x] Weirdness re: single/duo evos
 - [ ] Beldum has no move data
 - [ ] Handle long pokemon names (e.g. Nidoran female)
+- [ ] Handle Rockruff evolutions
 
 ## Future Work
 

@@ -28,7 +28,7 @@
   - [x] Handle No Evo
   - [x] Handle 2 stage evolutions
   - [x] Handle 3 stage evolutions
-  - [ ] Handle split evolutions e.g politoed
+  - [x] Handle split evolutions e.g politoed
   - [ ] Handle Eevee
   - [ ] Handle clicking evolution forms to go to other pokemon
 

@@ -82,7 +82,7 @@ export function Pokedex() {
         }
       />
 
-      <View className="bg-slate-300 h-full">
+      <View className="bg-amber-200 h-full">
         {error && (
           <View className="flex-row items-center p-1 justify-center w-full h-full">
             Error: {error.message}

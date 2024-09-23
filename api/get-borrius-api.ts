@@ -195,7 +195,6 @@ async function traverseEvolutionChain(chain) {
     return evolutions;
 }
 
-
 export const getAllBorriusPokemon = async () => {
     const allPokemon: Pokemon[] = [];
     const pokemonSection = pokedexData[0].pokemon;

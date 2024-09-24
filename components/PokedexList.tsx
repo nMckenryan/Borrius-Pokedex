@@ -1,5 +1,5 @@
 import { ListItem, Card, Text } from "@rneui/base";
-import { FlatList, View, TouchableOpacity } from "react-native";
+import { FlatList, View, Pressable } from "react-native";
 import SpriteAvatar from "./UI/SpriteAvatar";
 import TypeIcon from "./UI/TypeIcon";
 
@@ -80,7 +80,7 @@ function PokemonListDesktop({
       initialNumToRender={105}
       contentContainerClassName="flex-row flex-wrap justify-center"
       renderItem={({ item: desktopPokemon }) => (
-        <TouchableOpacity
+        <Pressable
           onPress={() => {
             setSelectedPokemon(desktopPokemon);
             setIsBottomSheetVisible(true);
@@ -131,7 +131,7 @@ function PokemonListDesktop({
               </View>
             </View>
           </Card>
-        </TouchableOpacity>
+        </Pressable>
       )}
     />
   );

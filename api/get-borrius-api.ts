@@ -129,7 +129,7 @@ async function traverseEvolutionChain(chain) {
         }
 
         if (heldItem) {
-            triggerMethod += `Hold  ${item.held_item.replace(/[^\w\s]/gi, '')}\n`
+            triggerMethod += `Hold  ${heldItem.name.replace(/[^\w\s]/gi, '')}\n`
         }
 
         if (knownMove) {

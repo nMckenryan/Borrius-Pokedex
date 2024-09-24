@@ -5,10 +5,18 @@ import SpriteAvatar from "../UI/SpriteAvatar";
 import { Evolutions } from "../../api/borrius-types";
 
 function Eeveelutions({ eevee }: { eevee: Evolutions[] }) {
+  //places eveee in middle of array
+  const newEevee = [...eevee];
+  const firstElement = eevee[0];
+  const middleIndex = Math.floor(newEevee.length / 2);
+  newEevee.splice(0, 1);
+  newEevee.splice(middleIndex, 0, firstElement);
+
   return (
     <FlatList
-      data={eevee}
+      data={newEevee}
       numColumns={3}
+      keyExtractor={(item, index) => item.name + index}
       renderItem={({ item }) => {
         return <EvolutionStage stageDetails={item} />;
       }}

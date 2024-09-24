@@ -8,13 +8,14 @@ export default function SpriteAvatar({
   spriteUrl: string;
   size: number | "small" | "large" | "medium" | "xlarge";
 }) {
+  const avatarSize = window.innerWidth < 768 ? "small" : size;
   return (
     <>
       {!spriteUrl ? (
         <Skeleton circle width="100%" />
       ) : (
         <Avatar
-          size={size}
+          size={avatarSize}
           rounded
           source={{
             uri: spriteUrl || "../../assets/questionMark.png",

@@ -32,10 +32,14 @@ function EvolutionStage({ stageDetails }: { stageDetails: Evolutions }) {
         size={"large"}
         spriteUrl={stageDetails.stage_sprite.game_sprite || null}
       />
-      <Text className="text-md capitalize">{stageDetails.name}</Text>
+      <View className="flex-col items-center">
+        <Text className="text-xs md:text-small capitalize ">
+          {stageDetails.name}
+        </Text>
 
-      <View className="flex-row items-center">
-        <Text className="text-sm capitalize">{stageDetails.triggerItem}</Text>
+        <Text className="text-xs md:text-small capitalize">
+          {stageDetails.triggerItem}
+        </Text>
       </View>
     </View>
   );
@@ -43,8 +47,7 @@ function EvolutionStage({ stageDetails }: { stageDetails: Evolutions }) {
 
 export function EvolutionBlock({ evolutions }: { evolutions: Evolutions[] }) {
   return (
-    <View className="flex-col items-center justify-center">
-      <Text className="text-md font-bold mb-2">Evolutions</Text>
+    <View className="flex-col items-center justify-center m-1">
       <View className="flex-row flex-wrap space-between gap-1">
         <View className="flex-row items-center justify-center">
           <EvolutionStage stageDetails={evolutions[0]} />

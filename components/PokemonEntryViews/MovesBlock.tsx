@@ -2,7 +2,7 @@ import { View, Text, FlatList } from "react-native";
 import { Image } from "@rneui/themed";
 import React from "react";
 import { Pokemon } from "../../api/borrius-types";
-import TypeIcon from "../UI/TypeIcon";
+import TypeIcon, { MoveTypeIcon } from "../UI/TypeIcon";
 
 const BASE_URI = "../../assets/";
 
@@ -17,15 +17,27 @@ export default function MovesBlock({
       style={{ borderWidth: 1 }}
     >
       {selectedPokemon.moves.length > 0 && (
-        <View className="flex-col h-[250px]">
+        <View className="flex-col h-[125px] md:h-[250px] w-[350px]">
           {/* HEADER */}
           <View className="flex-row justify-between py-1 bg-slate-200">
-            <Text className="font-bold text-center">Move</Text>
-            <Text className="font-bold text-center">Type</Text>
-            <Text className="font-bold text-center">Accuracy</Text>
-            <Text className="font-bold text-center">Category</Text>
-            <Text className="font-bold text-center">Power</Text>
-            <Text className="font-bold text-center">Learned via</Text>
+            <Text className="font-bold text-xs md:text-sm text-center">
+              Move
+            </Text>
+            <Text className="font-bold text-xs md:text-sm text-center">
+              Type
+            </Text>
+            <Text className="font-bold text-xs md:text-sm text-center">
+              Accuracy
+            </Text>
+            <Text className="font-bold text-xs md:text-sm text-center">
+              Category
+            </Text>
+            <Text className="font-bold text-xs md:text-sm text-center">
+              Power
+            </Text>
+            <Text className="font-bold text-xs md:text-sm text-center">
+              Learned via
+            </Text>
             <View></View>
           </View>
           <FlatList
@@ -33,39 +45,31 @@ export default function MovesBlock({
             showsVerticalScrollIndicator={true}
             keyExtractor={(item, index) => item.name + index}
             contentContainerClassName="h-50"
-            renderItem={({ item }) => (
-              <View className="grid grid-cols-[repeat(6,minmax(20px,1fr))]">
-                <View>
-                  <Text className="px-1 text-sm">{item.name}</Text>
-                </View>
-                <View>
-                  <TypeIcon typeList={[item.type]} />
-                </View>
-                <View>
-                  <Text className="px-1 text-sm">
-                    {item.accuracy !== "-" ? `${item.accuracy}%` : "-"}
-                  </Text>
-                </View>
-                <View>
-                  <Image
-                    source={{ uri: BASE_URI + item.category + ".png" }}
-                    containerStyle={{ width: 30, height: 20, borderRadius: 25 }}
-                  />
-                </View>
-                <View>
-                  <Text className="px-1 text-sm">{item.power}</Text>
-                </View>
+            renderItem={({ item: move }) => (
+              <View className="grid flex-nowrap grid-cols-[repeat(6,minmax(35px,1fr))]">
+                <Text className="px-1 text-nowrap text-xs md:text-sm max-w-[100px] overflow-hidden text-ellipsis">
+                  {move.name}
+                </Text>
 
-                {item.learn_method == "level-up" ? (
-                  <View>
-                    <Text className="px-1 text-sm">
-                      Level {item.level_learned}
-                    </Text>
-                  </View>
+                <MoveTypeIcon type={move.type} />
+
+                <Text className="px-1 text-xs md:text-sm">
+                  {move.accuracy !== "-" ? `${move.accuracy}%` : "-"}
+                </Text>
+
+                <Image
+                  source={{ uri: BASE_URI + move.category + ".png" }}
+                  containerStyle={{ width: 30, height: 20, borderRadius: 25 }}
+                />
+
+                <Text className="px-1 text-xs md:text-sm">{move.power}</Text>
+
+                {move.learn_method == "level-up" ? (
+                  <Text className="px-1 text-xs md:text-sm">
+                    Level {move.level_learned}
+                  </Text>
                 ) : (
-                  <View>
-                    <Text className="px-1 text-sm">TM/HM</Text>
-                  </View>
+                  <Text className="px-1 text-xs md:text-sm">TM/HM</Text>
                 )}
               </View>
             )}

@@ -89,12 +89,6 @@ export function Pokedex() {
           </View>
         )}
 
-        {!filterData && (
-          <View className="flex-row items-center p-1 justify-center w-full h-full">
-            <Text>No Pokemon found</Text>
-          </View>
-        )}
-
         {isLoading ? (
           <View className="flex-row items-center p-1 justify-center w-full h-full">
             <ActivityIndicator size="large" color="#641e8c" />
@@ -136,7 +130,7 @@ export function Pokedex() {
 
           <FlatList
             data={filterData}
-            className="h-full w-full flex-col flex-wrap "
+            className="h-full w-full flex-col flex-wrap p-0 mb-50"
             showsVerticalScrollIndicator={true}
             keyExtractor={(item) => item.name}
             initialNumToRender={45}

@@ -17,17 +17,19 @@ export default function LocationsBlock({
   }
 
   return (
-    <View className="flex-col">
+    <View className="flex-col mx-1">
       {selectedPokemon.capture_rate && (
         <View className="flex-col">
-          <Text className="font-bold">
-            Catch Rate: {selectedPokemon.capture_rate}
+          <Text className="text-xs md:text-small">
+            <b>Catch Rate:</b> {selectedPokemon.capture_rate}
           </Text>
-          <Text>({getCatchRateDifficulty(selectedPokemon.capture_rate)})</Text>
+          <Text className="text-xs md:text-small">
+            ({getCatchRateDifficulty(selectedPokemon.capture_rate)})
+          </Text>
         </View>
       )}
       <br />
-      <Text className="text-md font-bold">Locations</Text>
+      <Text className="text-xs md:text-small font-bold">Locations</Text>
 
       <FlatList
         data={selectedPokemon.locations}
@@ -36,12 +38,12 @@ export default function LocationsBlock({
         contentContainerClassName="h-50"
         renderItem={({ item, index }) => (
           <View className="flex-row justify-between" key={index}>
-            <Text>
+            <Text className="text-xs md:text-small">
               {item.location}
               {item.encounterMethod != "Grass/Cave" &&
                 " - " + item.encounterMethod}
             </Text>
-            <Text>
+            <Text className="text-xs md:text-small">
               {item.isSpecialEncounter ? " (Special encounter)" : ""}
               {item.timeOfDay != "All Day" && item.timeOfDay}
             </Text>

@@ -105,40 +105,40 @@ const gradeStat = (stat: number) => {
 
 export function StatBlock({ selectedPokemon }: { selectedPokemon: Pokemon }) {
   return (
-    <View className="flex-row justify-around items-center">
+    <View className="flex-row justify-around items-center mx-1">
       <View className="flex-col mr-1">
         <View className="flex-row my-1">
-          <Text className="font-bold my-1 w-24">
+          <Text className="font-bold my-1 w-24 text-xs md:text-small">
             HP: {JSON.stringify(selectedPokemon.stats.hp)}
           </Text>
           {gradeStat(selectedPokemon.stats.hp)}
         </View>
         <View className="flex-row my-1">
-          <Text className="font-bold my-1 w-24">
+          <Text className="font-bold my-1 w-24 text-xs md:text-small">
             Attack: {JSON.stringify(selectedPokemon.stats.attack)}
           </Text>
           {gradeStat(selectedPokemon.stats.attack)}
         </View>
         <View className="flex-row my-1">
-          <Text className="font-bold my-1 w-24">
+          <Text className="font-bold my-1 w-24 text-xs md:text-small">
             Defense: {JSON.stringify(selectedPokemon.stats.defense)}
           </Text>
           {gradeStat(selectedPokemon.stats.defense)}
         </View>
         <View className="flex-row my-1">
-          <Text className="font-bold my-1 w-24">
+          <Text className="font-bold my-1 w-24 text-xs md:text-small">
             Sp. Atk: {JSON.stringify(selectedPokemon.stats.specialAttack)}
           </Text>
           {gradeStat(selectedPokemon.stats.specialAttack)}
         </View>
         <View className="flex-row my-1">
-          <Text className="font-bold my-1 w-24">
+          <Text className="font-bold my-1 w-24 text-xs md:text-small">
             Sp. Def: {JSON.stringify(selectedPokemon.stats.specialDefense)}
           </Text>
           {gradeStat(selectedPokemon.stats.specialDefense)}
         </View>
         <View className="flex-row my-1">
-          <Text className="font-bold my-1 w-24">
+          <Text className="font-bold my-1 w-24 text-xs md:text-small">
             Speed: {JSON.stringify(selectedPokemon.stats.speed)}
           </Text>
           {gradeStat(selectedPokemon.stats.speed)}

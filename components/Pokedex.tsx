@@ -1,28 +1,18 @@
 import "../global.css";
 
 import React, { useMemo, useState } from "react";
-import {
-  BottomSheet,
-  Card,
-  Header,
-  ListItem,
-  SearchBar,
-  Text,
-} from "@rneui/themed";
+import { BottomSheet } from "@rneui/themed";
 
 import { useQuery } from "@tanstack/react-query";
-import { getAllBorriusPokemon, Pokemon } from "../api/get-borrius-api";
+import { getAllBorriusPokemon } from "../api/get-borrius-api";
 
-import {
-  View,
-  ActivityIndicator,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
-import SpriteAvatar from "./UI/SpriteAvatar";
-import TypeIcon from "./UI/TypeIcon";
 import { PokemonEntry } from "./PokemonEntryViews/PokemonEntry";
+import { Pokemon } from "../api/borrius-types";
+import { SearchHeader } from "./SearchHeader";
+
+import { PokedexList } from "./PokedexList";
 
 export function Pokedex() {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
@@ -57,31 +47,7 @@ export function Pokedex() {
 
   return (
     <>
-      <Header
-        backgroundColor="#641e8c"
-        style={{
-          borderBottomColor: "#641e8c",
-          shadowColor: "black",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        rightComponent={
-          <SearchBar
-            lightTheme
-            onChangeText={setSearchTerm}
-            placeholder="Type query here..."
-            placeholderTextColor="#888"
-            value={searchTerm}
-            containerStyle={{
-              backgroundColor: "#641e8c",
-              borderTopColor: "#641e8c",
-              borderBottomColor: "#641e8c",
-            }}
-          />
-        }
-      />
-
+      <SearchHeader setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
       <View className="bg-amber-200 h-full">
         {error && (
           <View className="flex-row items-center p-1 justify-center w-full h-full">
@@ -93,99 +59,22 @@ export function Pokedex() {
           <View className="flex-row items-center p-1 justify-center w-full h-full">
             <ActivityIndicator size="large" color="#641e8c" />
           </View>
-        ) : window.innerWidth < 768 ? (
-          // MOBILE
-          <FlatList
-            data={filterData}
-            scrollEnabled={true}
-            initialNumToRender={15}
-            renderItem={({ item }) => (
-              <View className="flex-row items-center">
-                <ListItem
-                  bottomDivider
-                  className="w-full"
-                  onPress={() => {
-                    setSelectedPokemon(item);
-                    setIsBottomSheetVisible(true);
-                  }}
-                >
-                  <SpriteAvatar
-                    size={"medium"}
-                    spriteUrl={item.sprites.game_sprite}
-                  />
-                  <ListItem.Content>
-                    <ListItem.Title className="capitalize">
-                      #{item.id} - {item.name}
-                    </ListItem.Title>
-                    <ListItem.Subtitle>
-                      <TypeIcon typeList={item.typeList} />
-                    </ListItem.Subtitle>
-                  </ListItem.Content>
-                </ListItem>
-              </View>
-            )}
-          />
         ) : (
-          //  DESKTOP
-
-          <FlatList
-            data={filterData}
-            className="h-full w-full flex-col flex-wrap p-0 mb-50"
-            showsVerticalScrollIndicator={true}
-            keyExtractor={(item) => item.name}
-            initialNumToRender={45}
-            contentContainerClassName="flex-row flex-wrap justify-center"
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => {
-                  setSelectedPokemon(item);
-                  setIsBottomSheetVisible(true);
-                }}
-              >
-                <Card
-                  containerStyle={{
-                    height: 150,
-                    width: 175,
-                    shadowColor: "black",
-                    shadowOpacity: 0.5,
-                    shadowRadius: 5,
-                    elevation: 10,
-                    borderRadius: 5,
-                    margin: 10,
-                  }}
-                  wrapperStyle={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <View style={{ position: "absolute", top: 0, left: 0 }}>
-                    <Text style={{ fontSize: 9 }}>#{item.id}</Text>
-                  </View>
-                  <Card.Title className="capitalize" style={{ margin: 0 }}>
-                    {item.name}
-                  </Card.Title>
-                  <View className="p-2">
-                    <SpriteAvatar
-                      size={"medium"}
-                      spriteUrl={item.sprites.game_sprite}
-                    />
-                  </View>
-                  <View className="p-2">
-                    <TypeIcon typeList={item.typeList} />
-                  </View>
-                </Card>
-              </TouchableOpacity>
-            )}
+          <PokedexList
+            filterData={filterData}
+            setSelectedPokemon={setSelectedPokemon}
+            setIsBottomSheetVisible={setIsBottomSheetVisible}
           />
         )}
 
-        <BottomSheet
-          isVisible={isBottomSheetVisible}
-          onBackdropPress={() => setIsBottomSheetVisible(false)}
-        >
-          <PokemonEntry selectedPokemon={selectedPokemon} />
-        </BottomSheet>
+        <View className="justify-center align-center">
+          <BottomSheet
+            isVisible={isBottomSheetVisible}
+            onBackdropPress={() => setIsBottomSheetVisible(false)}
+          >
+            <PokemonEntry selectedPokemon={selectedPokemon} />
+          </BottomSheet>
+        </View>
       </View>
     </>
   );

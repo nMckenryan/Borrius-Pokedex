@@ -36,16 +36,16 @@ export default function LocationsBlock({
         showsVerticalScrollIndicator={true}
         keyExtractor={(item) => item.location}
         contentContainerClassName="h-50"
-        renderItem={({ item, index }) => (
+        renderItem={({ item: locationData, index }) => (
           <View className="flex-row justify-between" key={index}>
             <Text className="text-xs md:text-small">
-              {item.location}
-              {item.encounterMethod != "Grass/Cave" &&
-                " - " + item.encounterMethod}
+              {locationData.location}
+              {locationData.encounterMethod != "Grass/Cave" &&
+                " - " + locationData.encounterMethod}
             </Text>
             <Text className="text-xs md:text-small">
-              {item.isSpecialEncounter ? " (Special encounter)" : ""}
-              {item.timeOfDay != "All Day" && item.timeOfDay}
+              {locationData.isSpecialEncounter ? " (Special encounter)" : ""}
+              {locationData.timeOfDay != "All Day" && locationData.timeOfDay}
             </Text>
           </View>
         )}

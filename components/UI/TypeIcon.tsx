@@ -1,5 +1,32 @@
+import { Chip } from "@rneui/themed";
 import "../../global.css";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+
+const colors = {
+  normal: "rgb(159, 161, 159)",
+  grass: "rgb(63, 161, 41)",
+  fire: "rgb(230, 40, 41)",
+  water: "rgb(41, 128, 239)",
+  electric: "rgb(250, 192, 0)",
+  ice: "rgb(61, 206, 243)",
+  fighting: "rgb(255, 128, 0)",
+  poison: "rgb(145, 65, 203)",
+  ground: "rgb(145, 81, 33)",
+  flying: "rgb(129, 185, 239)",
+  psychic: "rgb(239, 65, 121)",
+  bug: "rgb(145, 161, 25)",
+  rock: "rgb(175, 169, 129)",
+  ghost: "rgb(112, 65, 112)",
+  steel: "rgb(96, 161, 184)",
+  dragon: "rgb(80, 96, 225)",
+  dark: "rgb(98, 77, 78)",
+  fairy: "rgb(239, 112, 239)",
+  pokeDexRed: "#DE1537",
+  pokeDexBlack: "#fffff",
+  pokeDexWhite: "#F5F5F5",
+  pokeDexBlue: "##27A4F3",
+  unboundPurple: "#641e8c",
+};
 
 export default function TypeIcon({
   typeList,
@@ -19,46 +46,24 @@ export default function TypeIcon({
   }
 }
 
-const colors = {
-  normal: "bg-normal",
-  fire: "bg-fire",
-  water: "bg-water",
-  electric: "bg-electric",
-  grass: "bg-grass",
-  ice: "bg-ice",
-  fighting: "bg-fighting",
-  poison: "bg-poison",
-  ground: "bg-ground",
-  flying: "bg-flying",
-  psychic: "bg-psychic",
-  bug: "bg-bug",
-  rock: "bg-rock",
-  ghost: "bg-ghost",
-  dragon: "bg-dragon",
-  dark: "bg-dark",
-  steel: "bg-steel",
-  fairy: "bg-fairy",
-};
-
 function TypeIconButton({ type }: { type: string }) {
   const color = colors[type.toLowerCase()] || "bg-gray-500";
   return (
-    <Text
-      className={`mr-1 text-xs uppercase ${color} text-white px-2 py-1 rounded-full font-bold [text-shadow:_0_1px_0_rgb(0_0_0_/_40%) flex-nowrap]`}
-    >
-      {type}
-    </Text>
-  );
-}
-
-export function MoveTypeIcon({ type }: { type: string }) {
-  const color = colors[type.toLowerCase()] || "bg-gray-500";
-
-  return (
-    <Text
-      className={`mr-1 text-[0.5rem] uppercase ${color} text-white px-2 py-1 rounded-full font-bold [text-shadow:_0_1px_0_rgb(0_0_0_/_40%) flex-nowrap]`}
-    >
-      {type}
-    </Text>
+    <Chip
+      title={type}
+      buttonStyle={{
+        backgroundColor: color,
+        padding: 1,
+      }}
+      titleStyle={{
+        textTransform: "uppercase",
+        color: "white",
+        fontSize: 10,
+        fontWeight: "bold",
+        textShadowColor: "rgb(0,0,0)",
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 1,
+      }}
+    />
   );
 }

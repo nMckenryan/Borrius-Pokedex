@@ -14,7 +14,7 @@ export function PokemonEntry({
   selectedPokemon: Pokemon;
 }) {
   return (
-    <Card containerStyle={{ borderRadius: 10 }}>
+    <Card containerStyle={{ borderRadius: 10, width: "25%" }}>
       {/* MOBILE */}
       {window.innerWidth < 768 ? (
         <>
@@ -104,12 +104,13 @@ export function PokemonEntry({
                   {selectedPokemon.evolutions.length > 1 && (
                     <EvolutionBlock evolutions={selectedPokemon.evolutions} />
                   )}
-
                   {selectedPokemon.locations.length > 0 && (
                     <LocationsBlock selectedPokemon={selectedPokemon} />
                   )}
                 </View>
+              </View>
 
+              <View className="flex-row">
                 {selectedPokemon.moves.length > 0 ? (
                   <MovesBlock selectedPokemon={selectedPokemon} />
                 ) : (

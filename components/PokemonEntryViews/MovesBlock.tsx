@@ -2,7 +2,7 @@ import { View, Text, FlatList } from "react-native";
 import { Image } from "@rneui/themed";
 import React from "react";
 import { Pokemon } from "../../api/borrius-types";
-import TypeIcon, { MoveTypeIcon } from "../UI/TypeIcon";
+import TypeIcon from "../UI/TypeIcon";
 
 const BASE_URI = "../../assets/";
 
@@ -17,7 +17,7 @@ export default function MovesBlock({
       style={{ borderWidth: 1 }}
     >
       {selectedPokemon.moves.length > 0 && (
-        <View className="flex-col h-[125px] md:h-[250px] w-[350px]">
+        <View className="flex-col h-[125px] md:h-[250px] w-full">
           {/* HEADER */}
           <View className="flex-row justify-between py-1 bg-slate-200">
             <Text className="font-bold text-xs md:text-sm text-center">
@@ -40,6 +40,7 @@ export default function MovesBlock({
             </Text>
             <View></View>
           </View>
+
           <FlatList
             data={selectedPokemon.moves}
             showsVerticalScrollIndicator={true}
@@ -51,7 +52,7 @@ export default function MovesBlock({
                   {move.name}
                 </Text>
 
-                <MoveTypeIcon type={move.type} />
+                <TypeIcon typeList={[move.type]} />
 
                 <Text className="px-1 text-xs md:text-sm">
                   {move.accuracy !== "-" ? `${move.accuracy}%` : "-"}

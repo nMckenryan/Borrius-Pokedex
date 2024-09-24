@@ -18,7 +18,7 @@ export function SearchHeader({ setSearchTerm, searchTerm }) {
         <SearchBar
           lightTheme
           onChangeText={setSearchTerm}
-          placeholder="Type query here..."
+          placeholder="Search Borrius Pokedex"
           placeholderTextColor="#888"
           value={searchTerm}
           containerStyle={{

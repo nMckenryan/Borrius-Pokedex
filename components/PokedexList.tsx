@@ -11,13 +11,13 @@ export function PokedexList({
   return (
     <>
       {window.innerWidth < 768 ? (
-        <PokemonListDesktop
+        <PokemonListMobile
           filterData={filterData}
           setSelectedPokemon={setSelectedPokemon}
           setIsBottomSheetVisible={setIsBottomSheetVisible}
         />
       ) : (
-        <PokemonListMobile
+        <PokemonListDesktop
           filterData={filterData}
           setSelectedPokemon={setSelectedPokemon}
           setIsBottomSheetVisible={setIsBottomSheetVisible}
@@ -27,7 +27,7 @@ export function PokedexList({
   );
 }
 
-function PokemonListDesktop({
+function PokemonListMobile({
   filterData,
   setSelectedPokemon,
   setIsBottomSheetVisible,
@@ -66,7 +66,7 @@ function PokemonListDesktop({
   );
 }
 
-function PokemonListMobile({
+function PokemonListDesktop({
   filterData,
   setSelectedPokemon,
   setIsBottomSheetVisible,
@@ -77,7 +77,7 @@ function PokemonListMobile({
       className="h-full w-full flex-col flex-wrap p-0 mb-50"
       showsVerticalScrollIndicator={true}
       keyExtractor={(item) => item.name}
-      initialNumToRender={45}
+      initialNumToRender={105}
       contentContainerClassName="flex-row flex-wrap justify-center"
       renderItem={({ item: desktopPokemon }) => (
         <TouchableOpacity
@@ -88,19 +88,21 @@ function PokemonListMobile({
         >
           <Card
             containerStyle={{
-              height: 150,
-              width: 175,
+              width: 150,
               shadowColor: "black",
               shadowOpacity: 0.5,
               shadowRadius: 5,
               elevation: 10,
               borderRadius: 5,
               margin: 10,
+              padding: 0,
+              overflow: "hidden",
             }}
             wrapperStyle={{
               alignItems: "center",
               justifyContent: "center",
               flexDirection: "column",
+              padding: 0,
             }}
           >
             <View
@@ -110,30 +112,23 @@ function PokemonListMobile({
                 left: 0,
               }}
             >
-              <Text
-                style={{
-                  fontSize: 9,
-                }}
-              >
+              <Text style={{ fontSize: 8, color: "gray" }}>
                 #{desktopPokemon.id}
               </Text>
             </View>
-            <Card.Title
-              className="capitalize"
-              style={{
-                margin: 0,
-              }}
-            >
-              {desktopPokemon.name}
-            </Card.Title>
-            <View className="p-2">
-              <SpriteAvatar
-                size={"medium"}
-                spriteUrl={desktopPokemon.sprites.game_sprite}
-              />
-            </View>
-            <View className="p-2">
-              <TypeIcon typeList={desktopPokemon.typeList} />
+            <View className="flex-col items-center justify-center">
+              <Card.Title className="mt-1" style={{ margin: 0 }}>
+                {desktopPokemon.name}
+              </Card.Title>
+              <View style={{ overflow: "hidden" }}>
+                <SpriteAvatar
+                  size={"medium"}
+                  spriteUrl={desktopPokemon.sprites.game_sprite}
+                />
+              </View>
+              <View className="p-2" style={{ overflow: "hidden" }}>
+                <TypeIcon typeList={desktopPokemon.typeList} />
+              </View>
             </View>
           </Card>
         </TouchableOpacity>

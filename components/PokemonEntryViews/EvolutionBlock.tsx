@@ -1,5 +1,5 @@
 import { Icon } from "@rneui/themed";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 
 import SpriteAvatar from "../UI/SpriteAvatar";
 import { Evolutions } from "../../api/borrius-types";
@@ -25,21 +25,27 @@ function Eeveelutions({ eevee }: { eevee: Evolutions[] }) {
 }
 function EvolutionStage({ stageDetails }: { stageDetails: Evolutions }) {
   return (
-    <View className="flex-col items-center justify-center">
-      <SpriteAvatar
-        size={"large"}
-        spriteUrl={stageDetails.stage_sprite?.game_sprite || null}
-      />
-      <View className="flex-col items-center">
-        <Text className="text-xs md:text-small capitalize ">
-          {stageDetails.name}
-        </Text>
+    <Pressable
+      onPress={() => {
+        console.log(stageDetails);
+      }}
+    >
+      <View className="flex-col items-center justify-center">
+        <SpriteAvatar
+          size={"large"}
+          spriteUrl={stageDetails.stage_sprite?.game_sprite || null}
+        />
+        <View className="flex-col items-center">
+          <Text className="text-xs md:text-sm capitalize text-wrap">
+            {stageDetails.name}
+          </Text>
 
-        <Text className="text-xs md:text-small capitalize">
-          {stageDetails.triggerItem}
-        </Text>
+          <Text className="text-xs md:text-small capitalize">
+            {stageDetails.triggerItem}
+          </Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

@@ -14,7 +14,7 @@ export function PokemonEntry({
   selectedPokemon: Pokemon;
 }) {
   return (
-    <Card containerStyle={{ borderRadius: 10, width: "25%" }}>
+    <Card containerStyle={{ borderRadius: 10 }}>
       {/* MOBILE */}
       {window.innerWidth < 768 ? (
         <>

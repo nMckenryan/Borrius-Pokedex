@@ -1,13 +1,10 @@
 import "../global.css";
 
-import React, { useMemo, useState } from "react";
+import React, { createContext, useMemo, useState } from "react";
 import { BottomSheet } from "@rneui/themed";
-
 import { useQuery } from "@tanstack/react-query";
 import { getAllBorriusPokemon } from "../api/get-borrius-api";
-
 import { View, ActivityIndicator } from "react-native";
-
 import { PokemonEntry } from "./PokemonEntryViews/PokemonEntry";
 import { Pokemon } from "../api/borrius-types";
 import { SearchHeader } from "./SearchHeader";
@@ -18,6 +15,15 @@ export function Pokedex() {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+
+  // const PokemonSelectContext = createContext<(pokemon: Pokemon) => void>(
+  //   () => {}
+  // );
+
+  // const pokemonValue = useMemo(
+  //   () => ({ setSelectedPokemon }),
+  //   [setSelectedPokemon]
+  // );
 
   const {
     data: pokemonData,

@@ -104,7 +104,6 @@ async function traverseEvolutionChain(chain) {
         const tradeSpecies = node.evolution_details[0]?.trade_species
         const partySpecies = node.evolution_details[0]?.party_species
         const timeOfDay = node.evolution_details[0]?.time_of_day
-        const relativePhysicalStats = node.evolution_details[0]?.relative_physical_stats
         const minAffection = node.evolution_details[0]?.min_affection
         const minHappiness = node.evolution_details[0]?.min_happiness
         const minLevel = node.evolution_details[0]?.min_level
@@ -116,9 +115,8 @@ async function traverseEvolutionChain(chain) {
         }
 
         if (item) {
-            triggerMethod += `Use ${item.name.replace(/[^\w\s]/gi, '')}\n`
+            triggerMethod += `${item.name.replace(/[^\w\s]/gi, ' ')}\n`
         }
-
 
         if (tradeSpecies || trade) {
             triggerMethod += `Link Stone\n`
@@ -129,19 +127,28 @@ async function traverseEvolutionChain(chain) {
         }
 
         if (heldItem) {
-            triggerMethod += `Hold  ${heldItem.name.replace(/[^\w\s]/gi, '')}\n`
+            triggerMethod += `Hold ${heldItem.name.replace(/[^\w\s]/gi, ' ')}\n`
         }
 
         if (knownMove) {
-            triggerMethod += `Known Move: ${knownMove.name.replace(/[^\w\s]/gi, '')}\n`
+            triggerMethod += `${knownMove.name.replace(/[^\w\s]/gi, ' ')}\n`
         }
 
         if (knownMoveType) {
-            triggerMethod += `Known Move Type: ${knownMoveType.name}\n`
+            triggerMethod += `Knows ${knownMoveType.name} Move\n`
         }
 
-        if (location) {
-            triggerMethod += `Location: ${location.name.replace(/[^\w\s]/gi, '')}\n`
+        switch (location?.name) {
+            case "eterna-forest":
+                triggerMethod = "Leaf Stone";
+                break;
+            case "mt-coronet":
+                triggerMethod = "Thunder Stone";
+                break;
+            case "sinnoh-route-217":
+            case "mount-lanakila":
+                triggerMethod = "Ice Stone";
+                break;
         }
 
         if (partyType) {
@@ -156,16 +163,12 @@ async function traverseEvolutionChain(chain) {
             triggerMethod += `${timeOfDay} Time\n`
         }
 
-        if (relativePhysicalStats) {
-            triggerMethod += `Relative Physical Stats: ${relativePhysicalStats}\n`
-        }
-
         if (minAffection) {
-            triggerMethod += `High Affection: (${minAffection})\n`
+            triggerMethod += `High Affection\n`
         }
 
         if (minHappiness) {
-            triggerMethod += `High Happiness: (${minHappiness})\n`
+            triggerMethod += `Happiness\n`
         }
 
 

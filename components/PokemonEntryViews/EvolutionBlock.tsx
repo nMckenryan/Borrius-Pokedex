@@ -3,9 +3,11 @@ import { View, Text, FlatList, Pressable } from "react-native";
 
 import SpriteAvatar from "../UI/SpriteAvatar";
 import { Evolutions } from "../../api/borrius-types";
+import { useContext } from "react";
+import { PokedexContext } from "../Pokedex";
 
 function Eeveelutions({ eevee }: { eevee: Evolutions[] }) {
-  //places eveee in middle of array
+  //places eevee in middle of array
   const newEevee = [...eevee];
   const firstElement = eevee[0];
   const middleIndex = Math.floor(newEevee.length / 2);
@@ -24,10 +26,13 @@ function Eeveelutions({ eevee }: { eevee: Evolutions[] }) {
   );
 }
 function EvolutionStage({ stageDetails }: { stageDetails: Evolutions }) {
+  const context = useContext(PokedexContext);
   return (
     <Pressable
       onPress={() => {
-        console.log(stageDetails);
+        if (stageDetails != null) {
+          context.selectNewPokemon(stageDetails.name);
+        }
       }}
     >
       <View className="flex-col items-center justify-center">

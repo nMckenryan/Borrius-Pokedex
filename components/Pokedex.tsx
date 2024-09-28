@@ -6,24 +6,29 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllBorriusPokemon } from "../api/get-borrius-api";
 import { View, ActivityIndicator } from "react-native";
 import { PokemonEntry } from "./PokemonEntryViews/PokemonEntry";
-import { Pokemon } from "../api/borrius-types";
+import { Evolutions, Pokemon } from "../api/borrius-types";
 import { SearchHeader } from "./SearchHeader";
 
 import { PokedexList } from "./PokedexList";
+
+export const PokedexContext = createContext<{
+  selectNewPokemon: (pokemon: Pokemon | null) => void;
+}>({} as any);
 
 export function Pokedex() {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // const PokemonSelectContext = createContext<(pokemon: Pokemon) => void>(
-  //   () => {}
-  // );
-
-  // const pokemonValue = useMemo(
-  //   () => ({ setSelectedPokemon }),
-  //   [setSelectedPokemon]
-  // );
+  function selectNewPokemon(pokemon: Pokemon | string | null) {
+    if (typeof pokemon === "string") {
+      setSelectedPokemon(pokemonData.find((item) => item.name === pokemon));
+    } else if (typeof pokemon && "nationalId" in pokemon) {
+      setSelectedPokemon(pokemon);
+    } else {
+      null;
+    }
+  }
 
   const {
     data: pokemonData,
@@ -52,7 +57,7 @@ export function Pokedex() {
   );
 
   return (
-    <>
+    <PokedexContext.Provider value={{ selectNewPokemon }}>
       <SearchHeader setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
       <View className="bg-amber-200 h-full">
         {error && (
@@ -82,6 +87,6 @@ export function Pokedex() {
           </BottomSheet>
         </View>
       </View>
-    </>
+    </PokedexContext.Provider>
   );
 }

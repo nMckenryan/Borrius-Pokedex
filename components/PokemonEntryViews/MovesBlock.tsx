@@ -4,76 +4,70 @@ import React from "react";
 import { Pokemon } from "../../api/borrius-types";
 import TypeIcon from "../UI/TypeIcon";
 
-const BASE_URI = "../../assets/";
+import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
+
+const BASE_URI = "../../assets/types/gen8/";
 
 export default function MovesBlock({
   selectedPokemon,
 }: {
   selectedPokemon: Pokemon;
 }) {
+  const columnHeader = [
+    { field: "name", suppressMovable: true },
+    { field: "type", suppressMovable: true },
+    { field: "power", headerName: "Power/Acc", suppressMovable: true },
+    {
+      field: "learn_method",
+      headerName: "Learned",
+      suppressMovable: true,
+    },
+  ];
+
+  const rowData = selectedPokemon.moves.map((move) => {
+    const learn_method =
+      move.learn_method == "level-up" ? "Lvl " + move.level_learned : "TM/HM";
+
+    return {
+      name: move.name,
+      type: move.type,
+      power: move.power + " " + move.accuracy + "%",
+      learn_method: learn_method,
+    };
+  });
+
   return (
     <View
       className="flex-col items-center border-slate-200 rounded"
       style={{ borderWidth: 1 }}
     >
       {selectedPokemon.moves.length > 0 && (
-        <View className="flex-col h-[125px] md:h-[250px] w-full">
-          {/* HEADER */}
-          <View className="flex-row justify-between py-1 bg-slate-200">
-            <Text className="font-bold text-xs md:text-sm text-center">
-              Move
-            </Text>
-            <Text className="font-bold text-xs md:text-sm text-center">
-              Type
-            </Text>
-            <Text className="font-bold text-xs md:text-sm text-center">
-              Accuracy
-            </Text>
-            <Text className="font-bold text-xs md:text-sm text-center">
-              Category
-            </Text>
-            <Text className="font-bold text-xs md:text-sm text-center">
-              Power
-            </Text>
-            <Text className="font-bold text-xs md:text-sm text-center">
-              Learned via
-            </Text>
-            <View></View>
-          </View>
-
-          <FlatList
-            data={selectedPokemon.moves}
-            showsVerticalScrollIndicator={true}
-            keyExtractor={(item, index) => item.name + index}
-            contentContainerClassName="h-50"
-            renderItem={({ item: move }) => (
-              <View className="grid flex-nowrap grid-cols-[repeat(6,minmax(35px,1fr))]">
-                <Text className="px-1 text-nowrap text-xs md:text-sm max-w-[100px] overflow-hidden text-ellipsis">
-                  {move.name}
-                </Text>
-
-                <TypeIcon typeList={[move.type]} />
-
-                <Text className="px-1 text-xs md:text-sm">
-                  {move.accuracy !== "-" ? `${move.accuracy}%` : "-"}
-                </Text>
-
-                <Image
-                  source={{ uri: BASE_URI + move.category + ".png" }}
-                  containerStyle={{ width: 30, height: 20, borderRadius: 25 }}
-                />
-
-                <Text className="px-1 text-xs md:text-sm">{move.power}</Text>
-
-                {move.learn_method == "level-up" ? (
-                  <Text className="px-1 text-xs md:text-sm">
-                    Level {move.level_learned}
-                  </Text>
-                ) : (
-                  <Text className="px-1 text-xs md:text-sm">TM/HM</Text>
-                )}
-              </View>
-            )}
+        <View
+          className="ag-theme-quartz"
+          style={{ height: 250, minWidth: 345 }}
+        >
+          <AgGridReact
+            alwaysShowHorizontalScroll={true}
+            suppressDragLeaveHidesColumns={true}
+            rowData={rowData}
+            columnDefs={columnHeader.map((column) => {
+              if (column.field === "type") {
+                return {
+                  ...column,
+                  cellRenderer: (params) => (
+                    <Image
+                      style={{ width: 20, height: 20 }}
+                      source={{
+                        uri: BASE_URI + params.data.type.toLowerCase() + ".png",
+                      }}
+                    />
+                  ),
+                };
+              }
+              return column;
+            })}
           />
         </View>
       )}

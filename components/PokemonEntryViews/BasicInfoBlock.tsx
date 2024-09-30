@@ -4,6 +4,24 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Pokemon } from "../../api/borrius-types";
 
+function getCatchRateColor(catchRate: number) {
+  if (catchRate <= 5) return "bg-red-300";
+  if (catchRate <= 50) return "bg-red-600";
+  if (catchRate <= 100) return "bg-orange-300";
+  if (catchRate <= 150) return "bg-orange-600";
+  if (catchRate <= 200) return "bg-green-300";
+  return "bg-green-600";
+}
+
+function getCatchRateDifficulty(catchRate: number) {
+  if (catchRate <= 5) return "Extreme";
+  if (catchRate <= 50) return "Very Hard";
+  if (catchRate <= 100) return "Hard";
+  if (catchRate <= 150) return "Medium";
+  if (catchRate <= 200) return "Easy";
+  return "Very Easy";
+}
+
 export function BasicInfoBlock({
   selectedPokemon,
 }: {
@@ -42,6 +60,19 @@ export function BasicInfoBlock({
             {selectedPokemon.abilities.map((ability) => ability + "\n")}
           </Text>
         </View>
+        {selectedPokemon.capture_rate && (
+          <Text className="flex-row text-xs md:text-small">
+            <b>Catch Rate:</b>{" "}
+            <View
+              className={`w-5 h-5 rounded-full font-bold flex-row justify-center items-center ${getCatchRateColor(
+                selectedPokemon.capture_rate
+              )} my-1`}
+            >
+              {selectedPokemon.capture_rate}
+            </View>{" "}
+            {getCatchRateDifficulty(selectedPokemon.capture_rate)}
+          </Text>
+        )}
       </View>
     </View>
   );

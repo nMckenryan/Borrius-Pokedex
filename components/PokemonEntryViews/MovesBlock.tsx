@@ -6,9 +6,37 @@ import TypeIcon from "../UI/TypeIcon";
 
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
+import { themeQuartz } from "@ag-grid-community/theming";
 
 const BASE_URI = "../../assets/";
+
+export const myTheme = themeQuartz.withParams({
+  accentColor: "#FDE68A",
+  backgroundColor: "#FFFFFF",
+  borderColor: "#D7E2E6",
+  borderRadius: 2,
+  browserColorScheme: "light",
+  cellHorizontalPaddingScale: 0.7,
+  chromeBackgroundColor: {
+    ref: "backgroundColor",
+  },
+  columnBorder: false,
+  fontFamily: {
+    googleFont: "Inter",
+  },
+  fontSize: 13,
+  foregroundColor: "#555B62",
+  headerBackgroundColor: "#FFFFFF",
+  headerFontSize: "10px",
+  headerFontWeight: 400,
+  headerTextColor: "#000000",
+  rowBorder: true,
+  rowVerticalPaddingScale: 0.8,
+  sidePanelBorder: true,
+  spacing: "3px",
+  wrapperBorder: false,
+  wrapperBorderRadius: "3px",
+});
 
 export default function MovesBlock({
   selectedPokemon,
@@ -17,7 +45,7 @@ export default function MovesBlock({
 }) {
   const columnHeader = [
     { field: "name", suppressMovable: true },
-    { field: "type", suppressMovable: true },
+    { field: "type", suppressMovable: true, maxWidth: "25px" },
     { field: "power", headerName: "Power/Acc", suppressMovable: true },
     {
       field: "learn_method",
@@ -45,12 +73,9 @@ export default function MovesBlock({
       style={{ borderWidth: 1 }}
     >
       {selectedPokemon.moves.length > 0 && (
-        <View
-          // className="ag-theme-quartz"
-          className="ag-theme-quartz"
-          style={{ height: "25vh", minWidth: "95vw" }}
-        >
+        <View style={{ height: "25vh", minWidth: "90vw" }}>
           <AgGridReact
+            theme={myTheme}
             alwaysShowHorizontalScroll={true}
             suppressDragLeaveHidesColumns={true}
             rowData={rowData}

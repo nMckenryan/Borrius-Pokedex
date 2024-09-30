@@ -7,28 +7,8 @@ export default function LocationsBlock({
 }: {
   selectedPokemon: Pokemon;
 }) {
-  function getCatchRateDifficulty(catchRate: number) {
-    if (catchRate <= 5) return "Extremely Hard";
-    if (catchRate <= 50) return "Very Hard";
-    if (catchRate <= 100) return "Hard";
-    if (catchRate <= 150) return "Medium";
-    if (catchRate <= 200) return "Easy";
-    return "Very Easy";
-  }
-
   return (
-    <View className="flex-col mx-1">
-      {selectedPokemon.capture_rate && (
-        <View className="flex-col">
-          <Text className="text-xs md:text-small">
-            <b>Catch Rate:</b> {selectedPokemon.capture_rate}
-          </Text>
-          <Text className="text-xs md:text-small">
-            ({getCatchRateDifficulty(selectedPokemon.capture_rate)})
-          </Text>
-        </View>
-      )}
-      <br />
+    <View className="flex-col mx-1  items-center justify-center">
       <Text className="text-xs md:text-small font-bold">Locations</Text>
 
       <FlatList

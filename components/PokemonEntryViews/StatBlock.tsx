@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { Pokemon } from "../../api/borrius-types";
 
-const gradeColors = [
+export const gradeColors = [
   "bg-red-500", //F
   "bg-gray-400", //D-
   "bg-gray-500", //D

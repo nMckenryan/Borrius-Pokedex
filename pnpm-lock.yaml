@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@ag-grid-community/theming':
+        specifier: ^32.2.0
+        version: 32.2.0
       '@expo/metro-runtime':
         specifier: ~3.2.3
         version: 3.2.3(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.7)(react@18.2.0))
@@ -77,6 +80,12 @@ importers:
         version: 3.3.2
 
 packages:
+
+  '@ag-grid-community/core@32.2.0':
+    resolution: {integrity: sha512-ng7qhDfF91ecT5TldQsb5lhJ6M1ZhSIB2c1hSSmY0kqQHxn0uAJo6lpjz7SIUqyy4PFupsOoPs98CsW0Dl9dHA==}
+
+  '@ag-grid-community/theming@32.2.0':
+    resolution: {integrity: sha512-MnJUsPZGwXtX+XL5J8uScF93h55drJTlYqEnLKVWZbBOgPjIe4oKlfsgXgK7mubiqqKDa5dME+coVLW9OFPfMQ==}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -4231,6 +4240,16 @@ packages:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
 snapshots:
+
+  '@ag-grid-community/core@32.2.0':
+    dependencies:
+      ag-charts-types: 10.2.0
+      tslib: 2.7.0
+
+  '@ag-grid-community/theming@32.2.0':
+    dependencies:
+      '@ag-grid-community/core': 32.2.0
+      tslib: 2.7.0
 
   '@alloc/quick-lru@5.2.0': {}
 

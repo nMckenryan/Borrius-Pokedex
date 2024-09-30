@@ -26,8 +26,8 @@ export function PokemonEntry({
                   #{selectedPokemon.id}
                 </Text>
               )}
-              {/* COLUMN 1 */}
-              <View className="flex-col justify-between items-center">
+              {/* COLUMN 1 - BasicInfo & Stats*/}
+              <View className="flex-col justify-evenly items-center">
                 <View className="flex-row">
                   {selectedPokemon ? (
                     <BasicInfoBlock selectedPokemon={selectedPokemon} />
@@ -47,20 +47,22 @@ export function PokemonEntry({
                   )}
                 </View>
               </View>
-              {/* COLUMN 2 */}
-              <View className="flex-col justify-between items-center">
+              {/* COLUMN 2 - Evo & location*/}
+              <View className="flex-col items-center">
                 <View className="flex-row">
-                  {selectedPokemon.locations.length > 0 ? (
-                    <LocationsBlock selectedPokemon={selectedPokemon} />
-                  ) : (
-                    <Skeleton animation="pulse" width={200} height={100} />
-                  )}
                   {selectedPokemon.evolutions.length > 1 && (
                     <EvolutionBlock evolutions={selectedPokemon.evolutions} />
                   )}
                 </View>
               </View>
-              {/* COLUMN 3 */}
+
+              {/* COLUMN 2 - Evo & location*/}
+              <View className="flex-col items-center">
+                {selectedPokemon.locations.length > 0 && (
+                  <LocationsBlock selectedPokemon={selectedPokemon} />
+                )}
+              </View>
+              {/* COLUMN 3 - Moves*/}
               <View className="flex-col justify-between items-center">
                 <View className="flex-row">
                   {selectedPokemon.moves.length > 0 ? (

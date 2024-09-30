@@ -81,6 +81,7 @@ function PokemonListDesktop({
       contentContainerClassName="flex-row flex-wrap justify-center"
       renderItem={({ item: desktopPokemon }) => (
         <Pressable
+          android_ripple={{ color: "#ccc" }}
           onPress={() => {
             setSelectedPokemon(desktopPokemon);
             setIsBottomSheetVisible(true);

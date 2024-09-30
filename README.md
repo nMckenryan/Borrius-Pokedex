@@ -29,7 +29,6 @@
   - [x] Handle 3 stage evolutions
   - [x] Handle split evolutions e.g politoed
   - [/] Handle Eevee
-  - [ ] Handle clicking evolution forms to go to other pokemon
 
 - [x] EVO TRIGGERS
 
@@ -67,10 +66,11 @@
 - [x] Table of Moves
 - [x] Cache images?
 - [x] Sort desktop UI
+- [ ] Handle Rockruff evolutions (3 split)
 - [ ] Make sure it works on iOS
 - [ ] publish to store
-- [ ] Fix up android responsiveness
-- [/] Handle tables for location and Moves
+- [x] Fix up android responsiveness
+- [x] Handle tables for location and Moves
 
 ## BUGS
 
@@ -79,7 +79,7 @@
 - [x] Weirdness re: single/duo evos
 - [ ] Beldum has no move data
 - [x] Handle long pokemon names (e.g. Nidoran female)
-- [ ] Handle Rockruff evolutions
+- [ ] Handle clicking evolution forms to go to other pokemon
 
 ## Future Work
 

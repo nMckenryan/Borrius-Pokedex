@@ -43,16 +43,37 @@ export default function MovesBlock({
 }: {
   selectedPokemon: Pokemon;
 }) {
-  const columnHeader = [
-    { field: "name", suppressMovable: true },
-    { field: "type", suppressMovable: true, maxWidth: "25px" },
-    { field: "power", headerName: "Power/Acc", suppressMovable: true },
+  // TODO: Set this up for multipl screen sizes
+  const columnHeaderMobile = [
+    { field: "name", suppressMovable: true, maxWidth: 125 },
+    { field: "type", suppressMovable: true, maxWidth: 60 },
+    {
+      field: "power",
+      headerName: "Power/Acc",
+      suppressMovable: true,
+      maxWidth: 100,
+    },
     {
       field: "learn_method",
       headerName: "Learned",
       suppressMovable: true,
+      maxWidth: 75,
     },
   ];
+
+  const columnDesktopHeader = [
+    { field: "name" },
+    { field: "type" },
+    {
+      field: "power",
+      headerName: "Power/Acc",
+    },
+    {
+      field: "learn_method",
+      headerName: "Learned",
+    },
+  ];
+
   const rowData = selectedPokemon.moves.map((move) => {
     const learn_method =
       move.learn_method == "level-up" ? "Lvl " + move.level_learned : "TM/HM";
@@ -67,33 +88,36 @@ export default function MovesBlock({
     };
   });
 
+  let columnHeader =
+    window.innerWidth < 1028 ? columnHeaderMobile : columnDesktopHeader;
+
   return (
     <View
       className="flex-col items-center border-slate-200 rounded"
       style={{ borderWidth: 1 }}
     >
       {selectedPokemon.moves.length > 0 && (
-        <View style={{ height: "25vh", minWidth: "90vw" }}>
+        <View style={{ height: "25vh", minWidth: "80vw" }}>
           <AgGridReact
             theme={myTheme}
-            alwaysShowHorizontalScroll={true}
-            suppressDragLeaveHidesColumns={true}
             rowData={rowData}
             columnDefs={columnHeader.map((column) => {
               if (column.field === "type") {
                 return {
                   ...column,
                   cellRenderer: (params) => (
-                    <Image
-                      style={{ width: 20, height: 20 }}
-                      source={{
-                        uri:
-                          BASE_URI +
-                          "types/gen8/" +
-                          params.data.type.toLowerCase() +
-                          ".png",
-                      }}
-                    />
+                    <View className="flex-row  item-center justify-center">
+                      <Image
+                        style={{ width: 20, height: 20 }}
+                        source={{
+                          uri:
+                            BASE_URI +
+                            "types/gen8/" +
+                            params.data.type.toLowerCase() +
+                            ".png",
+                        }}
+                      />
+                    </View>
                   ),
                 };
               }
@@ -101,18 +125,24 @@ export default function MovesBlock({
                 return {
                   ...column,
                   cellRenderer: (params) => (
-                    <>
-                      <Text>{params.data.power}</Text>
-                      <Image
-                        style={{ width: 20, height: 20 }}
-                        source={{
-                          uri: BASE_URI + "Physical.png",
-                        }}
-                      />
+                    <View className="flex-row item-center justify-center">
                       <Text>
-                        {params.data.accuracy ? params.data.accuracy + "%" : ""}
+                        {params.data.power != "-"
+                          ? `${params.data.power} `
+                          : ""}
+
+                        <Image
+                          style={{ width: 25, height: 20, borderRadius: 5 }}
+                          source={{
+                            uri: BASE_URI + params.data.category + ".png",
+                          }}
+                        />
+
+                        {params.data.accuracy != "-"
+                          ? ` ${params.data.accuracy}%`
+                          : ""}
                       </Text>
-                    </>
+                    </View>
                   ),
                 };
               }

@@ -14,12 +14,12 @@ function getCatchRateColor(catchRate: number) {
 }
 
 function getCatchRateDifficulty(catchRate: number) {
-  if (catchRate <= 5) return "Extreme";
-  if (catchRate <= 50) return "Very Hard";
-  if (catchRate <= 100) return "Hard";
-  if (catchRate <= 150) return "Medium";
+  if (catchRate <= 5) return "Difficult";
+  if (catchRate <= 50) return "Hard";
+  if (catchRate <= 100) return "Challenging";
+  if (catchRate <= 150) return "Average";
   if (catchRate <= 200) return "Easy";
-  return "Very Easy";
+  return "Trivial";
 }
 
 export function BasicInfoBlock({

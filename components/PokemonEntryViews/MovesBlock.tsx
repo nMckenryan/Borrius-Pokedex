@@ -8,7 +8,7 @@ import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
 
-const BASE_URI = "../../assets/types/gen8/";
+const BASE_URI = "../../assets/";
 
 export default function MovesBlock({
   selectedPokemon,
@@ -25,7 +25,6 @@ export default function MovesBlock({
       suppressMovable: true,
     },
   ];
-
   const rowData = selectedPokemon.moves.map((move) => {
     const learn_method =
       move.learn_method == "level-up" ? "Lvl " + move.level_learned : "TM/HM";
@@ -33,7 +32,9 @@ export default function MovesBlock({
     return {
       name: move.name,
       type: move.type,
-      power: move.power + " " + move.accuracy + "%",
+      power: move.power,
+      accuracy: move.accuracy,
+      category: move.category,
       learn_method: learn_method,
     };
   });
@@ -45,8 +46,9 @@ export default function MovesBlock({
     >
       {selectedPokemon.moves.length > 0 && (
         <View
+          // className="ag-theme-quartz"
           className="ag-theme-quartz"
-          style={{ height: 250, minWidth: 345 }}
+          style={{ height: "25vh", minWidth: "95vw" }}
         >
           <AgGridReact
             alwaysShowHorizontalScroll={true}
@@ -60,12 +62,36 @@ export default function MovesBlock({
                     <Image
                       style={{ width: 20, height: 20 }}
                       source={{
-                        uri: BASE_URI + params.data.type.toLowerCase() + ".png",
+                        uri:
+                          BASE_URI +
+                          "types/gen8/" +
+                          params.data.type.toLowerCase() +
+                          ".png",
                       }}
                     />
                   ),
                 };
               }
+              if (column.field === "power") {
+                return {
+                  ...column,
+                  cellRenderer: (params) => (
+                    <>
+                      <Text>{params.data.power}</Text>
+                      <Image
+                        style={{ width: 20, height: 20 }}
+                        source={{
+                          uri: BASE_URI + "Physical.png",
+                        }}
+                      />
+                      <Text>
+                        {params.data.accuracy ? params.data.accuracy + "%" : ""}
+                      </Text>
+                    </>
+                  ),
+                };
+              }
+
               return column;
             })}
           />

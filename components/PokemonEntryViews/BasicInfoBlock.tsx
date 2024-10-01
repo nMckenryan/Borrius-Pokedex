@@ -5,9 +5,9 @@ import { View, Text } from "react-native";
 import { Pokemon } from "../../api/borrius-types";
 
 function getCatchRateColor(catchRate: number) {
-  if (catchRate <= 5) return "bg-red-300";
+  if (catchRate <= 5) return "bg-red-800";
   if (catchRate <= 50) return "bg-red-600";
-  if (catchRate <= 100) return "bg-orange-300";
+  if (catchRate <= 100) return "bg-orange-800";
   if (catchRate <= 150) return "bg-orange-600";
   if (catchRate <= 200) return "bg-green-300";
   return "bg-green-600";

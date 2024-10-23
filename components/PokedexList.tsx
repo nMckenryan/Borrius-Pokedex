@@ -118,7 +118,7 @@ function PokemonListDesktop({
               </Text>
             </View>
             <View className="flex-col items-center justify-center">
-              <Card.Title className="mt-1" style={{ margin: 0 }}>
+              <Card.Title className="mt-1 capitalize" style={{ margin: 0 }}>
                 {desktopPokemon.name}
               </Card.Title>
               <View style={{ overflow: "hidden" }}>

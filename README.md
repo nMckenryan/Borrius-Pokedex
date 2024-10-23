@@ -65,13 +65,15 @@
 - [x] Cache images?
 - [x] Sort desktop UI
 - [ ] Handle Rockruff evolutions (3 split)
-- [ ] Make sure it works on iOS
-- [ ] Deploy to Expo (web version)
-- [ ] publish to store
 - [ ] Implement fonts
 - [x] Fix up android responsiveness
 - [x] Handle tables for location and Moves
 - [/] Combine Moves that are learned via level up and TM
+
+- DEPLOY:
+  [] - Web (Vercel)
+  [] - Android (Expo)
+  [] - iOS (Expo)
 
 ## BUGS
 

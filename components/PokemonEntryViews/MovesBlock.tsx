@@ -76,7 +76,11 @@ export default function MovesBlock({
 
   const rowData = selectedPokemon.moves.map((move) => {
     const learn_method =
-      move.learn_method == "level-up" ? "Lvl " + move.level_learned : "TM/HM";
+      move.learn_method == "level-up"
+        ? "Lvl " + move.level_learned
+        : move.learn_method == "level-up/tm-hm"
+        ? "Lvl " + move.level_learned + " & TM/HM"
+        : "TM/HM";
 
     return {
       name: move.name,
@@ -93,65 +97,61 @@ export default function MovesBlock({
 
   return (
     <View
+      id="movesBlockView"
       className="flex-col items-center border-slate-200 rounded"
-      style={{ borderWidth: 1 }}
     >
-      {selectedPokemon.moves.length > 0 && (
-        <View style={{ height: "25vh", minWidth: "80vw" }}>
-          <AgGridReact
-            theme={myTheme}
-            rowData={rowData}
-            columnDefs={columnHeader.map((column) => {
-              if (column.field === "type") {
-                return {
-                  ...column,
-                  cellRenderer: (params) => (
-                    <View className="flex-row  item-center justify-center">
+      <View style={{ height: "25vh", minWidth: "45vw" }}>
+        <AgGridReact
+          theme={myTheme}
+          rowData={rowData}
+          columnDefs={columnHeader.map((column) => {
+            if (column.field === "type") {
+              return {
+                ...column,
+                cellRenderer: (params) => (
+                  <View className="flex-row  item-center justify-center">
+                    <Image
+                      style={{ width: 20, height: 20 }}
+                      source={{
+                        uri:
+                          BASE_URI +
+                          "types/gen8/" +
+                          params.data.type.toLowerCase() +
+                          ".png",
+                      }}
+                    />
+                  </View>
+                ),
+              };
+            }
+            if (column.field === "power") {
+              return {
+                ...column,
+                cellRenderer: (params) => (
+                  <View className="flex-row item-center justify-center">
+                    <Text>
+                      {params.data.power != "-" ? `${params.data.power} ` : ""}
+
                       <Image
-                        style={{ width: 20, height: 20 }}
+                        style={{ width: 25, height: 20, borderRadius: 5 }}
                         source={{
-                          uri:
-                            BASE_URI +
-                            "types/gen8/" +
-                            params.data.type.toLowerCase() +
-                            ".png",
+                          uri: BASE_URI + params.data.category + ".png",
                         }}
                       />
-                    </View>
-                  ),
-                };
-              }
-              if (column.field === "power") {
-                return {
-                  ...column,
-                  cellRenderer: (params) => (
-                    <View className="flex-row item-center justify-center">
-                      <Text>
-                        {params.data.power != "-"
-                          ? `${params.data.power} `
-                          : ""}
 
-                        <Image
-                          style={{ width: 25, height: 20, borderRadius: 5 }}
-                          source={{
-                            uri: BASE_URI + params.data.category + ".png",
-                          }}
-                        />
+                      {params.data.accuracy != "-"
+                        ? ` ${params.data.accuracy}%`
+                        : ""}
+                    </Text>
+                  </View>
+                ),
+              };
+            }
 
-                        {params.data.accuracy != "-"
-                          ? ` ${params.data.accuracy}%`
-                          : ""}
-                      </Text>
-                    </View>
-                  ),
-                };
-              }
-
-              return column;
-            })}
-          />
-        </View>
-      )}
+            return column;
+          })}
+        />
+      </View>
     </View>
   );
 }

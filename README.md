@@ -28,7 +28,7 @@
   - [x] Handle 2 stage evolutions
   - [x] Handle 3 stage evolutions
   - [x] Handle split evolutions e.g politoed
-  - [/] Handle Eevee
+  - [x] Handle Eevee
 
 - [x] EVO TRIGGERS
 
@@ -58,8 +58,6 @@
 - [x] Get Pokemon location for Borrius (Scan thru PDF?)
 - [x] Movelist
 - [x] Create App Icon
-- Remove Anachronicistic pokemon (e.g. Annihilape)
-- Set Regional pokemon
 
 ## TODO:
 
@@ -71,6 +69,7 @@
 - [ ] publish to store
 - [x] Fix up android responsiveness
 - [x] Handle tables for location and Moves
+- [/] Combine Moves that are learned via level up and TM
 
 ## BUGS
 
@@ -80,6 +79,8 @@
 - [ ] Beldum has no move data
 - [x] Handle long pokemon names (e.g. Nidoran female)
 - [ ] Handle clicking evolution forms to go to other pokemon
+- [ ] Remove Anachronicistic pokemon (e.g. Annihilape)
+- [ ] Set Regional pokemon
 
 ## Future Work
 

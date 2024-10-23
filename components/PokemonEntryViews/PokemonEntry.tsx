@@ -102,7 +102,8 @@ export function PokemonEntry({
                 ) : (
                   <Skeleton animation="pulse" width={300} height={200} />
                 )}
-                <View className="flex-col">
+
+                <View className="flex-col justify-around">
                   {selectedPokemon.evolutions.length > 1 && (
                     <EvolutionBlock evolutions={selectedPokemon.evolutions} />
                   )}
@@ -110,14 +111,13 @@ export function PokemonEntry({
                     <LocationsBlock selectedPokemon={selectedPokemon} />
                   )}
                 </View>
-              </View>
-
-              <View className="flex-row">
-                {selectedPokemon.moves.length > 0 ? (
-                  <MovesBlock selectedPokemon={selectedPokemon} />
-                ) : (
-                  <Skeleton animation="pulse" width={250} height={200} />
-                )}
+                <View className="flex-col">
+                  {selectedPokemon.moves.length > 0 ? (
+                    <MovesBlock selectedPokemon={selectedPokemon} />
+                  ) : (
+                    <Skeleton animation="pulse" width={250} height={200} />
+                  )}
+                </View>
               </View>
             </>
           ) : (

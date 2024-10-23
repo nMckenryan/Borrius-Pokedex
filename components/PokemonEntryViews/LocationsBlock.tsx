@@ -8,7 +8,10 @@ export default function LocationsBlock({
   selectedPokemon: Pokemon;
 }) {
   return (
-    <View className="flex-col mx-1  items-center justify-center">
+    <View
+      id="locationsBlockView"
+      className="flex-col mx-1  items-center justify-center max-w-sm"
+    >
       <Text className="text-xs md:text-small font-bold">Locations</Text>
 
       <FlatList

@@ -12,6 +12,7 @@
   "dependencies": {
     "@ag-grid-community/theming": "^32.2.0",
     "@expo/metro-runtime": "~3.2.3",
+    "@expo/webpack-config": "~19.0.1",
     "@rneui/base": "4.0.0-rc.8",
     "@rneui/themed": "4.0.0-rc.8",
     "@tanstack/react-query": "^5.56.2",

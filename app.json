@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Pokedex Unbound",
-    "slug": "A Borrius Region Pokedex",
+    "slug": "borrius-pokedex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,17 +12,25 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "borrius.pokedex"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "borrius.pokedex"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1040ad0c-c47b-436f-88f9-bff0cf0cdda8"
+      }
+    },
+    "owner": "nmckenryan"
   }
 }

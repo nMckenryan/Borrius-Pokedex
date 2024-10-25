@@ -29,7 +29,7 @@ export function BasicInfoBlock({
 }) {
   return (
     <View className="flex-col  items-center justify-center w-[150px] mx-1">
-      <Text className="text-base md:text-lg items-center font-bold capitalize">
+      <Text className="text-base md:text-lg lg:text-2xl items-center font-bold capitalize">
         {selectedPokemon.name}
       </Text>
       {/* MAIN SPRITE */}
@@ -55,16 +55,18 @@ export function BasicInfoBlock({
       <View className="flex-col items-center">
         <TypeIcon typeList={selectedPokemon.typeList} />
         <View className="flex-row">
-          <Text className="font-bold text-xs md:text-small">Abilities: </Text>
-          <Text className="flex-wrap px-1 text-xs md:text-small">
+          <Text className="font-bold text-xs md:text-small lg:text-base">
+            Abilities:
+          </Text>
+          <Text className="flex-wrap px-1 text-xs md:text-small lg:text-base">
             {selectedPokemon.abilities.map((ability) => ability + "\n")}
           </Text>
         </View>
         {selectedPokemon.capture_rate && (
-          <Text className="flex-row text-xs md:text-small">
+          <Text className="flex-row text-xs md:text-small lg:text-base">
             <b>Catch Rate:</b>{" "}
             <View
-              className={`w-5 h-5 rounded-full font-bold flex-row justify-center items-center ${getCatchRateColor(
+              className={`w-5 h-5 rounded-full font-bold text-small flex-row justify-center items-center ${getCatchRateColor(
                 selectedPokemon.capture_rate
               )} my-1`}
             >

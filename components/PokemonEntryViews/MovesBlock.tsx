@@ -8,7 +8,7 @@ import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import { themeQuartz } from "@ag-grid-community/theming";
 
-const BASE_URI = "../../assets/";
+const BASE_URI = "../../assets/images/";
 
 export const myTheme = themeQuartz.withParams({
   accentColor: "#FDE68A",
@@ -115,7 +115,7 @@ export default function MovesBlock({
                       source={{
                         uri:
                           BASE_URI +
-                          "types/gen8/" +
+                          "types/" +
                           params.data.type.toLowerCase() +
                           ".png",
                       }}

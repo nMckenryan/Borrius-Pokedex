@@ -8,6 +8,10 @@ module.exports = {
   ],
   presets: [require("nativewind/preset")],
   theme: {
+    fontFamily: {
+      pokemonGB: ["Pokemon GB", "sans-serif"],
+      gillSans: ["Gill Sans", "sans-serif"],
+    },
     extend: {
       colors: {
         normal: "rgb(159, 161, 159)",
@@ -34,7 +38,16 @@ module.exports = {
         pokeDexBlue: "##27A4F3",
         unboundPurple: "#641e8c",
       },
+      typography: {
+        "3xl": {
+          css: {
+            text: {
+              fontFamily: ["Gill Sans", "sans-serif"],
+            },
+          },
+        },
+      },
     },
+    plugins: [],
   },
-  plugins: [],
 };

@@ -66,10 +66,11 @@
 - [x] Sort desktop UI
 - [ ] Handle Rockruff evolutions (3 split)
 - [ ] Make sure it works on iOS
+- [x] Update Icons 
 - [ ] publish to store
 - [x] Fix up android responsiveness
 - [x] Handle tables for location and Moves
-- [/] Combine Moves that are learned via level up and TM
+- [x] Combine Moves that are learned via level up and TM
 
 ## BUGS
 
@@ -86,4 +87,4 @@
 
 - [ ] Pokesprite items for evo
 - [ ] Unit test API calls
-- [ ] Customise FOnts
+- [x] Customise FOnts

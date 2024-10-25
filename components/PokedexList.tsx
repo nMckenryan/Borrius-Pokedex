@@ -2,6 +2,7 @@ import { ListItem, Card, Text } from "@rneui/base";
 import { FlatList, View, Pressable } from "react-native";
 import SpriteAvatar from "./UI/SpriteAvatar";
 import TypeIcon from "./UI/TypeIcon";
+import React from "react";
 
 export function PokedexList({
   filterData,
@@ -118,7 +119,7 @@ function PokemonListDesktop({
               </Text>
             </View>
             <View className="flex-col items-center justify-center">
-              <Card.Title className="mt-1" style={{ margin: 0 }}>
+              <Card.Title className="mt-1 capitalize text-gray-700">
                 {desktopPokemon.name}
               </Card.Title>
               <View style={{ overflow: "hidden" }}>

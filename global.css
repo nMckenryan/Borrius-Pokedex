@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+      font-family: 'PokemonGB';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(/fonts/Pokemon_GB.woff2) format('woff2');
+    }
+
+    @font-face {
+      font-family: 'Gill Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(/fonts/GillSans.woff2) format('woff2');
+    }
+  }

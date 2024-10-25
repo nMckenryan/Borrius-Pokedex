@@ -68,9 +68,15 @@
 - [ ] Make sure it works on iOS
 - [x] Update Icons 
 - [ ] publish to store
+- [ ] Implement fonts
 - [x] Fix up android responsiveness
 - [x] Handle tables for location and Moves
-- [x] Combine Moves that are learned via level up and TM
+- [/] Combine Moves that are learned via level up and TM
+
+- DEPLOY:
+  [] - Web (Vercel)
+  [] - Android (Expo)
+  [] - iOS (Expo)
 
 ## BUGS
 
